@@ -2,6 +2,7 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {SubjectOverview} from '../subject-overview.jsx';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Sparkles, Split, SquareFunction, X} from 'lucide-react';
 import originalData from './study-data.json';
 import {upgradeQuestions} from './worked.mjs';
@@ -61,19 +62,8 @@ function Navigation({view,go,count}) {
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
-function Overview({go,openTopic,done,savedCount,openSaved}) {
-  return <>
-    <section className="hero">
-      <div className="hero-copy"><p className="eyebrow">KIIT <span> / </span> 2024–2026</p><h1>Engineering<br className="hero-break"/> Economics<span className="hero-period">.</span></h1>
-      <p className="hero-description">Six exam papers with worked calculations, diagrams, and a searchable formula sheet.</p>
-      <div className="flex flex-wrap items-center gap-3"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={17}/></button><button className="button secondary hero-secondary" onClick={()=>go('formula')}>Browse formulas <ArrowUpRight size={16}/></button></div></div>
-      <div className="hero-art economics-chart" aria-hidden="true"><svg viewBox="0 0 480 335" fill="none"><path className="hero-grid" d="M42 74H448M42 121H448M42 168H448M42 215H448M42 262H448M98 44V262M167 44V262M236 44V262M305 44V262M374 44V262"/><path className="hero-axis" d="M43 47V262H452"/><path className="hero-data-fill" d="M48 236L115 218L180 169L247 180L318 116L391 76L437 45V262H48Z"/><path className="hero-trend" d="M48 240L438 61"/><path className="hero-data" d="M48 236L115 218L180 169L247 180L318 116L391 76L437 45"/><circle cx="247" cy="180" r="5"/><circle cx="318" cy="116" r="5"/><circle cx="437" cy="45" r="7"/><text x="51" y="291">CASH FLOW  /  STUDY MODEL</text></svg></div>
-    </section>
-    <div className="stats-strip">{[[QS.length,'worked questions'],[NOTES.length,'notes chapters'],[FORMULA_ENTRIES.length,'formulas'],[done.length,'mastered']].map(([n,label])=><div key={label}><b>{n}</b><span>{label}</span></div>)}</div>
-    <div className="sub-heading flex items-end justify-between gap-3"><div><p className="eyebrow">01 / STUDY BY TOPIC</p><h2>Chapter library</h2></div><button className="saved-shortcut button secondary" onClick={openSaved}><Bookmark size={15}/> Bookmarks{savedCount ? ` · ${savedCount}` : ""}</button></div>
-    <div className="chapter-grid">{ORDER.map((topic,index)=>{const Icon=topicIcons[index];const questions=QS.filter(q=>q.topic===topic);const count=questions.length;const complete=questions.filter(q=>done.includes(q.id)).length;return <button key={topic} className="chapter-tile surface" onClick={()=>openTopic(topic)}><span className="chapter-icon"><Icon size={20}/></span><span className="chapter-copy"><b>{TOPICS[topic][0]}</b><small>{TOPICS[topic][1]}</small></span><span className="chapter-count"><span>{complete ? `${complete}/${count} mastered` : `${count} questions`}</span><progress aria-label={TOPICS[topic][0] + " mastery"} value={complete} max={count}/></span><ArrowUpRight className="chapter-arrow" size={17}/></button>;})}</div>
-  </>;
-}
+const overviewTopics=ORDER.map((id,i)=>({id,title:TOPICS[id][0],description:TOPICS[id][1],Icon:topicIcons[i]}));
+const overviewPapers=papers.map(id=>({id,label:year(id),pages:SCANS[id].length}));
 function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) {
   const [revealed,setRevealed]=useState(false);
   const [copied,setCopied]=useState(false);
@@ -228,7 +218,7 @@ function App() {
   return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
     <Navigation view={view} go={go} count={progress.done.length}/>
     <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
-      {view==='overview'&&<Overview go={go} openTopic={openTopic} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
+      {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress}} onFocusQuestion={id=>{setOpened([id]);setJump(id);}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
       {view==='notes'&&<Notes openTopic={openTopic}/>}
       {view==='formula'&&<Formulas openQuestion={openQuestion}/>}

@@ -35,5 +35,7 @@ for(const id of Object.keys(subjectNames))execFileSync(process.execPath,[cli,'-i
 const css=await transform(await readFile(path.join(root,'src/hub.css'),'utf8'),{loader:'css',minify:true,target:'es2022'});
 await writeFile(path.join(target,'hub.css'),css.code);
 const page=await readFile(path.join(root,'index.html'),'utf8');
-const revision=createHash('sha256').update(await readFile(path.join(target,'hub.js'))).update(css.code).digest('hex').slice(0,12);
-await writeFile(path.join(dist,'index.html'),page.replace(/app\/hub\.(?:js|css)/g,name=>name+'?v='+revision));
+const hash=createHash('sha256');
+for(const id of ['hub',...Object.keys(subjectNames)])for(const ext of ['js','css'])hash.update(await readFile(path.join(target,id+'.'+ext)));
+const revision=hash.digest('hex').slice(0,12);
+await writeFile(path.join(dist,'index.html'),page.replace(/app\/hub\.(?:js|css)/g,name=>name+'?v='+revision).replace('<html lang="en">','<html lang="en" data-atlas-revision="'+revision+'">'));

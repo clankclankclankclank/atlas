@@ -116,12 +116,16 @@ function Finder({mode,close,progress}){
  </dialog>;
 }
 const subjectAssets=new Map();
+function subjectAsset(id,extension){
+ const revision=document.documentElement.dataset.atlasRevision;
+ return 'app/'+id+'.'+extension+(revision?'?v='+revision:'');
+}
 function loadSubject(id){
  const cached=subjectAssets.get(id);
  if(cached)return cached;
  const style=document.createElement('link');
  style.rel='stylesheet';
- style.href='app/'+id+'.css';
+ style.href=subjectAsset(id,'css');
  style.media='not all';
  const css=new Promise((resolve,reject)=>{
   style.onload=resolve;
@@ -132,7 +136,7 @@ function loadSubject(id){
  const global=subjects[id].global;
  const script=document.createElement('script');
  const module=window[global]?Promise.resolve(window[global]):new Promise((resolve,reject)=>{
-  script.src='app/'+id+'.js';
+  script.src=subjectAsset(id,'js');
   script.onload=()=>{
    script.remove();
    if(window[global])resolve(window[global]);

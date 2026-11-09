@@ -2,6 +2,7 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {SubjectOverview} from '../subject-overview.jsx';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Sparkles, Split, SquareFunction, X} from 'lucide-react';
 import data from './study-data.json';
 import clips from './reward-clips.json';
@@ -59,21 +60,8 @@ function Navigation({view,go,count}) {
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
-function Overview({go,openTopic,done,savedCount,openSaved}) {
-  return <>
-    <section className="hero">
-      <div className="hero-copy"><p className="eyebrow">KIIT <span> / </span> 5TH SEMESTER</p><h1>Computer<br className="hero-break"/> Networks<span className="hero-period">.</span></h1>
-      <p className="hero-description">Four years of exam questions, worked solutions, and the formulas behind them.</p>
-      <div className="flex flex-wrap items-center gap-3"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={17}/></button><button className="button secondary hero-secondary" onClick={()=>go('formula')}>Browse formulas <ArrowUpRight size={16}/></button></div></div>
-      <div className="hero-art" aria-hidden="true"><svg viewBox="0 0 480 335" fill="none">
-        <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" stroke="currentColor" opacity=".2"/></pattern><radialGradient id="fade"><stop offset="30%" stopColor="white"/><stop offset="100%" stopColor="black"/></radialGradient><mask id="grid-fade"><rect width="480" height="335" fill="url(#fade)"/></mask></defs>
-        <rect width="480" height="335" fill="url(#grid)" mask="url(#grid-fade)"/><g stroke="currentColor" opacity=".42"><circle cx="254" cy="163" r="110" strokeDasharray="4 7"/><circle cx="254" cy="163" r="77"/><path d="M75 229H120L184 163H254L321 93H403M126 71H173L254 163L319 228H403M254 163V290M254 163H420"/></g><g fill="currentColor"><circle cx="75" cy="229" r="4"/><circle cx="126" cy="71" r="5"/><circle cx="184" cy="163" r="4"/><circle cx="321" cy="93" r="5"/><circle cx="319" cy="228" r="5"/><circle cx="403" cy="93" r="3"/><circle cx="403" cy="228" r="3"/><circle cx="420" cy="163" r="4"/><circle cx="254" cy="290" r="4"/></g><circle cx="254" cy="163" r="26" stroke="currentColor" strokeWidth="2"/><circle cx="254" cy="163" r="13" fill="currentColor"/></svg></div>
-    </section>
-    <div className="stats-strip">{[[QS.length,'worked questions'],[NOTES.length,'notes chapters'],[FORMULA_ENTRIES.length,'formulas'],[done.length,'mastered']].map(([n,label])=><div key={label}><b>{n}</b><span>{label}</span></div>)}</div>
-    <div className="sub-heading flex items-end justify-between gap-3"><div><p className="eyebrow">01 / STUDY BY TOPIC</p><h2>Chapter library</h2></div><button className="saved-shortcut button secondary" onClick={openSaved}><Bookmark size={15}/> Bookmarks{savedCount ? ` · ${savedCount}` : ""}</button></div>
-    <div className="chapter-grid">{ORDER.map((topic,index)=>{const Icon=topicIcons[index];const questions=QS.filter(q=>q.topic===topic);const count=questions.length;const complete=questions.filter(q=>done.includes(q.id)).length;return <button key={topic} className="chapter-tile surface" onClick={()=>openTopic(topic)}><span className="chapter-icon"><Icon size={20}/></span><span className="chapter-copy"><b>{TOPICS[topic][0]}</b><small>{TOPICS[topic][1]}</small></span><span className="chapter-count"><span>{complete ? `${complete}/${count} mastered` : `${count} questions`}</span><progress aria-label={TOPICS[topic][0] + " mastery"} value={complete} max={count}/></span><ArrowUpRight className="chapter-arrow" size={17}/></button>;})}</div>
-  </>;
-}
+const overviewTopics=ORDER.map((id,i)=>({id,title:TOPICS[id][0],description:TOPICS[id][1],Icon:topicIcons[i]}));
+const overviewPapers=papers.map(id=>({id,label:'Autumn '+year(id),pages:SCANS[id].length}));
 function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) {
   const [revealed,setRevealed]=useState(false);
   const [copied,setCopied]=useState(false);
@@ -229,7 +217,7 @@ function App() {
   return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
     <Navigation view={view} go={go} count={progress.done.length}/>
     <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
-      {view==='overview'&&<Overview go={go} openTopic={openTopic} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
+      {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress}} onFocusQuestion={id=>{setOpened([id]);setJump(id);}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
       {view==='notes'&&<Notes openTopic={openTopic}/>}
       {view==='formula'&&<Formulas openQuestion={openQuestion}/>}
