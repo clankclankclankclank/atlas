@@ -1,0 +1,305 @@
+[
+  {
+    "method": "effective",
+    "title": "Effective interest rate",
+    "description": "Convert a nominal annual rate to an effective annual rate.",
+    "fields": [
+      {
+        "id": "i",
+        "label": "Nominal annual rate (%)",
+        "value": 18,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "m",
+        "label": "Compounding periods per year",
+        "value": 12,
+        "type": "number",
+        "min": 1,
+        "max": 365
+      }
+    ]
+  },
+  {
+    "method": "single",
+    "title": "Single deposit future value",
+    "description": "Compound one deposit to its maturity date.",
+    "fields": [
+      {
+        "id": "p",
+        "label": "Initial deposit",
+        "value": 20000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "annuity",
+    "title": "Ordinary annuity",
+    "description": "Compare present and future value of equal year-end deposits.",
+    "fields": [
+      {
+        "id": "a",
+        "label": "Annual cash flow",
+        "value": 10000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "gradient",
+    "title": "Arithmetic gradient",
+    "description": "Find annual and future equivalence for a series that rises by a fixed amount.",
+    "fields": [
+      {
+        "id": "a",
+        "label": "First year deposit",
+        "value": 4000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "g",
+        "label": "Yearly increment",
+        "value": 500,
+        "type": "number",
+        "min": -1000000000
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "worth",
+    "title": "PW, FW, AW and benefit–cost",
+    "description": "Compare all four appraisal measures from one cash-flow model.",
+    "fields": [
+      {
+        "id": "p",
+        "label": "Initial cost",
+        "value": 2500000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "a",
+        "label": "Annual benefit",
+        "value": 600000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "om",
+        "label": "Annual O&M cost",
+        "value": 200000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "s",
+        "label": "Terminal salvage",
+        "value": 500000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "return",
+    "title": "IRR and simple payback",
+    "description": "Use a conventional investment with equal inflows and optional salvage.",
+    "fields": [
+      {
+        "id": "p",
+        "label": "Initial cost",
+        "value": 150000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "a",
+        "label": "Annual net inflow",
+        "value": 45570,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "s",
+        "label": "Terminal salvage",
+        "value": 0,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "depreciation",
+    "title": "Depreciation schedule",
+    "description": "Compare straight-line, sinking-fund, declining-balance and SYD schedules.",
+    "fields": [
+      {
+        "id": "kind",
+        "label": "Method",
+        "value": "SF",
+        "items": [
+          {
+            "value": "SL",
+            "label": "Straight line"
+          },
+          {
+            "value": "SF",
+            "label": "Sinking fund"
+          },
+          {
+            "value": "DB",
+            "label": "Declining balance"
+          },
+          {
+            "value": "SYD",
+            "label": "Sum of years’ digits"
+          }
+        ]
+      },
+      {
+        "id": "p",
+        "label": "First cost",
+        "value": 400000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "s",
+        "label": "Salvage",
+        "value": 100000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "i",
+        "label": "Annual rate (%)",
+        "value": 12,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "n",
+        "label": "Years",
+        "value": 6,
+        "type": "number",
+        "min": 1,
+        "max": 100
+      }
+    ]
+  },
+  {
+    "method": "break",
+    "title": "Break-even and margin of safety",
+    "description": "Calculate break-even, contribution, profit, and margin of safety.",
+    "fields": [
+      {
+        "id": "price",
+        "label": "Selling price per unit",
+        "value": 800,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "variable",
+        "label": "Variable cost per unit",
+        "value": 500,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "fixed",
+        "label": "Fixed cost",
+        "value": 150000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "q",
+        "label": "Actual sales units",
+        "value": 700,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  }
+]

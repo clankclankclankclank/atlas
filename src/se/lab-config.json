@@ -1,0 +1,246 @@
+[
+  {
+    "method": "cocomo",
+    "title": "Basic COCOMO 81",
+    "description": "Estimate effort, duration, staffing and cost.",
+    "fields": [
+      {
+        "id": "k",
+        "label": "KLOC",
+        "value": 50,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "mode",
+        "label": "Project mode",
+        "value": "semi",
+        "items": [
+          {
+            "value": "organic",
+            "label": "Organic"
+          },
+          {
+            "value": "semi",
+            "label": "Semi-detached"
+          },
+          {
+            "value": "embedded",
+            "label": "Embedded"
+          }
+        ]
+      },
+      {
+        "id": "rate",
+        "label": "Salary per person-month",
+        "value": 40000,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "fp",
+    "title": "Function points",
+    "description": "Enter low, average and high counts in each field.",
+    "fields": [
+      {
+        "id": "EI",
+        "label": "EI counts",
+        "value": "3,4,3",
+        "type": "text"
+      },
+      {
+        "id": "EO",
+        "label": "EO counts",
+        "value": "5,5,2",
+        "type": "text"
+      },
+      {
+        "id": "EQ",
+        "label": "EQ counts",
+        "value": "3,3,1",
+        "type": "text"
+      },
+      {
+        "id": "ILF",
+        "label": "ILF counts",
+        "value": "2,4,2",
+        "type": "text"
+      },
+      {
+        "id": "EIF",
+        "label": "EIF counts",
+        "value": "2,3,1",
+        "type": "text"
+      },
+      {
+        "id": "di",
+        "label": "Degree of influence",
+        "value": 50,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "cfg",
+    "title": "Cyclomatic complexity",
+    "description": "Use E − N + 2P for the flow graph.",
+    "fields": [
+      {
+        "id": "edges",
+        "label": "Edges",
+        "value": 35,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "nodes",
+        "label": "Nodes",
+        "value": 25,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "parts",
+        "label": "Components",
+        "value": 1,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "coverage",
+    "title": "Structural coverage",
+    "description": "Calculate statement, branch or condition coverage from counts.",
+    "fields": [
+      {
+        "id": "done",
+        "label": "Targets executed",
+        "value": 17,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "total",
+        "label": "Total targets",
+        "value": 20,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "pert",
+    "title": "PERT expected duration",
+    "description": "Use optimistic, most likely and pessimistic times.",
+    "fields": [
+      {
+        "id": "o",
+        "label": "Optimistic",
+        "value": 1,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "m",
+        "label": "Most likely",
+        "value": 2,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "p",
+        "label": "Pessimistic",
+        "value": 9,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "cpm",
+    "title": "CPM forward and backward pass",
+    "description": "Use semicolon-separated ID:duration:predecessors; list predecessors before successors.",
+    "fields": [
+      {
+        "id": "network",
+        "label": "Activity network",
+        "value": "A:4; B:5; C:3:B; D:12:A; E:6:C; F:9:B; G:4:E,F",
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "method": "risk",
+    "title": "Risk exposure and mitigation",
+    "description": "Compare expected loss before and after mitigation.",
+    "fields": [
+      {
+        "id": "before",
+        "label": "Original probability (%)",
+        "value": 5,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "after",
+        "label": "Residual probability (%)",
+        "value": 2,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "loss",
+        "label": "Loss if risk occurs",
+        "value": 100000000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "cost",
+        "label": "Mitigation cost",
+        "value": 200000,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  },
+  {
+    "method": "reliability",
+    "title": "Software reliability",
+    "description": "Compute availability and mission reliability under constant hazard.",
+    "fields": [
+      {
+        "id": "uptime",
+        "label": "Operating hours",
+        "value": 1000,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "down",
+        "label": "Repair hours",
+        "value": 21,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "fail",
+        "label": "Failures",
+        "value": 10,
+        "type": "number",
+        "min": 0
+      },
+      {
+        "id": "mission",
+        "label": "Mission hours",
+        "value": 100,
+        "type": "number",
+        "min": 0
+      }
+    ]
+  }
+]

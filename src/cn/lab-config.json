@@ -1,0 +1,304 @@
+[
+  {
+    "title": "CRC binary division",
+    "description": "Choose any dataword and binary generator. Watch the XOR division and transmitted codeword.",
+    "result": "crcResult",
+    "method": "runCRC",
+    "fields": [
+      {
+        "label": "Dataword",
+        "class": "field",
+        "id": "crcData",
+        "value": "101000"
+      },
+      {
+        "label": "Divisor / generator",
+        "class": "field",
+        "id": "crcGen",
+        "value": "1001"
+      }
+    ]
+  },
+  {
+    "title": "IPv4 subnet calculator",
+    "description": "Calculate all equal-sized subnet ranges for any valid IPv4 CIDR block.",
+    "result": "subResult",
+    "method": "runSubnet",
+    "fields": [
+      {
+        "label": "IP / base network",
+        "class": "field",
+        "id": "subIp",
+        "value": "200.1.2.0"
+      },
+      {
+        "label": "Starting prefix",
+        "class": "field",
+        "id": "subPrefix",
+        "type": "number",
+        "min": "0",
+        "max": "32",
+        "value": "24"
+      },
+      {
+        "label": "Number of subnets",
+        "id": "subCount",
+        "items": [
+          {
+            "label": "2",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "label": "4",
+            "value": "4",
+            "selected": true
+          },
+          {
+            "label": "8",
+            "value": "8",
+            "selected": false
+          },
+          {
+            "label": "16",
+            "value": "16",
+            "selected": false
+          }
+        ],
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "title": "TCP AIMD congestion-window trace",
+    "description": "Simulate the common 2022/2023/2025 timeout question, with explicit round-end convention.",
+    "result": "tcpResult",
+    "method": "runTCP",
+    "fields": [
+      {
+        "label": "Initial cwnd (MSS)",
+        "class": "field",
+        "id": "tcpInit",
+        "type": "number",
+        "min": "1",
+        "max": "50",
+        "value": "2"
+      },
+      {
+        "label": "Initial threshold (MSS)",
+        "class": "field",
+        "id": "tcpThresh",
+        "type": "number",
+        "min": "1",
+        "max": "100",
+        "value": "8"
+      },
+      {
+        "label": "Timeout round",
+        "class": "field",
+        "id": "tcpTimeout",
+        "type": "number",
+        "min": "1",
+        "max": "40",
+        "value": "5"
+      },
+      {
+        "label": "Total rounds",
+        "class": "field",
+        "id": "tcpRounds",
+        "type": "number",
+        "min": "1",
+        "max": "40",
+        "value": "10"
+      }
+    ]
+  },
+  {
+    "title": "Slotted ALOHA throughput",
+    "description": "Compute normalized load, throughput and maximum achievable throughput.",
+    "result": "alohaResult",
+    "method": "runALOHA",
+    "fields": [
+      {
+        "label": "Frame size (bits)",
+        "class": "field",
+        "id": "alohaSize",
+        "type": "number",
+        "min": "1",
+        "value": "200"
+      },
+      {
+        "label": "Channel rate (kbps)",
+        "class": "field",
+        "id": "alohaRate",
+        "type": "number",
+        "min": "1",
+        "value": "200"
+      },
+      {
+        "label": "Offered frames / sec",
+        "class": "field",
+        "id": "alohaLambda",
+        "type": "number",
+        "min": "0",
+        "value": "1000"
+      }
+    ]
+  },
+  {
+    "title": "Distance vector (2025 graph)",
+    "description": "Inspect all four router distance vectors after each simultaneous exchange.",
+    "result": "dvResult",
+    "method": "runDV",
+    "fields": [
+      {
+        "label": "Iteration",
+        "id": "dvStep",
+        "items": [
+          {
+            "label": "Step 0 · direct neighbors only",
+            "value": "0",
+            "selected": false
+          },
+          {
+            "label": "Step 1 · first exchange",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "label": "Step 2 · converged",
+            "value": "2",
+            "selected": true
+          }
+        ],
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "title": "Stop-and-Wait link utilization",
+    "description": "Compare link utilization using one outstanding frame versus a sliding window.",
+    "result": "swResult",
+    "method": "runSW",
+    "fields": [
+      {
+        "label": "Bandwidth (Mbps)",
+        "class": "field",
+        "id": "swRate",
+        "type": "number",
+        "min": ".001",
+        "value": "1"
+      },
+      {
+        "label": "RTT (ms)",
+        "class": "field",
+        "id": "swRtt",
+        "type": "number",
+        "min": "0",
+        "value": "20"
+      },
+      {
+        "label": "Packet size (bits)",
+        "class": "field",
+        "id": "swBits",
+        "type": "number",
+        "min": "1",
+        "value": "1000"
+      },
+      {
+        "label": "Window (packets)",
+        "class": "field",
+        "id": "swW",
+        "type": "number",
+        "min": "1",
+        "value": "15"
+      }
+    ]
+  },
+  {
+    "title": "CSMA/CD minimum frame + Ethernet rate (2022)",
+    "description": "Two 2022 questions in one calculator: collision-detection minimum length and useful Ethernet payload throughput.",
+    "result": "csmaResult",
+    "method": "runCSMA",
+    "fields": [
+      {
+        "label": "Cable distance (km)",
+        "class": "field",
+        "id": "csmaKm",
+        "type": "number",
+        "step": ".1",
+        "min": ".001",
+        "value": "2"
+      },
+      {
+        "label": "Propagation speed (×10⁸ m/s)",
+        "class": "field",
+        "id": "csmaSpeed",
+        "type": "number",
+        "step": ".1",
+        "min": ".01",
+        "value": "2"
+      },
+      {
+        "label": "Channel rate (Mbps)",
+        "class": "field",
+        "id": "csmaRate",
+        "type": "number",
+        "step": ".1",
+        "min": ".01",
+        "value": "10"
+      },
+      {
+        "label": "Frame size (bytes)",
+        "class": "field",
+        "id": "csmaBytes",
+        "type": "number",
+        "min": "1",
+        "value": "128"
+      },
+      {
+        "label": "Overhead (bytes)",
+        "class": "field",
+        "id": "csmaOver",
+        "type": "number",
+        "min": "0",
+        "value": "30"
+      }
+    ]
+  },
+  {
+    "title": "Distance vector (2022 five-router graph)",
+    "description": "Trace the 2022 A–B–C–D–E network from direct neighbors through three synchronous updates.",
+    "result": "dv22Result",
+    "method": "runDV22",
+    "fields": [
+      {
+        "label": "Iteration",
+        "id": "dv22Step",
+        "items": [
+          {
+            "label": "Step 0 · direct links",
+            "value": "0",
+            "selected": false
+          },
+          {
+            "label": "Step 1 · first exchange",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "label": "Step 2 · second exchange",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "label": "Step 3 · converged",
+            "value": "3",
+            "selected": true
+          }
+        ],
+        "value": "3"
+      }
+    ]
+  }
+]

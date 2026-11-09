@@ -1,0 +1,2043 @@
+{
+  "QS": [
+    {
+      "id": "E1-1(a)",
+      "paper": "E1",
+      "ref": "1(a)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "Define the price effect.",
+      "solution": "It is the change in quantity demanded after the good’s own price changes, holding money income and other prices constant. In consumer theory it combines substitution and income effects.",
+      "qhtml": "<p>Define the price effect.</p>",
+      "ahtml": "<p>It is the change in quantity demanded after the good’s own price changes, holding money income and other prices constant. In consumer theory it combines substitution and income effects.</p>"
+    },
+    {
+      "id": "E1-1(b)",
+      "paper": "E1",
+      "ref": "1(b)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "Distinguish relatively inelastic and perfectly inelastic demand.",
+      "solution": "Relatively inelastic demand has 0     Price  Quantity   D   Perfectly inelastic demand keeps quantity constant at every shown price.  ",
+      "qhtml": "<p>Distinguish relatively inelastic and perfectly inelastic demand.</p>",
+      "ahtml": "<p>Relatively inelastic demand has 0 < |Eₚ| < 1: quantity changes proportionately less than price. Perfectly inelastic demand has Eₚ = 0 and a vertical curve. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Perfectly inelastic demand keeps quantity constant at every shown price.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M164 29V165\"/><text x=\"172\" y=\"35\">D</text></svg><figcaption>Perfectly inelastic demand keeps quantity constant at every shown price.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E1-1(c)",
+      "paper": "E1",
+      "ref": "1(c)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 1,
+      "question": "Find both MRTS ratios for L = 1, 2, 3, 4, 5 and K = 20, 15, 11, 8, 6.",
+      "solution": "Taking absolute ratios, K given up per extra L equals 5, 4, 3, 2. The reciprocal L per K equals 1/5, 1/4, 1/3, 1/2. The isoquant slope with L horizontal is −5, −4, −3, −2.",
+      "qhtml": "<p>Find both MRTS ratios for L = 1, 2, 3, 4, 5 and K = 20, 15, 11, 8, 6.</p>",
+      "ahtml": "<p>Taking absolute ratios, K given up per extra L equals 5, 4, 3, 2. The reciprocal L per K equals 1/5, 1/4, 1/3, 1/2. The isoquant slope with L horizontal is −5, −4, −3, −2.</p>"
+    },
+    {
+      "id": "E1-1(d)",
+      "paper": "E1",
+      "ref": "1(d)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 2,
+      "question": "Explain the link between total and marginal cost.",
+      "solution": "MC = dTC/dQ = dTVC/dQ because fixed cost is constant. MC is the slope of TC. Rising MC means TC steepens.",
+      "qhtml": "<p>Explain the link between total and marginal cost.</p>",
+      "ahtml": "<p>MC = dTC/dQ = dTVC/dQ because fixed cost is constant. MC is the slope of TC. Rising MC means TC steepens.</p>"
+    },
+    {
+      "id": "E1-1(e)",
+      "paper": "E1",
+      "ref": "1(e)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "Find the effective annual rate on 25% nominal interest compounded monthly.",
+      "solution": "i = (1 + .25/12)¹² − 1 = 28.07%.",
+      "qhtml": "<p>Find the effective annual rate on 25% nominal interest compounded monthly.</p>",
+      "ahtml": "<p>i = (1 + .25/12)¹² − 1 = 28.07%.</p>"
+    },
+    {
+      "id": "E1-1(f)",
+      "paper": "E1",
+      "ref": "1(f)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "Find the annual instalment on a ₹70 lakh loan at 11% for 25 years.",
+      "solution": "For 25 end-of-year payments, instalment = 70,00,000/(P/A,11%,25) = ₹8,31,181.69.",
+      "qhtml": "<p>Find the annual instalment on a ₹70 lakh loan at 11% for 25 years.</p>",
+      "ahtml": "<p>For 25 end-of-year payments, instalment = 70,00,000/(P/A,11%,25) = ₹8,31,181.69.</p>"
+    },
+    {
+      "id": "E1-1(g)",
+      "paper": "E1",
+      "ref": "1(g)",
+      "topic": "Depreciation",
+      "marks": 1,
+      "page": 2,
+      "question": "An ₹80 lakh instrument has ₹20,000 salvage and 10 years of life. Find straight-line depreciation rate and year-5 book value.",
+      "solution": "D = (80,00,000 − 20,000)/10 = ₹7,98,000 per year. This is 9.975% of first cost or 10% of the depreciable base per year. BV₅ = 80,00,000 − 5(7,98,000) = ₹40,10,000.",
+      "qhtml": "<p>An ₹80 lakh instrument has ₹20,000 salvage and 10 years of life. Find straight-line depreciation rate and year-5 book value.</p>",
+      "ahtml": "<p>D = (80,00,000 − 20,000)/10 = ₹7,98,000 per year. This is 9.975% of first cost or 10% of the depreciable base per year. BV₅ = 80,00,000 − 5(7,98,000) = ₹40,10,000.</p>"
+    },
+    {
+      "id": "E1-1(h)",
+      "paper": "E1",
+      "ref": "1(h)",
+      "topic": "Project appraisal",
+      "marks": 1,
+      "page": 2,
+      "question": "State the annual worth criterion.",
+      "solution": "For an independent investment accept AW ≥ 0 at the MARR. For equal-service mutually exclusive alternatives choose highest net AW, or lowest equivalent annual cost when only costs differ.",
+      "qhtml": "<p>State the annual worth criterion.</p>",
+      "ahtml": "<p>For an independent investment accept AW ≥ 0 at the MARR. For equal-service mutually exclusive alternatives choose highest net AW, or lowest equivalent annual cost when only costs differ.</p>"
+    },
+    {
+      "id": "E1-1(i)",
+      "paper": "E1",
+      "ref": "1(i)",
+      "topic": "Project appraisal",
+      "marks": 1,
+      "page": 2,
+      "question": "Define net present value.",
+      "solution": "NPV = Σ CFₜ/(1+i)ᵗ including the initial cash flow. Positive NPV is value above the required discount rate.",
+      "qhtml": "<p>Define net present value.</p>",
+      "ahtml": "<p>NPV = Σ CFₜ/(1+i)ᵗ including the initial cash flow. Positive NPV is value above the required discount rate.</p>"
+    },
+    {
+      "id": "E1-1(j)",
+      "paper": "E1",
+      "ref": "1(j)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 2,
+      "question": "How can a higher bank rate control inflation?",
+      "solution": "A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.",
+      "qhtml": "<p>How can a higher bank rate control inflation?</p>",
+      "ahtml": "<p>A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.</p>"
+    },
+    {
+      "id": "E1-2(a)",
+      "paper": "E1",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 2,
+      "question": "Distinguish income effect from price effect.",
+      "solution": "A change in money income shifts the budget line in parallel if prices remain fixed. A change in one price rotates the line and alters both relative price and real purchasing power. The income effect of that price change is the demand change from altered real purchasing power. The price effect is the combined income and substitution effect.",
+      "qhtml": "<p>Distinguish income effect from price effect.</p>",
+      "ahtml": "<p>A change in money income shifts the budget line in parallel if prices remain fixed. A change in one price rotates the line and alters both relative price and real purchasing power. The income effect of that price change is the demand change from altered real purchasing power. The price effect is the combined income and substitution effect.</p>"
+    },
+    {
+      "id": "E1-2(b)",
+      "paper": "E1",
+      "ref": "2(b)",
+      "topic": "Forecasting",
+      "marks": 5,
+      "page": 2,
+      "question": "Fit a trend to 2003–09 sales (thousands): 15, 25, 30, 45, 50, 55, 62. Forecast 2010 and 2012.",
+      "solution": "Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,006, ȳ = 40.29, Sxy = 221, Sxx = 28, and b = 7.8929. At x = 2010, ŷ ≈ 71.86; At x = 2012, ŷ ≈ 87.64.    x  y  x − x̄  (x − x̄)(y − ȳ)      2003  15  -3  75.86    2004  25  -2  30.57    2005  30  -1  10.29    2006  45  0  0    2007  50  1  9.71    2008  55  2  29.43    2009  62  3  65.14    ",
+      "qhtml": "<p>Fit a trend to 2003–09 sales (thousands): 15, 25, 30, 45, 50, 55, 62. Forecast 2010 and 2012.</p>",
+      "ahtml": "<p>Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,006, ȳ = 40.29, Sxy = 221, Sxx = 28, and b = 7.8929. At x = 2010, ŷ ≈ 71.86; At x = 2012, ŷ ≈ 87.64.</p><table><thead><tr><th>x</th><th>y</th><th>x − x̄</th><th>(x − x̄)(y − ȳ)</th></tr></thead><tbody><tr><td>2003</td><td>15</td><td>-3</td><td>75.86</td></tr><tr><td>2004</td><td>25</td><td>-2</td><td>30.57</td></tr><tr><td>2005</td><td>30</td><td>-1</td><td>10.29</td></tr><tr><td>2006</td><td>45</td><td>0</td><td>0</td></tr><tr><td>2007</td><td>50</td><td>1</td><td>9.71</td></tr><tr><td>2008</td><td>55</td><td>2</td><td>29.43</td></tr><tr><td>2009</td><td>62</td><td>3</td><td>65.14</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E1-3(a)",
+      "paper": "E1",
+      "ref": "3(a)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 2,
+      "question": "Explain producer equilibrium for output maximization and cost minimization.",
+      "solution": "The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable.     Capital  Labour   Q₁   Q₂   Isocost   E   The least-cost interior mix is tangent to the target isoquant.  ",
+      "qhtml": "<p>Explain producer equilibrium for output maximization and cost minimization.</p>",
+      "ahtml": "<p>The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The least-cost interior mix is tangent to the target isoquant.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Capital</text><text x=\"235\" y=\"195\">Labour</text><path class=\"econ-line econ-line-0\" d=\"M53 25Q68 110 222 144\"/><text x=\"226\" y=\"145\">Q₁</text><path class=\"econ-line econ-line-1\" d=\"M86 25Q105 103 294 133\"/><text x=\"301\" y=\"134\">Q₂</text><path class=\"econ-line econ-line-2\" d=\"M56 54L274 161\"/><text x=\"274\" y=\"158\">Isocost</text><circle cx=\"123\" cy=\"86\" r=\"3\"/><text x=\"129\" y=\"80\">E</text></svg><figcaption>The least-cost interior mix is tangent to the target isoquant.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E1-3(b)",
+      "paper": "E1",
+      "ref": "3(b)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 3,
+      "question": "TC = 100 + 5Q + Q². Find TFC, AC, MC and the output minimizing AC and MC.",
+      "solution": "TFC = 100, AC = 100/Q + 5 + Q, MC = 5 + 2Q. Setting dAC/dQ = 1 − 100/Q² = 0 gives Q = 10, where AC = MC = 25. MC rises throughout, so its minimum on Q ≥ 0 is 5 at Q = 0, or at the smallest feasible positive output if production must occur.",
+      "qhtml": "<p>TC = 100 + 5Q + Q². Find TFC, AC, MC and the output minimizing AC and MC.</p>",
+      "ahtml": "<p>TFC = 100, AC = 100/Q + 5 + Q, MC = 5 + 2Q. Setting dAC/dQ = 1 − 100/Q² = 0 gives Q = 10, where AC = MC = 25. MC rises throughout, so its minimum on Q ≥ 0 is 5 at Q = 0, or at the smallest feasible positive output if production must occur.</p>"
+    },
+    {
+      "id": "E1-4(a)",
+      "paper": "E1",
+      "ref": "4(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 3,
+      "question": "Compare two 17-year projects at 16% by PW. A: cost ₹50 lakh, revenue ₹3 lakh/year, salvage ₹3,000. B: ₹65 lakh, ₹5 lakh/year, ₹5,000.",
+      "solution": "PW = −P + A(P/A,16%,17) + S(P/F,16%,17). A = ₹-32,75,148.16, B = ₹-36,25,246.94. B has the higher PW if forced to choose. Both are negative, so reject both if doing nothing is feasible.",
+      "qhtml": "<p>Compare two 17-year projects at 16% by PW. A: cost ₹50 lakh, revenue ₹3 lakh/year, salvage ₹3,000. B: ₹65 lakh, ₹5 lakh/year, ₹5,000.</p>",
+      "ahtml": "<p>PW = −P + A(P/A,16%,17) + S(P/F,16%,17). A = ₹-32,75,148.16, B = ₹-36,25,246.94. B has the higher PW if forced to choose. Both are negative, so reject both if doing nothing is feasible.</p>"
+    },
+    {
+      "id": "E1-4(b)",
+      "paper": "E1",
+      "ref": "4(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 3,
+      "question": "Compare 20-year machines at 18% by future worth. Initial costs ₹20 lakh and ₹15 lakh, annual costs ₹1 lakh and ₹1.5 lakh.",
+      "solution": "Future cost = P(1.18)²⁰ + annual cost × (F/A,18%,20). Machine 1 = ₹6,94,48,866.21, Machine 2 = ₹6,30,83,747.41. Choose Machine 2 for the lower future cost, assuming equal service.",
+      "qhtml": "<p>Compare 20-year machines at 18% by future worth. Initial costs ₹20 lakh and ₹15 lakh, annual costs ₹1 lakh and ₹1.5 lakh.</p>",
+      "ahtml": "<p>Future cost = P(1.18)²⁰ + annual cost × (F/A,18%,20). Machine 1 = ₹6,94,48,866.21, Machine 2 = ₹6,30,83,747.41. Choose Machine 2 for the lower future cost, assuming equal service.</p>"
+    },
+    {
+      "id": "E1-5(a)",
+      "paper": "E1",
+      "ref": "5(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 4,
+      "question": "At 10%, compare A (₹35 lakh, ₹8.5 lakh/year for 10 years) and B (₹40 lakh, ₹9 lakh/year for 12 years) by B/C.",
+      "solution": "Individual B/C = A(P/A)/P: A = 1.492, B = 1.533. For unequal repeatable lives, annualize the costs at 10%: 5.696 and 5.871 lakh/year. The added annual benefit is ₹0.50 lakh and the added annualized cost is about ₹0.17 lakh. Incremental B/C is above 1, so choose B on this basis. For one-time lives, a specified common service period may change the comparison.",
+      "qhtml": "<p>At 10%, compare A (₹35 lakh, ₹8.5 lakh/year for 10 years) and B (₹40 lakh, ₹9 lakh/year for 12 years) by B/C.</p>",
+      "ahtml": "<p>Individual B/C = A(P/A)/P: A = 1.492, B = 1.533. For unequal repeatable lives, annualize the costs at 10%: 5.696 and 5.871 lakh/year. The added annual benefit is ₹0.50 lakh and the added annualized cost is about ₹0.17 lakh. Incremental B/C is above 1, so choose B on this basis. For one-time lives, a specified common service period may change the comparison.</p>"
+    },
+    {
+      "id": "E1-5(b)",
+      "paper": "E1",
+      "ref": "5(b)",
+      "topic": "Depreciation",
+      "marks": 5,
+      "page": 4,
+      "question": "Build a five-year 25% declining-balance schedule for a ₹2 lakh machine.",
+      "solution": "Dₜ = .25BVₜ₋₁ and BVₜ = .75BVₜ₋₁.     Year  Year depreciation  Accumulated depreciation  Book value      1  50,000  50,000  1,50,000    2  37,500  87,500  1,12,500    3  28,125  1,15,625  84,375    4  21,093.75  1,36,718.75  63,281.25    5  15,820.31  1,52,539.06  47,460.94    ",
+      "qhtml": "<p>Build a five-year 25% declining-balance schedule for a ₹2 lakh machine.</p>",
+      "ahtml": "<p>Dₜ = .25BVₜ₋₁ and BVₜ = .75BVₜ₋₁. </p><table><thead><tr><th>Year</th><th>Year depreciation</th><th>Accumulated depreciation</th><th>Book value</th></tr></thead><tbody><tr><td>1</td><td>50,000</td><td>50,000</td><td>1,50,000</td></tr><tr><td>2</td><td>37,500</td><td>87,500</td><td>1,12,500</td></tr><tr><td>3</td><td>28,125</td><td>1,15,625</td><td>84,375</td></tr><tr><td>4</td><td>21,093.75</td><td>1,36,718.75</td><td>63,281.25</td></tr><tr><td>5</td><td>15,820.31</td><td>1,52,539.06</td><td>47,460.94</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E1-6(a)",
+      "paper": "E1",
+      "ref": "6(a)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain five causes of inflation.",
+      "solution": "Strong consumption, credit or public spending can push demand above capacity. Wage increases exceeding productivity lift unit costs. Energy and raw-material shocks raise production costs. Depreciation can increase import prices. Supply disruptions and bottlenecks reduce available output. Expectations can amplify these pressures.",
+      "qhtml": "<p>Explain five causes of inflation.</p>",
+      "ahtml": "<p>Strong consumption, credit or public spending can push demand above capacity. Wage increases exceeding productivity lift unit costs. Energy and raw-material shocks raise production costs. Depreciation can increase import prices. Supply disruptions and bottlenecks reduce available output. Expectations can amplify these pressures.</p>"
+    },
+    {
+      "id": "E1-6(b)",
+      "paper": "E1",
+      "ref": "6(b)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain fiscal measures for controlling inflation.",
+      "solution": "Contractionary fiscal policy reduces demand by cutting or deferring government spending, reducing transfers, or raising net taxes. Higher taxes reduce disposable income and consumption, while lower public spending directly reduces aggregate demand. The appropriate mix depends on the source of inflation. Supply-side measures can relieve bottlenecks when costs drive the price increase.",
+      "qhtml": "<p>Explain fiscal measures for controlling inflation.</p>",
+      "ahtml": "<p>Contractionary fiscal policy reduces demand by cutting or deferring government spending, reducing transfers, or raising net taxes. Higher taxes reduce disposable income and consumption, while lower public spending directly reduces aggregate demand. The appropriate mix depends on the source of inflation. Supply-side measures can relieve bottlenecks when costs drive the price increase.</p>"
+    },
+    {
+      "id": "E2-1(a)",
+      "paper": "E2",
+      "ref": "1(a)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 1,
+      "question": "Find the effective annual rate for 18% nominal interest compounded monthly.",
+      "solution": "(1 + .18/12)¹² − 1 = 19.56%.",
+      "qhtml": "<p>Find the effective annual rate for 18% nominal interest compounded monthly.</p>",
+      "ahtml": "<p>(1 + .18/12)¹² − 1 = 19.56%.</p>"
+    },
+    {
+      "id": "E2-1(b)",
+      "paper": "E2",
+      "ref": "1(b)",
+      "topic": "Break-even",
+      "marks": 1,
+      "page": 1,
+      "question": "Find P/V ratio from ₹1,50,000 sales and ₹60,000 variable cost.",
+      "solution": "Contribution = ₹90,000. P/V = 90,000/1,50,000 = 60%.",
+      "qhtml": "<p>Find P/V ratio from ₹1,50,000 sales and ₹60,000 variable cost.</p>",
+      "ahtml": "<p>Contribution = ₹90,000. P/V = 90,000/1,50,000 = 60%.</p>"
+    },
+    {
+      "id": "E2-1(c)",
+      "paper": "E2",
+      "ref": "1(c)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 1,
+      "question": "Distinguish monetary and fiscal policy.",
+      "solution": "Monetary policy operates through the central bank, interest rates and liquidity. Fiscal policy operates through government expenditure, taxation and transfers.",
+      "qhtml": "<p>Distinguish monetary and fiscal policy.</p>",
+      "ahtml": "<p>Monetary policy operates through the central bank, interest rates and liquidity. Fiscal policy operates through government expenditure, taxation and transfers.</p>"
+    },
+    {
+      "id": "E2-1(d)",
+      "paper": "E2",
+      "ref": "1(d)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 1,
+      "question": "Determine returns to scale for Q = 50L¹⁄⁴K³⁄⁴.",
+      "solution": "The exponents sum to 1, so scaling both inputs by t scales output by t. Returns are constant.",
+      "qhtml": "<p>Determine returns to scale for Q = 50L¹⁄⁴K³⁄⁴.</p>",
+      "ahtml": "<p>The exponents sum to 1, so scaling both inputs by t scales output by t. Returns are constant.</p>"
+    },
+    {
+      "id": "E2-1(e)",
+      "paper": "E2",
+      "ref": "1(e)",
+      "topic": "Break-even",
+      "marks": 1,
+      "page": 2,
+      "question": "Show margin of safety on a break-even graph.",
+      "solution": "MOS in units equals actual sales units minus break-even units. At constant selling price, the same gap times price gives the sales-value margin.     ₹  Units sold   TR   TC   MOS   BEP   Actual   The margin of safety lies between break-even and actual sales.  ",
+      "qhtml": "<p>Show margin of safety on a break-even graph.</p>",
+      "ahtml": "<p>MOS in units equals actual sales units minus break-even units. At constant selling price, the same gap times price gives the sales-value margin. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The margin of safety lies between break-even and actual sales.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">₹</text><text x=\"235\" y=\"195\">Units sold</text><path class=\"econ-line econ-line-0\" d=\"M43 165L303 26\"/><text x=\"312\" y=\"26\">TR</text><path class=\"econ-line econ-line-1\" d=\"M43 124L323 72\"/><text x=\"327\" y=\"73\">TC</text><path class=\"econ-line econ-line-2\" d=\"M160 101V164M256 51V164M160 153H256\"/><text x=\"196\" y=\"149\">MOS</text><circle cx=\"160\" cy=\"102\" r=\"3\"/><text x=\"166\" y=\"96\">BEP</text><circle cx=\"256\" cy=\"51\" r=\"3\"/><text x=\"262\" y=\"45\">Actual</text></svg><figcaption>The margin of safety lies between break-even and actual sales.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E2-1(f)",
+      "paper": "E2",
+      "ref": "1(f)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Derive the relation between price, elasticity and marginal revenue.",
+      "solution": "TR = PQ, so MR = P + QdP/dQ. Since signed Eₚ = (dQ/dP)(P/Q), MR = P(1 + 1/Eₚ), or P(1 − 1/|Eₚ|). AR = P.",
+      "qhtml": "<p>Derive the relation between price, elasticity and marginal revenue.</p>",
+      "ahtml": "<p>TR = PQ, so MR = P + QdP/dQ. Since signed Eₚ = (dQ/dP)(P/Q), MR = P(1 + 1/Eₚ), or P(1 − 1/|Eₚ|). AR = P.</p>"
+    },
+    {
+      "id": "E2-1(g)",
+      "paper": "E2",
+      "ref": "1(g)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Does continuing to buy organic food after a price rise violate the law of demand?",
+      "solution": "Continued purchases alone show willingness to pay, and may indicate low elasticity. A genuine exception would require quantity demanded to increase after the price rise while other determinants stay constant. A change in health preferences shifts demand instead.",
+      "qhtml": "<p>Does continuing to buy organic food after a price rise violate the law of demand?</p>",
+      "ahtml": "<p>Continued purchases alone show willingness to pay, and may indicate low elasticity. A genuine exception would require quantity demanded to increase after the price rise while other determinants stay constant. A change in health preferences shifts demand instead.</p>"
+    },
+    {
+      "id": "E2-1(h)",
+      "paper": "E2",
+      "ref": "1(h)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 2,
+      "question": "Derive the relation between marginal cost and total variable cost.",
+      "solution": "TC = TFC + TVC and TFC is constant, hence MC = dTC/dQ = dTVC/dQ. For discrete output use ΔTVC/ΔQ.",
+      "qhtml": "<p>Derive the relation between marginal cost and total variable cost.</p>",
+      "ahtml": "<p>TC = TFC + TVC and TFC is constant, hence MC = dTC/dQ = dTVC/dQ. For discrete output use ΔTVC/ΔQ.</p>"
+    },
+    {
+      "id": "E2-1(i)",
+      "paper": "E2",
+      "ref": "1(i)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Give two properties of standard indifference curves.",
+      "solution": "For two desirable goods, indifference curves slope downward and do not intersect. With diminishing MRS they are also convex to the origin.",
+      "qhtml": "<p>Give two properties of standard indifference curves.</p>",
+      "ahtml": "<p>For two desirable goods, indifference curves slope downward and do not intersect. With diminishing MRS they are also convex to the origin.</p>"
+    },
+    {
+      "id": "E2-1(j)",
+      "paper": "E2",
+      "ref": "1(j)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "Find the five-year maturity value of $10,000 invested at 5%.",
+      "solution": "$10,000(1.05)⁵ = $12,762.82.",
+      "qhtml": "<p>Find the five-year maturity value of $10,000 invested at 5%.</p>",
+      "ahtml": "<p>$10,000(1.05)⁵ = $12,762.82.</p>"
+    },
+    {
+      "id": "E2-2(a)",
+      "paper": "E2",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 2,
+      "question": "Coffee cross elasticity is −0.7. Predict demand after a 6% price increase. Recalculate if a 20% price rise causes a 5% demand fall. Explain why nonessential goods are often more elastic.",
+      "solution": "The initial negative cross elasticity implies complements. Predicted change is −0.7 × 6% = −4.2%. The second elasticity is −5%/20% = −0.25, still complements but less responsive. Consumers can delay or substitute a nonessential product such as a designer bag more readily than an essential medicine.",
+      "tip": "The original scan reads 5%, not 50%.",
+      "qhtml": "<p>Coffee cross elasticity is −0.7. Predict demand after a 6% price increase. Recalculate if a 20% price rise causes a 5% demand fall. Explain why nonessential goods are often more elastic.</p>",
+      "ahtml": "<p>The initial negative cross elasticity implies complements. Predicted change is −0.7 × 6% = −4.2%. The second elasticity is −5%/20% = −0.25, still complements but less responsive. Consumers can delay or substitute a nonessential product such as a designer bag more readily than an essential medicine.</p>"
+    },
+    {
+      "id": "E2-2(b)",
+      "paper": "E2",
+      "ref": "2(b)",
+      "topic": "Forecasting",
+      "marks": 5,
+      "page": 2,
+      "question": "Forecast sales for 2040 and 2045 from 2025–30 sales of 25, 32, 47, 53, 70, 85 (thousands).",
+      "solution": "Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,027.5, ȳ = 52, Sxy = 210, Sxx = 17.5, and b = 12. At x = 2040, ŷ ≈ 202; At x = 2045, ŷ ≈ 262.    x  y  x − x̄  (x − x̄)(y − ȳ)      2025  25  -2.5  67.5    2026  32  -1.5  30    2027  47  -0.5  2.5    2028  53  0.5  0.5    2029  70  1.5  27    2030  85  2.5  82.5     These forecasts are well outside the observed years.",
+      "qhtml": "<p>Forecast sales for 2040 and 2045 from 2025–30 sales of 25, 32, 47, 53, 70, 85 (thousands).</p>",
+      "ahtml": "<p>Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,027.5, ȳ = 52, Sxy = 210, Sxx = 17.5, and b = 12. At x = 2040, ŷ ≈ 202; At x = 2045, ŷ ≈ 262.</p><table><thead><tr><th>x</th><th>y</th><th>x − x̄</th><th>(x − x̄)(y − ȳ)</th></tr></thead><tbody><tr><td>2025</td><td>25</td><td>-2.5</td><td>67.5</td></tr><tr><td>2026</td><td>32</td><td>-1.5</td><td>30</td></tr><tr><td>2027</td><td>47</td><td>-0.5</td><td>2.5</td></tr><tr><td>2028</td><td>53</td><td>0.5</td><td>0.5</td></tr><tr><td>2029</td><td>70</td><td>1.5</td><td>27</td></tr><tr><td>2030</td><td>85</td><td>2.5</td><td>82.5</td></tr></tbody></table><p> These forecasts are well outside the observed years.</p>"
+    },
+    {
+      "id": "E2-3(a)",
+      "paper": "E2",
+      "ref": "3(a)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 3,
+      "question": "Explain the three cases of returns to scale with a table and diagram.",
+      "solution": "Scale all inputs together by t > 1. If Q′/Q exceeds, equals or is below t, returns to scale are increasing, constant or decreasing respectively. For example, doubling all inputs can generate 2.5×, 2× or 1.5× output. This is a long-run comparison with all inputs variable.     Case  Input change  Output example      Increasing  2×  2.5×    Constant  2×  2×    Decreasing  2×  1.5×        Output  Input scale   IRS   CRS   DRS   Proportionate input scaling versus output.  ",
+      "qhtml": "<p>Explain the three cases of returns to scale with a table and diagram.</p>",
+      "ahtml": "<p>Scale all inputs together by t > 1. If Q′/Q exceeds, equals or is below t, returns to scale are increasing, constant or decreasing respectively. For example, doubling all inputs can generate 2.5×, 2× or 1.5× output. This is a long-run comparison with all inputs variable. </p><table><thead><tr><th>Case</th><th>Input change</th><th>Output example</th></tr></thead><tbody><tr><td>Increasing</td><td>2×</td><td>2.5×</td></tr><tr><td>Constant</td><td>2×</td><td>2×</td></tr><tr><td>Decreasing</td><td>2×</td><td>1.5×</td></tr></tbody></table><p></p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Proportionate input scaling versus output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Output</text><text x=\"235\" y=\"195\">Input scale</text><path class=\"econ-line econ-line-0\" d=\"M43 165Q236 153 308 29\"/><text x=\"313\" y=\"29\">IRS</text><path class=\"econ-line econ-line-1\" d=\"M43 165L299 61\"/><text x=\"308\" y=\"62\">CRS</text><path class=\"econ-line econ-line-2\" d=\"M43 165Q120 100 301 104\"/><text x=\"309\" y=\"104\">DRS</text></svg><figcaption>Proportionate input scaling versus output.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E2-3(b)",
+      "paper": "E2",
+      "ref": "3(b)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 3,
+      "question": "Find income elasticity for Q = 5000 − 3P + 0.4Y at P = 5000 and Y = 12000. Then maximize revenue for P = 8000 − 5Q.",
+      "solution": "(i) Q = −5,200, so there is no economically meaningful elasticity at this point. Mechanical Eᵧ = 4,800/−5,200 ≈ −0.923. A 15% income rise adds 0.4(1,800) = 720 units algebraically, giving Q = −4,480, still invalid. (ii) TR = 8000Q − 5Q². MR = 8000 − 10Q gives Q = 800, P = ₹4,000 and Eₚ = −1.",
+      "tip": "The paper’s printed intercept produces negative demand.",
+      "qhtml": "<p>Find income elasticity for Q = 5000 − 3P + 0.4Y at P = 5000 and Y = 12000. Then maximize revenue for P = 8000 − 5Q.</p>",
+      "ahtml": "<p>(i) Q = −5,200, so there is no economically meaningful elasticity at this point. Mechanical Eᵧ = 4,800/−5,200 ≈ −0.923. A 15% income rise adds 0.4(1,800) = 720 units algebraically, giving Q = −4,480, still invalid. (ii) TR = 8000Q − 5Q². MR = 8000 − 10Q gives Q = 800, P = ₹4,000 and Eₚ = −1.</p>"
+    },
+    {
+      "id": "E2-4(a)",
+      "paper": "E2",
+      "ref": "4(a)",
+      "topic": "Depreciation",
+      "marks": 5,
+      "page": 3,
+      "question": "Calculate yearly straight-line depreciation for ₹4 lakh, ₹40,000 salvage, 12 years, and 15% declining balance for ₹6 lakh over 10 years.",
+      "solution": "Straight line: D = ₹30,000 per year.     Year  Year depreciation  Accumulated depreciation  Book value      1  30,000  30,000  3,70,000    2  30,000  60,000  3,40,000    3  30,000  90,000  3,10,000    4  30,000  1,20,000  2,80,000    5  30,000  1,50,000  2,50,000    6  30,000  1,80,000  2,20,000    7  30,000  2,10,000  1,90,000    8  30,000  2,40,000  1,60,000    9  30,000  2,70,000  1,30,000    10  30,000  3,00,000  1,00,000    11  30,000  3,30,000  70,000    12  30,000  3,60,000  40,000     Declining balance: Dₜ = .15BVₜ₋₁ and BVₜ = .85BVₜ₋₁.     Year  Year depreciation  Accumulated depreciation  Book value      1  90,000  90,000  5,10,000    2  76,500  1,66,500  4,33,500    3  65,025  2,31,525  3,68,475    4  55,271.25  2,86,796.25  3,13,203.75    5  46,980.56  3,33,776.81  2,66,223.19    6  39,933.48  3,73,710.29  2,26,289.71    7  33,943.46  4,07,653.75  1,92,346.25    8  28,851.94  4,36,505.68  1,63,494.32    9  24,524.15  4,61,029.83  1,38,970.17    10  20,845.53  4,81,875.36  1,18,124.64    ",
+      "qhtml": "<p>Calculate yearly straight-line depreciation for ₹4 lakh, ₹40,000 salvage, 12 years, and 15% declining balance for ₹6 lakh over 10 years.</p>",
+      "ahtml": "<p>Straight line: D = ₹30,000 per year. </p><table><thead><tr><th>Year</th><th>Year depreciation</th><th>Accumulated depreciation</th><th>Book value</th></tr></thead><tbody><tr><td>1</td><td>30,000</td><td>30,000</td><td>3,70,000</td></tr><tr><td>2</td><td>30,000</td><td>60,000</td><td>3,40,000</td></tr><tr><td>3</td><td>30,000</td><td>90,000</td><td>3,10,000</td></tr><tr><td>4</td><td>30,000</td><td>1,20,000</td><td>2,80,000</td></tr><tr><td>5</td><td>30,000</td><td>1,50,000</td><td>2,50,000</td></tr><tr><td>6</td><td>30,000</td><td>1,80,000</td><td>2,20,000</td></tr><tr><td>7</td><td>30,000</td><td>2,10,000</td><td>1,90,000</td></tr><tr><td>8</td><td>30,000</td><td>2,40,000</td><td>1,60,000</td></tr><tr><td>9</td><td>30,000</td><td>2,70,000</td><td>1,30,000</td></tr><tr><td>10</td><td>30,000</td><td>3,00,000</td><td>1,00,000</td></tr><tr><td>11</td><td>30,000</td><td>3,30,000</td><td>70,000</td></tr><tr><td>12</td><td>30,000</td><td>3,60,000</td><td>40,000</td></tr></tbody></table><p> Declining balance: Dₜ = .15BVₜ₋₁ and BVₜ = .85BVₜ₋₁. </p><table><thead><tr><th>Year</th><th>Year depreciation</th><th>Accumulated depreciation</th><th>Book value</th></tr></thead><tbody><tr><td>1</td><td>90,000</td><td>90,000</td><td>5,10,000</td></tr><tr><td>2</td><td>76,500</td><td>1,66,500</td><td>4,33,500</td></tr><tr><td>3</td><td>65,025</td><td>2,31,525</td><td>3,68,475</td></tr><tr><td>4</td><td>55,271.25</td><td>2,86,796.25</td><td>3,13,203.75</td></tr><tr><td>5</td><td>46,980.56</td><td>3,33,776.81</td><td>2,66,223.19</td></tr><tr><td>6</td><td>39,933.48</td><td>3,73,710.29</td><td>2,26,289.71</td></tr><tr><td>7</td><td>33,943.46</td><td>4,07,653.75</td><td>1,92,346.25</td></tr><tr><td>8</td><td>28,851.94</td><td>4,36,505.68</td><td>1,63,494.32</td></tr><tr><td>9</td><td>24,524.15</td><td>4,61,029.83</td><td>1,38,970.17</td></tr><tr><td>10</td><td>20,845.53</td><td>4,81,875.36</td><td>1,18,124.64</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E2-4(b)",
+      "paper": "E2",
+      "ref": "4(b)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 4,
+      "question": "Using the printed TC = 1000 + 40Q + 5Q, compute TC, AC, AVC and MC at Q = 50.",
+      "solution": "As printed, TC = 1000 + 45Q, so TC = ₹3,250, AC = ₹65, AVC = ₹45 and MC = ₹45. MC < AC, so AC is falling. If the last term was intended to be 5Q², the corresponding values are ₹15,500, ₹310, ₹290 and ₹540, and AC is rising.",
+      "qhtml": "<p>Using the printed TC = 1000 + 40Q + 5Q, compute TC, AC, AVC and MC at Q = 50.</p>",
+      "ahtml": "<p>As printed, TC = 1000 + 45Q, so TC = ₹3,250, AC = ₹65, AVC = ₹45 and MC = ₹45. MC < AC, so AC is falling. If the last term was intended to be 5Q², the corresponding values are ₹15,500, ₹310, ₹290 and ₹540, and AC is rising.</p>"
+    },
+    {
+      "id": "E2-5(a)",
+      "paper": "E2",
+      "ref": "5(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 4,
+      "question": "Highway: ₹25 lakh initial, ₹6 lakh annual benefits, ₹2 lakh annual O&M, ₹5 lakh salvage, 10 years, 7%. Find PW B/C.",
+      "solution": "PW benefits = ₹44,68,323.57. PW costs = ₹39,04,716.31. B/C = 1.144, above 1, so accept under these assumptions. Salvage is counted on the benefit side.",
+      "qhtml": "<p>Highway: ₹25 lakh initial, ₹6 lakh annual benefits, ₹2 lakh annual O&amp;M, ₹5 lakh salvage, 10 years, 7%. Find PW B/C.</p>",
+      "ahtml": "<p>PW benefits = ₹44,68,323.57. PW costs = ₹39,04,716.31. B/C = 1.144, above 1, so accept under these assumptions. Salvage is counted on the benefit side.</p>"
+    },
+    {
+      "id": "E2-5(b)",
+      "paper": "E2",
+      "ref": "5(b)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain the shapes and relationships of ATC, AVC, MC and TC.",
+      "solution": "ATC − AVC = AFC = TFC/Q > 0, so the curves do not meet at finite Q. If marginal productivity initially improves and later falls, MC initially falls then rises. Discrete MC is first defined for the first output increment, although the right-hand derivative may exist at Q = 0. TC first flattens and then steepens when its slope MC falls and then rises.     Cost  Output   AC / AVC   MC   MC crosses the average curve at its minimum.  ",
+      "qhtml": "<p>Explain the shapes and relationships of ATC, AVC, MC and TC.</p>",
+      "ahtml": "<p>ATC − AVC = AFC = TFC/Q > 0, so the curves do not meet at finite Q. If marginal productivity initially improves and later falls, MC initially falls then rises. Discrete MC is first defined for the first output increment, although the right-hand derivative may exist at Q = 0. TC first flattens and then steepens when its slope MC falls and then rises. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"MC crosses the average curve at its minimum.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M65 54Q164 170 302 87\"/><text x=\"285\" y=\"83\">AC / AVC</text><path class=\"econ-line econ-line-1\" d=\"M64 112Q143 186 278 34\"/><text x=\"286\" y=\"37\">MC</text></svg><figcaption>MC crosses the average curve at its minimum.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E2-6(a)",
+      "paper": "E2",
+      "ref": "6(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Find IRR for −$150,000 followed by five $45,570 inflows. Compare with 10% MARR.",
+      "solution": "Set −150,000 + 45,570(P/A,r,5) = 0. NPV at 15% ≈ $2,757.71 and at 16% ≈ $-790.44. Solving gives IRR ≈ 15.774%, above 10%; accept.",
+      "qhtml": "<p>Find IRR for −$150,000 followed by five $45,570 inflows. Compare with 10% MARR.</p>",
+      "ahtml": "<p>Set −150,000 + 45,570(P/A,r,5) = 0. NPV at 15% ≈ $2,757.71 and at 16% ≈ $-790.44. Solving gives IRR ≈ 15.774%, above 10%; accept.</p>"
+    },
+    {
+      "id": "E2-6(b)",
+      "paper": "E2",
+      "ref": "6(b)",
+      "topic": "Break-even",
+      "marks": 5,
+      "page": 5,
+      "question": "Find break-even and MOS at ₹800 price, ₹500 variable cost, ₹1.5 lakh fixed cost, and 700 units sold. Recalculate for ₹2 lakh fixed cost.",
+      "solution": "Unit contribution = 300, P/V = 37.5%, break-even quantity = 500, and break-even revenue = ₹4,00,000. At 700 units, contribution is ₹2,10,000, profit is ₹60,000, and margin of safety is 200 units = ₹1,60,000 = 28.57% of actual sales. At ₹2 lakh fixed cost, exact break-even is 666⅔ units, so at least 667 whole units are needed.",
+      "qhtml": "<p>Find break-even and MOS at ₹800 price, ₹500 variable cost, ₹1.5 lakh fixed cost, and 700 units sold. Recalculate for ₹2 lakh fixed cost.</p>",
+      "ahtml": "<p>Unit contribution = 300, P/V = 37.5%, break-even quantity = 500, and break-even revenue = ₹4,00,000. At 700 units, contribution is ₹2,10,000, profit is ₹60,000, and margin of safety is 200 units = ₹1,60,000 = 28.57% of actual sales. At ₹2 lakh fixed cost, exact break-even is 666⅔ units, so at least 667 whole units are needed.</p>"
+    },
+    {
+      "id": "E2-7(a)",
+      "paper": "E2",
+      "ref": "7(a)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 6,
+      "question": "Compare bank rate and repo rate, and explain their inflation channel.",
+      "solution": "Repo is a collateralized repurchase-based funding rate. Bank rate is a separate central-bank rate associated with eligible lending or rediscounting in textbook treatment. A higher policy/funding rate may raise borrowing costs and reduce interest-sensitive spending. A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.",
+      "qhtml": "<p>Compare bank rate and repo rate, and explain their inflation channel.</p>",
+      "ahtml": "<p>Repo is a collateralized repurchase-based funding rate. Bank rate is a separate central-bank rate associated with eligible lending or rediscounting in textbook treatment. A higher policy/funding rate may raise borrowing costs and reduce interest-sensitive spending. A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.</p>"
+    },
+    {
+      "id": "E2-7(b)",
+      "paper": "E2",
+      "ref": "7(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 6,
+      "question": "Find payback for ₹2 lakh invested in machines A, B and C. Annual earnings in thousands: A 40/30/60/90/20, B 20/30/40/50/80, C 15/35/45/50/95.",
+      "solution": "A has 130 recovered after year 3; payback = 3 + 70/90 = 3.78 years. B has 140 after year 4; 4 + 60/80 = 4.75 years. C has 145 after year 4; 4 + 55/95 = 4.58 years. Choose A by simple payback.",
+      "qhtml": "<p>Find payback for ₹2 lakh invested in machines A, B and C. Annual earnings in thousands: A 40/30/60/90/20, B 20/30/40/50/80, C 15/35/45/50/95.</p>",
+      "ahtml": "<p>A has 130 recovered after year 3; payback = 3 + 70/90 = 3.78 years. B has 140 after year 4; 4 + 60/80 = 4.75 years. C has 145 after year 4; 4 + 55/95 = 4.58 years. Choose A by simple payback.</p>"
+    },
+    {
+      "id": "E3-1(a)",
+      "paper": "E3",
+      "ref": "1(a)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "What happens to supply if production cost falls while price is unchanged?",
+      "solution": "Option (i): the supply curve shifts right. At the same market price firms are willing to supply more.",
+      "qhtml": "<p>What happens to supply if production cost falls while price is unchanged?</p>",
+      "ahtml": "<p>Option (i): the supply curve shifts right. At the same market price firms are willing to supply more.</p>"
+    },
+    {
+      "id": "E3-1(b)",
+      "paper": "E3",
+      "ref": "1(b)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "What is the indifference curve for perfect substitutes?",
+      "solution": "Option (iv): a straight downward-sloping line, with constant MRS.",
+      "qhtml": "<p>What is the indifference curve for perfect substitutes?</p>",
+      "ahtml": "<p>Option (iv): a straight downward-sloping line, with constant MRS.</p>"
+    },
+    {
+      "id": "E3-1(c)",
+      "paper": "E3",
+      "ref": "1(c)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Demand elasticity magnitude is 0.8. What happens if price rises 50%?",
+      "solution": "Using the stated elasticity, %ΔQ ≈ −0.8 × 50% = −40%. Demand falls by 40% under the standard percentage-change calculation.",
+      "tip": "The paper says “increase,” but a normal downward-sloping demand curve implies a decrease.",
+      "qhtml": "<p>Demand elasticity magnitude is 0.8. What happens if price rises 50%?</p>",
+      "ahtml": "<p>Using the stated elasticity, %ΔQ ≈ −0.8 × 50% = −40%. Demand falls by 40% under the standard percentage-change calculation.</p>"
+    },
+    {
+      "id": "E3-1(d)",
+      "paper": "E3",
+      "ref": "1(d)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Quantity demanded rises 20% when price falls 8%. Find and classify elasticity.",
+      "solution": "Eₚ = 20%/−8% = −2.5. Magnitude 2.5 > 1 means elastic demand. It does not identify the product category by itself.",
+      "qhtml": "<p>Quantity demanded rises 20% when price falls 8%. Find and classify elasticity.</p>",
+      "ahtml": "<p>Eₚ = 20%/−8% = −2.5. Magnitude 2.5 > 1 means elastic demand. It does not identify the product category by itself.</p>"
+    },
+    {
+      "id": "E3-1(e)",
+      "paper": "E3",
+      "ref": "1(e)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Find equilibrium for Qd = 1800 − 20P and Qs = 50P − 1000.",
+      "solution": "Equate demand and supply: 2800 = 70P, so P = 40 and Q = 1,000 (option ii).",
+      "qhtml": "<p>Find equilibrium for Qd = 1800 − 20P and Qs = 50P − 1000.</p>",
+      "ahtml": "<p>Equate demand and supply: 2800 = 70P, so P = 40 and Q = 1,000 (option ii).</p>"
+    },
+    {
+      "id": "E3-1(f)",
+      "paper": "E3",
+      "ref": "1(f)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Find MRS from the schedule (X,Y) = (1,8), (2,4), (3,2), (4,1).",
+      "solution": "MRSₓᵧ is units of Y forgone per extra unit of X at constant satisfaction: −ΔY/ΔX. For A→B, B→C and C→D the values are 4, 2 and 1. No interval precedes the first bundle.",
+      "qhtml": "<p>Find MRS from the schedule (X,Y) = (1,8), (2,4), (3,2), (4,1).</p>",
+      "ahtml": "<p>MRSₓᵧ is units of Y forgone per extra unit of X at constant satisfaction: −ΔY/ΔX. For A→B, B→C and C→D the values are 4, 2 and 1. No interval precedes the first bundle.</p>"
+    },
+    {
+      "id": "E3-1(g)",
+      "paper": "E3",
+      "ref": "1(g)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "Find the maturity value of ₹20,000 at 18% compounded annually for 10 years.",
+      "solution": "F = 20,000(1.18)¹⁰ = ₹1,04,676.71.",
+      "qhtml": "<p>Find the maturity value of ₹20,000 at 18% compounded annually for 10 years.</p>",
+      "ahtml": "<p>F = 20,000(1.18)¹⁰ = ₹1,04,676.71.</p>"
+    },
+    {
+      "id": "E3-1(h)",
+      "paper": "E3",
+      "ref": "1(h)",
+      "topic": "Project appraisal",
+      "marks": 1,
+      "page": 3,
+      "question": "Find payback for a $105 million investment yielding $25 million per year.",
+      "solution": "Simple payback = 105/25 = 4.2 years with within-year interpolation. With year-end cash flows, recovery is first observed at year 5.",
+      "qhtml": "<p>Find payback for a $105 million investment yielding $25 million per year.</p>",
+      "ahtml": "<p>Simple payback = 105/25 = 4.2 years with within-year interpolation. With year-end cash flows, recovery is first observed at year 5.</p>"
+    },
+    {
+      "id": "E3-1(i)",
+      "paper": "E3",
+      "ref": "1(i)",
+      "topic": "Depreciation",
+      "marks": 1,
+      "page": 3,
+      "question": "Write the sinking-fund book value at time t for cost P, salvage F, rate i and life n.",
+      "solution": "BVₜ = P − (P − F)[((1+i)ᵗ−1)/((1+i)ⁿ−1)]. At t = n it equals F.",
+      "qhtml": "<p>Write the sinking-fund book value at time t for cost P, salvage F, rate i and life n.</p>",
+      "ahtml": "<p>BVₜ = P − (P − F)[((1+i)ᵗ−1)/((1+i)ⁿ−1)]. At t = n it equals F.</p>"
+    },
+    {
+      "id": "E3-1(j)",
+      "paper": "E3",
+      "ref": "1(j)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 3,
+      "question": "What returns to scale result when the Cobb–Douglas exponents sum to 3?",
+      "solution": "Q = ALᵅKᵝ. With t times both inputs, output is tᵅ⁺ᵝQ. The sum α+β determines the returns to scale. Since α+β = 3, output scales by t³, which exceeds t when t > 1. Returns are increasing.",
+      "qhtml": "<p>What returns to scale result when the Cobb–Douglas exponents sum to 3?</p>",
+      "ahtml": "<p>Q = ALᵅKᵝ. With t times both inputs, output is tᵅ⁺ᵝQ. The sum α+β determines the returns to scale. Since α+β = 3, output scales by t³, which exceeds t when t > 1. Returns are increasing.</p>"
+    },
+    {
+      "id": "E3-2(a)",
+      "paper": "E3",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 3,
+      "question": "For wheat Q = 25000 − 8P + 0.8Y at P = Y = $2,000, find price and income elasticity and the effects of income −50% and price +10%.",
+      "solution": "Q₀ = 10,600. Eₚ = −16,000/10,600 ≈ −1.509 and Eᵧ = 1,600/10,600 ≈ 0.151. At the given demand function the income fall cuts Q by 800 and the price rise cuts Q by 1,600. Applied together, Q = 8,200, a fall of about 22.64%.",
+      "tip": "The country names change in the question. Both shocks are evaluated using the given demand function.",
+      "qhtml": "<p>For wheat Q = 25000 − 8P + 0.8Y at P = Y = $2,000, find price and income elasticity and the effects of income −50% and price +10%.</p>",
+      "ahtml": "<p>Q₀ = 10,600. Eₚ = −16,000/10,600 ≈ −1.509 and Eᵧ = 1,600/10,600 ≈ 0.151. At the given demand function the income fall cuts Q by 800 and the price rise cuts Q by 1,600. Applied together, Q = 8,200, a fall of about 22.64%.</p>"
+    },
+    {
+      "id": "E3-2(b)",
+      "paper": "E3",
+      "ref": "2(b)",
+      "topic": "Break-even",
+      "marks": 5,
+      "page": 4,
+      "question": "Fixed cost ₹20 lakh, variable cost ₹100, selling price ₹200. Find BEP, contribution and MOS if 60,000 units are sold.",
+      "solution": "Unit contribution = 100, P/V = 50%, break-even quantity = 20,000, and break-even revenue = ₹40,00,000. At 60,000 units, contribution is ₹60,00,000, profit is ₹40,00,000, and margin of safety is 40,000 units = ₹80,00,000 = 66.67% of actual sales. Cross-check MOS value = profit/PV ratio = ₹40 lakh/.5 = ₹80 lakh.     ₹  Units sold   TR   TC   MOS   BEP   Actual   The margin of safety lies between break-even and actual sales.  ",
+      "qhtml": "<p>Fixed cost ₹20 lakh, variable cost ₹100, selling price ₹200. Find BEP, contribution and MOS if 60,000 units are sold.</p>",
+      "ahtml": "<p>Unit contribution = 100, P/V = 50%, break-even quantity = 20,000, and break-even revenue = ₹40,00,000. At 60,000 units, contribution is ₹60,00,000, profit is ₹40,00,000, and margin of safety is 40,000 units = ₹80,00,000 = 66.67% of actual sales. Cross-check MOS value = profit/PV ratio = ₹40 lakh/.5 = ₹80 lakh. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The margin of safety lies between break-even and actual sales.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">₹</text><text x=\"235\" y=\"195\">Units sold</text><path class=\"econ-line econ-line-0\" d=\"M43 165L303 26\"/><text x=\"312\" y=\"26\">TR</text><path class=\"econ-line econ-line-1\" d=\"M43 124L323 72\"/><text x=\"327\" y=\"73\">TC</text><path class=\"econ-line econ-line-2\" d=\"M160 101V164M256 51V164M160 153H256\"/><text x=\"196\" y=\"149\">MOS</text><circle cx=\"160\" cy=\"102\" r=\"3\"/><text x=\"166\" y=\"96\">BEP</text><circle cx=\"256\" cy=\"51\" r=\"3\"/><text x=\"262\" y=\"45\">Actual</text></svg><figcaption>The margin of safety lies between break-even and actual sales.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E3-3(a)",
+      "paper": "E3",
+      "ref": "3(a)",
+      "topic": "Time value",
+      "marks": 5,
+      "page": 4,
+      "question": "Invest ₹10,000 annually for 25 years at 20%. Find the maturity value.",
+      "solution": "First deposit is at year 1, so F = 10,000[(1.2²⁵−1)/.2] = ₹47,19,810.83.",
+      "qhtml": "<p>Invest ₹10,000 annually for 25 years at 20%. Find the maturity value.</p>",
+      "ahtml": "<p>First deposit is at year 1, so F = 10,000[(1.2²⁵−1)/.2] = ₹47,19,810.83.</p>"
+    },
+    {
+      "id": "E3-3(b)",
+      "paper": "E3",
+      "ref": "3(b)",
+      "topic": "Forecasting",
+      "marks": 5,
+      "page": 4,
+      "question": "Fit an OLS demand line to X = 1,2,3,4,5 and Y = 18,12,10,9,4. Forecast at X = 3.5.",
+      "solution": "Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 3, ȳ = 10.6, Sxy = -31, Sxx = 10, and b = -3.1. At x = 3.5, ŷ ≈ 9.05.    x  y  x − x̄  (x − x̄)(y − ȳ)      1  18  -2  -14.8    2  12  -1  -1.4    3  10  0  -0    4  9  1  -1.6    5  4  2  -13.2     In intercept form, ŷ = 19.9 − 3.1X.",
+      "qhtml": "<p>Fit an OLS demand line to X = 1,2,3,4,5 and Y = 18,12,10,9,4. Forecast at X = 3.5.</p>",
+      "ahtml": "<p>Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 3, ȳ = 10.6, Sxy = -31, Sxx = 10, and b = -3.1. At x = 3.5, ŷ ≈ 9.05.</p><table><thead><tr><th>x</th><th>y</th><th>x − x̄</th><th>(x − x̄)(y − ȳ)</th></tr></thead><tbody><tr><td>1</td><td>18</td><td>-2</td><td>-14.8</td></tr><tr><td>2</td><td>12</td><td>-1</td><td>-1.4</td></tr><tr><td>3</td><td>10</td><td>0</td><td>-0</td></tr><tr><td>4</td><td>9</td><td>1</td><td>-1.6</td></tr><tr><td>5</td><td>4</td><td>2</td><td>-13.2</td></tr></tbody></table><p> In intercept form, ŷ = 19.9 − 3.1X.</p>"
+    },
+    {
+      "id": "E3-4(a)",
+      "paper": "E3",
+      "ref": "4(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Bridge: ₹40 lakh investment, ₹1.5 lakh annual O&M, first-year fuel savings ₹6 lakh rising by ₹50,000 annually, 15 years at 12%. Is B/C acceptable?",
+      "solution": "Convert the gradient to annual savings: 6 + 0.5(A/G,12%,15) = 8.49 lakh/year. PW benefits = 57.83 lakh. PW cost = 40 + 1.5(P/A) = 50.22 lakh. B/C ≈ 1.152, so accept.",
+      "qhtml": "<p>Bridge: ₹40 lakh investment, ₹1.5 lakh annual O&amp;M, first-year fuel savings ₹6 lakh rising by ₹50,000 annually, 15 years at 12%. Is B/C acceptable?</p>",
+      "ahtml": "<p>Convert the gradient to annual savings: 6 + 0.5(A/G,12%,15) = 8.49 lakh/year. PW benefits = 57.83 lakh. PW cost = 40 + 1.5(P/A) = 50.22 lakh. B/C ≈ 1.152, so accept.</p>"
+    },
+    {
+      "id": "E3-4(b)",
+      "paper": "E3",
+      "ref": "4(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Compare five-year projects by IRR. A: initial ₹1 lakh, annual amount ₹45,000, annual expense ₹10,000, salvage ₹8,000. B: ₹1.5 lakh, ₹60,000, ₹15,000 and ₹12,000.",
+      "solution": "Treat the row labelled “Annual Investment” as annual gross inflow, because expenses are listed separately. Net annual inflows are ₹35,000 and ₹45,000. Solve −P+A(P/A,r,5)+S(P/F,r,5)=0. A IRR ≈ 23.444%; B ≈ 16.844%; B−A ≈ 2.496%. With both acceptable at the MARR, choose B if its incremental IRR exceeds MARR, otherwise A. No MARR is printed. If the annual row literally denotes an additional outflow, the positive-return comparison is unsupported.",
+      "qhtml": "<p>Compare five-year projects by IRR. A: initial ₹1 lakh, annual amount ₹45,000, annual expense ₹10,000, salvage ₹8,000. B: ₹1.5 lakh, ₹60,000, ₹15,000 and ₹12,000.</p>",
+      "ahtml": "<p>Treat the row labelled “Annual Investment” as annual gross inflow, because expenses are listed separately. Net annual inflows are ₹35,000 and ₹45,000. Solve −P+A(P/A,r,5)+S(P/F,r,5)=0. A IRR ≈ 23.444%; B ≈ 16.844%; B−A ≈ 2.496%. With both acceptable at the MARR, choose B if its incremental IRR exceeds MARR, otherwise A. No MARR is printed. If the annual row literally denotes an additional outflow, the positive-return comparison is unsupported.</p>"
+    },
+    {
+      "id": "E3-5(a)",
+      "paper": "E3",
+      "ref": "5(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Compare A₁ (₹30 lakh, ₹9 lakh/year for 5 years) and A₂ (₹60 lakh, ₹15 lakh/year for 7 years) at 10% by B/C.",
+      "solution": "Individual B/C: 1.137 for A₁ and 1.217 for A₂. If comparable repeatable service is assumed, annualized costs are 7.91 and 12.32 lakh/year. Incremental B/C = 6 ÷ (difference in annual costs) ≈ 1.36, favoring A₂. The standalone ratio ranks A₁ higher but does not settle mutual exclusion.",
+      "qhtml": "<p>Compare A₁ (₹30 lakh, ₹9 lakh/year for 5 years) and A₂ (₹60 lakh, ₹15 lakh/year for 7 years) at 10% by B/C.</p>",
+      "ahtml": "<p>Individual B/C: 1.137 for A₁ and 1.217 for A₂. If comparable repeatable service is assumed, annualized costs are 7.91 and 12.32 lakh/year. Incremental B/C = 6 ÷ (difference in annual costs) ≈ 1.36, favoring A₂. The standalone ratio ranks A₁ higher but does not settle mutual exclusion.</p>"
+    },
+    {
+      "id": "E3-5(b)",
+      "paper": "E3",
+      "ref": "5(b)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 6,
+      "question": "Describe the law of variable proportions, with its stages and an example.",
+      "solution": "With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices.     AP, MP  Variable input   AP   MP   MP = AP   MP = 0   Stage I ends where MP = AP. Stage II ends where MP = 0.   With land fixed, early workers can specialize, later workers face congestion, and excessive staffing can reduce total output.",
+      "qhtml": "<p>Describe the law of variable proportions, with its stages and an example.</p>",
+      "ahtml": "<p>With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Stage I ends where MP = AP. Stage II ends where MP = 0.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">AP, MP</text><text x=\"235\" y=\"195\">Variable input</text><path class=\"econ-line econ-line-0\" d=\"M43 164Q134 43 295 114\"/><text x=\"299\" y=\"115\">AP</text><path class=\"econ-line econ-line-1\" d=\"M43 163Q124 -16 272 165\"/><text x=\"279\" y=\"160\">MP</text><circle cx=\"175\" cy=\"91\" r=\"3\"/><text x=\"181\" y=\"85\">MP = AP</text><circle cx=\"272\" cy=\"165\" r=\"3\"/><text x=\"278\" y=\"159\">MP = 0</text></svg><figcaption>Stage I ends where MP = AP. Stage II ends where MP = 0.</figcaption></figure><p> With land fixed, early workers can specialize, later workers face congestion, and excessive staffing can reduce total output.</p>"
+    },
+    {
+      "id": "E3-6(a)",
+      "paper": "E3",
+      "ref": "6(a)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 6,
+      "question": "Define inflation and classify it by pace and government response.",
+      "solution": "Inflation is a sustained rise in the general price level. By pace, creeping is slow, walking is moderate, galloping is rapid and hyperinflation is extreme. Exact cutoffs vary by textbook. Open inflation is visible in market prices. Suppressed or repressed inflation is restrained by controls and may produce rationing, shortages or informal price premiums.",
+      "qhtml": "<p>Define inflation and classify it by pace and government response.</p>",
+      "ahtml": "<p>Inflation is a sustained rise in the general price level. By pace, creeping is slow, walking is moderate, galloping is rapid and hyperinflation is extreme. Exact cutoffs vary by textbook. Open inflation is visible in market prices. Suppressed or repressed inflation is restrained by controls and may produce rationing, shortages or informal price premiums.</p>"
+    },
+    {
+      "id": "E3-6(b)",
+      "paper": "E3",
+      "ref": "6(b)",
+      "topic": "Time value",
+      "marks": 5,
+      "page": 6,
+      "question": "A first retirement deposit of ₹4,000 grows by ₹500 each year for 10 years at 15%. Find future value.",
+      "solution": "Treat ₹4,000 as the first deposit. Annual equivalent = 4000 + 500(A/G,15%,10), and F = that annual equivalent × (F/A,15%,10) = ₹1,15,560.6. If ₹4,000 denotes salary rather than the 20% deposit, use a first deposit of ₹800 and obtain ₹50,588.7.",
+      "tip": "The placement of ₹4,000 makes two readings possible.",
+      "qhtml": "<p>A first retirement deposit of ₹4,000 grows by ₹500 each year for 10 years at 15%. Find future value.</p>",
+      "ahtml": "<p>Treat ₹4,000 as the first deposit. Annual equivalent = 4000 + 500(A/G,15%,10), and F = that annual equivalent × (F/A,15%,10) = ₹1,15,560.6. If ₹4,000 denotes salary rather than the 20% deposit, use a first deposit of ₹800 and obtain ₹50,588.7.</p>"
+    },
+    {
+      "id": "E4-1(a)",
+      "paper": "E4",
+      "ref": "1(a)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "Distinguish an increase in demand from a contraction in demand with curves.",
+      "solution": "An increase shifts the demand curve right because a non-price determinant changes. Contraction is a movement up the original curve to a lower quantity after the good’s price rises.     Price  Quantity   D₀   D₁   B   A   A higher price moves up D₀. Higher demand shifts D₀ to D₁.  ",
+      "qhtml": "<p>Distinguish an increase in demand from a contraction in demand with curves.</p>",
+      "ahtml": "<p>An increase shifts the demand curve right because a non-price determinant changes. Contraction is a movement up the original curve to a lower quantity after the good’s price rises. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"A higher price moves up D₀. Higher demand shifts D₀ to D₁.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M67 32L265 152\"/><text x=\"260\" y=\"147\">D₀</text><path class=\"econ-line econ-line-1\" d=\"M112 32L310 152\"/><text x=\"314\" y=\"153\">D₁</text><circle cx=\"117\" cy=\"62\" r=\"3\"/><text x=\"123\" y=\"56\">B</text><circle cx=\"183\" cy=\"102\" r=\"3\"/><text x=\"189\" y=\"96\">A</text></svg><figcaption>A higher price moves up D₀. Higher demand shifts D₀ to D₁.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E4-1(b)",
+      "paper": "E4",
+      "ref": "1(b)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "Income rises ₹50,000→₹70,000 and purchases fall 20→15. Find income elasticity and classify the good.",
+      "solution": "Base-value elasticity = (−5/20)/(20,000/50,000) = −0.625. With midpoint percentages it is −0.857. Both are negative, indicating an inferior good over this range.",
+      "qhtml": "<p>Income rises ₹50,000→₹70,000 and purchases fall 20→15. Find income elasticity and classify the good.</p>",
+      "ahtml": "<p>Base-value elasticity = (−5/20)/(20,000/50,000) = −0.625. With midpoint percentages it is −0.857. Both are negative, indicating an inferior good over this range.</p>"
+    },
+    {
+      "id": "E4-1(c)",
+      "paper": "E4",
+      "ref": "1(c)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 1,
+      "question": "Find the annual deposit needed to accumulate ₹20 lakh in 15 years at 12%.",
+      "solution": "A = 20,00,000/(F/A,12%,15) = ₹53,648.48, paid at the end of each year.",
+      "qhtml": "<p>Find the annual deposit needed to accumulate ₹20 lakh in 15 years at 12%.</p>",
+      "ahtml": "<p>A = 20,00,000/(F/A,12%,15) = ₹53,648.48, paid at the end of each year.</p>"
+    },
+    {
+      "id": "E4-1(d)",
+      "paper": "E4",
+      "ref": "1(d)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 1,
+      "question": "Write the expression for effective annual interest.",
+      "solution": "iₑ = (1+j/m)ᵐ−1, where j is the nominal annual rate and m is compounding periods per year.",
+      "qhtml": "<p>Write the expression for effective annual interest.</p>",
+      "ahtml": "<p>iₑ = (1+j/m)ᵐ−1, where j is the nominal annual rate and m is compounding periods per year.</p>"
+    },
+    {
+      "id": "E4-1(e)",
+      "paper": "E4",
+      "ref": "1(e)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 1,
+      "question": "Define increasing returns to scale.",
+      "solution": "A proportional increase in all inputs yields a more-than-proportional increase in output. For t > 1, f(tL,tK) > t f(L,K).",
+      "qhtml": "<p>Define increasing returns to scale.</p>",
+      "ahtml": "<p>A proportional increase in all inputs yields a more-than-proportional increase in output. For t > 1, f(tL,tK) > t f(L,K).</p>"
+    },
+    {
+      "id": "E4-1(f)",
+      "paper": "E4",
+      "ref": "1(f)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 2,
+      "question": "Illustrate the MC–AVC relationship.",
+      "solution": "MC   AVC when AVC is rising; equality holds at AVC’s interior minimum. dAVC/dQ = (MC−AVC)/Q.     Cost  Output   AC / AVC   MC   MC crosses the average curve at its minimum.  ",
+      "qhtml": "<p>Illustrate the MC–AVC relationship.</p>",
+      "ahtml": "<p>MC < AVC when AVC is falling; MC > AVC when AVC is rising; equality holds at AVC’s interior minimum. dAVC/dQ = (MC−AVC)/Q. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"MC crosses the average curve at its minimum.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M65 54Q164 170 302 87\"/><text x=\"285\" y=\"83\">AC / AVC</text><path class=\"econ-line econ-line-1\" d=\"M64 112Q143 186 278 34\"/><text x=\"286\" y=\"37\">MC</text></svg><figcaption>MC crosses the average curve at its minimum.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E4-1(g)",
+      "paper": "E4",
+      "ref": "1(g)",
+      "topic": "Break-even",
+      "marks": 1,
+      "page": 2,
+      "question": "Define margin of safety.",
+      "solution": "MOS = actual sales − break-even sales, in comparable units or sales value. MOS% = MOS/actual sales × 100.",
+      "qhtml": "<p>Define margin of safety.</p>",
+      "ahtml": "<p>MOS = actual sales − break-even sales, in comparable units or sales value. MOS% = MOS/actual sales × 100.</p>"
+    },
+    {
+      "id": "E4-1(h)",
+      "paper": "E4",
+      "ref": "1(h)",
+      "topic": "Depreciation",
+      "marks": 1,
+      "page": 2,
+      "question": "Write the sum-of-years’-digits depreciation factor.",
+      "solution": "Year t factor = (n−t+1)/[n(n+1)/2]. Multiply by depreciable base P−S.",
+      "qhtml": "<p>Write the sum-of-years’-digits depreciation factor.</p>",
+      "ahtml": "<p>Year t factor = (n−t+1)/[n(n+1)/2]. Multiply by depreciable base P−S.</p>"
+    },
+    {
+      "id": "E4-1(i)",
+      "paper": "E4",
+      "ref": "1(i)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 2,
+      "question": "What is demand-pull inflation?",
+      "solution": "A sustained price-level increase driven by aggregate demand rising faster than the economy’s ability to supply output.",
+      "qhtml": "<p>What is demand-pull inflation?</p>",
+      "ahtml": "<p>A sustained price-level increase driven by aggregate demand rising faster than the economy’s ability to supply output.</p>"
+    },
+    {
+      "id": "E4-1(j)",
+      "paper": "E4",
+      "ref": "1(j)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 2,
+      "question": "Define cash reserve ratio (CRR).",
+      "solution": "CRR is the prescribed share of relevant bank demand and time liabilities that must be maintained as cash balances with the central bank.",
+      "qhtml": "<p>Define cash reserve ratio (CRR).</p>",
+      "ahtml": "<p>CRR is the prescribed share of relevant bank demand and time liabilities that must be maintained as cash balances with the central bank.</p>"
+    },
+    {
+      "id": "E4-2(a)",
+      "paper": "E4",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 2,
+      "question": "Explain the five degrees of price elasticity with demand curves.",
+      "solution": "Eₚ magnitudes: 0 perfectly inelastic (vertical), between 0 and 1 relatively inelastic, 1 unitary, above 1 relatively elastic, and ∞ perfectly elastic (horizontal). Unitary elasticity at all points implies a rectangular hyperbola. Slope alone does not determine point elasticity.     Price  Quantity   Perfectly elastic   Perfectly inelastic   Limiting cases of elasticity: horizontal is perfectly elastic; vertical is perfectly inelastic.  ",
+      "qhtml": "<p>Explain the five degrees of price elasticity with demand curves.</p>",
+      "ahtml": "<p>Eₚ magnitudes: 0 perfectly inelastic (vertical), between 0 and 1 relatively inelastic, 1 unitary, above 1 relatively elastic, and ∞ perfectly elastic (horizontal). Unitary elasticity at all points implies a rectangular hyperbola. Slope alone does not determine point elasticity. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Limiting cases of elasticity: horizontal is perfectly elastic; vertical is perfectly inelastic.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M43 58H278\"/><text x=\"280\" y=\"60\">Perfectly elastic</text><path class=\"econ-line econ-line-1\" d=\"M150 24V165\"/><text x=\"155\" y=\"28\">Perfectly inelastic</text></svg><figcaption>Limiting cases of elasticity: horizontal is perfectly elastic; vertical is perfectly inelastic.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E4-2(b)",
+      "paper": "E4",
+      "ref": "2(b)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 2,
+      "question": "For Q = 80,000 − 10P, derive TR and MR and find the revenue-maximizing P and Q.",
+      "solution": "P = 8000 − .1Q. TR = 8000Q − .1Q² and MR = 8000 − .2Q. At MR = 0, Q = 40,000 and P = ₹4,000. TR = ₹16 crore and d²TR/dQ² = −.2 confirms a maximum.",
+      "qhtml": "<p>For Q = 80,000 − 10P, derive TR and MR and find the revenue-maximizing P and Q.</p>",
+      "ahtml": "<p>P = 8000 − .1Q. TR = 8000Q − .1Q² and MR = 8000 − .2Q. At MR = 0, Q = 40,000 and P = ₹4,000. TR = ₹16 crore and d²TR/dQ² = −.2 confirms a maximum.</p>"
+    },
+    {
+      "id": "E4-3(a)",
+      "paper": "E4",
+      "ref": "3(a)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 2,
+      "question": "For Q = 9Y² − 0.6Y³ find MP, AP, and the input maximizing Q, AP and MP.",
+      "solution": "MP = 18Y−1.8Y²; AP = 9Y−.6Y². TP is maximum when MP falls through zero at Y = 10. AP maximum satisfies 9−1.2Y = 0 at Y = 7.5. MP maximum satisfies 18−3.6Y = 0 at Y = 5.",
+      "qhtml": "<p>For Q = 9Y² − 0.6Y³ find MP, AP, and the input maximizing Q, AP and MP.</p>",
+      "ahtml": "<p>MP = 18Y−1.8Y²; AP = 9Y−.6Y². TP is maximum when MP falls through zero at Y = 10. AP maximum satisfies 9−1.2Y = 0 at Y = 7.5. MP maximum satisfies 18−3.6Y = 0 at Y = 5.</p>"
+    },
+    {
+      "id": "E4-3(b)",
+      "paper": "E4",
+      "ref": "3(b)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 2,
+      "question": "Explain the isocost line and the output-maximizing equilibrium.",
+      "solution": "The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable.     Capital  Labour   Q₁   Q₂   Isocost   E   The least-cost interior mix is tangent to the target isoquant.  ",
+      "qhtml": "<p>Explain the isocost line and the output-maximizing equilibrium.</p>",
+      "ahtml": "<p>The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The least-cost interior mix is tangent to the target isoquant.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Capital</text><text x=\"235\" y=\"195\">Labour</text><path class=\"econ-line econ-line-0\" d=\"M53 25Q68 110 222 144\"/><text x=\"226\" y=\"145\">Q₁</text><path class=\"econ-line econ-line-1\" d=\"M86 25Q105 103 294 133\"/><text x=\"301\" y=\"134\">Q₂</text><path class=\"econ-line econ-line-2\" d=\"M56 54L274 161\"/><text x=\"274\" y=\"158\">Isocost</text><circle cx=\"123\" cy=\"86\" r=\"3\"/><text x=\"129\" y=\"80\">E</text></svg><figcaption>The least-cost interior mix is tangent to the target isoquant.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E4-4(a)",
+      "paper": "E4",
+      "ref": "4(a)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 3,
+      "question": "TFC = ₹5,000 and TVC = 3000Q−25Q²+.5Q³. Find AVC, AC, MC and minimum AVC/MC quantities.",
+      "solution": "AVC = 3000−25Q+.5Q². AC adds 5000/Q. MC = 3000−50Q+1.5Q². dAVC/dQ = −25+Q, so AVC is minimized at Q=25. dMC/dQ = −50+3Q, so MC is minimized at Q=50/3≈16.67. The second derivatives are positive.",
+      "qhtml": "<p>TFC = ₹5,000 and TVC = 3000Q−25Q²+.5Q³. Find AVC, AC, MC and minimum AVC/MC quantities.</p>",
+      "ahtml": "<p>AVC = 3000−25Q+.5Q². AC adds 5000/Q. MC = 3000−50Q+1.5Q². dAVC/dQ = −25+Q, so AVC is minimized at Q=25. dMC/dQ = −50+3Q, so MC is minimized at Q=50/3≈16.67. The second derivatives are positive.</p>"
+    },
+    {
+      "id": "E4-4(b)",
+      "paper": "E4",
+      "ref": "4(b)",
+      "topic": "Break-even",
+      "marks": 5,
+      "page": 3,
+      "question": "Price ₹50, variable cost ₹30, fixed cost ₹80,000. Find BEP, P/V and MOS at ₹1 lakh profit.",
+      "solution": "Unit contribution = 20, P/V = 40%, break-even quantity = 4,000, and break-even revenue = ₹2,00,000. Target units = (80,000+1,00,000)/20 = 9,000. MOS = 5,000 units = ₹2,50,000, or 55.56% of sales.",
+      "qhtml": "<p>Price ₹50, variable cost ₹30, fixed cost ₹80,000. Find BEP, P/V and MOS at ₹1 lakh profit.</p>",
+      "ahtml": "<p>Unit contribution = 20, P/V = 40%, break-even quantity = 4,000, and break-even revenue = ₹2,00,000. Target units = (80,000+1,00,000)/20 = 9,000. MOS = 5,000 units = ₹2,50,000, or 55.56% of sales.</p>"
+    },
+    {
+      "id": "E4-5(a)",
+      "paper": "E4",
+      "ref": "5(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 3,
+      "question": "PW at 12% over 25 years. A: initial ₹20 lakh, annual ₹2 lakh, salvage ₹30,000. B: ₹25 lakh, ₹2.5 lakh annually, salvage ₹40,000.",
+      "solution": "PW = −P + A(P/A) + S(P/F). A = ₹-4,29,607.48; B = ₹-5,36,862.29. A has higher PW if a choice is compulsory. Both are negative if the no-project option exists.",
+      "qhtml": "<p>PW at 12% over 25 years. A: initial ₹20 lakh, annual ₹2 lakh, salvage ₹30,000. B: ₹25 lakh, ₹2.5 lakh annually, salvage ₹40,000.</p>",
+      "ahtml": "<p>PW = −P + A(P/A) + S(P/F). A = ₹-4,29,607.48; B = ₹-5,36,862.29. A has higher PW if a choice is compulsory. Both are negative if the no-project option exists.</p>"
+    },
+    {
+      "id": "E4-5(b)",
+      "paper": "E4",
+      "ref": "5(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 4,
+      "question": "Compare six-year projects at 15% by B/C: ₹40 lakh and ₹70 lakh initial costs, ₹2 lakh and ₹5 lakh annual returns.",
+      "solution": "B/C₁ = 2(P/A,15%,6)/40 = 0.189; B/C₂ = 5(P/A)/70 = 0.27. Both are below 1, so reject both. If selection is compulsory, incremental B/C = 3(P/A)/30 = 0.378, so the upgrade is unjustified and project 1 has the smaller net loss.",
+      "qhtml": "<p>Compare six-year projects at 15% by B/C: ₹40 lakh and ₹70 lakh initial costs, ₹2 lakh and ₹5 lakh annual returns.</p>",
+      "ahtml": "<p>B/C₁ = 2(P/A,15%,6)/40 = 0.189; B/C₂ = 5(P/A)/70 = 0.27. Both are below 1, so reject both. If selection is compulsory, incremental B/C = 3(P/A)/30 = 0.378, so the upgrade is unjustified and project 1 has the smaller net loss.</p>"
+    },
+    {
+      "id": "E4-6(a)",
+      "paper": "E4",
+      "ref": "6(a)",
+      "topic": "Depreciation",
+      "marks": 5,
+      "page": 4,
+      "question": "Set up sinking-fund depreciation for a machine with ₹40,000 salvage and 10% interest.",
+      "solution": "If first cost is interpreted as ₹2,00,000, D = 1,60,000(.10)/(1.10ⁿ−1). Year-t depreciation = D(1.10)ᵗ⁻¹ and BVₜ = 2,00,000 − D[(1.10ᵗ−1)/.10]. A unique annual table requires service life n, which the question omits.",
+      "tip": "The scan prints “₹ 2,00,00” and gives no service life.",
+      "qhtml": "<p>Set up sinking-fund depreciation for a machine with ₹40,000 salvage and 10% interest.</p>",
+      "ahtml": "<p>If first cost is interpreted as ₹2,00,000, D = 1,60,000(.10)/(1.10ⁿ−1). Year-t depreciation = D(1.10)ᵗ⁻¹ and BVₜ = 2,00,000 − D[(1.10ᵗ−1)/.10]. A unique annual table requires service life n, which the question omits.</p>"
+    },
+    {
+      "id": "E4-6(b)",
+      "paper": "E4",
+      "ref": "6(b)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain fiscal policy to control inflation.",
+      "solution": "Contractionary fiscal policy reduces demand by cutting or deferring government spending, reducing transfers, or raising net taxes. Higher taxes reduce disposable income and consumption, while lower public spending directly reduces aggregate demand. The appropriate mix depends on the source of inflation. Supply-side measures can relieve bottlenecks when costs drive the price increase.",
+      "qhtml": "<p>Explain fiscal policy to control inflation.</p>",
+      "ahtml": "<p>Contractionary fiscal policy reduces demand by cutting or deferring government spending, reducing transfers, or raising net taxes. Higher taxes reduce disposable income and consumption, while lower public spending directly reduces aggregate demand. The appropriate mix depends on the source of inflation. Supply-side measures can relieve bottlenecks when costs drive the price increase.</p>"
+    },
+    {
+      "id": "E5-1(a)",
+      "paper": "E5",
+      "ref": "1(a)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "For Qx = 2000 − 3Px + 4Py, classify X and Y.",
+      "solution": "∂Qx/∂Py = +4. A higher price of Y increases demand for X, so they are substitutes in this model.",
+      "qhtml": "<p>For Qx = 2000 − 3Px + 4Py, classify X and Y.</p>",
+      "ahtml": "<p>∂Qx/∂Py = +4. A higher price of Y increases demand for X, so they are substitutes in this model.</p>"
+    },
+    {
+      "id": "E5-1(b)",
+      "paper": "E5",
+      "ref": "1(b)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "For P = 50 − .5Q, find P and Q when MR = 0.",
+      "solution": "TR = 50Q−.5Q², MR = 50−Q. At MR = 0, Q = 50 and P = 25.",
+      "qhtml": "<p>For P = 50 − .5Q, find P and Q when MR = 0.</p>",
+      "ahtml": "<p>TR = 50Q−.5Q², MR = 50−Q. At MR = 0, Q = 50 and P = 25.</p>"
+    },
+    {
+      "id": "E5-1(c)",
+      "paper": "E5",
+      "ref": "1(c)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Write the consumer budget equation and slope.",
+      "solution": "PxX + PyY = M. With X horizontal and Y vertical, slope = −Px/Py. Intercepts are M/Px and M/Py.",
+      "qhtml": "<p>Write the consumer budget equation and slope.</p>",
+      "ahtml": "<p>PxX + PyY = M. With X horizontal and Y vertical, slope = −Px/Py. Intercepts are M/Px and M/Py.</p>"
+    },
+    {
+      "id": "E5-1(d)",
+      "paper": "E5",
+      "ref": "1(d)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 2,
+      "question": "Relate total product and marginal product.",
+      "solution": "MP = dTP/dL. Positive MP raises TP, zero MP at the interior peak marks maximum TP, and negative MP lowers TP.",
+      "qhtml": "<p>Relate total product and marginal product.</p>",
+      "ahtml": "<p>MP = dTP/dL. Positive MP raises TP, zero MP at the interior peak marks maximum TP, and negative MP lowers TP.</p>"
+    },
+    {
+      "id": "E5-1(e)",
+      "paper": "E5",
+      "ref": "1(e)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 2,
+      "question": "What input substitution is needed if MPₗ/w < MPₖ/r?",
+      "solution": "Capital yields more marginal output per rupee. With total cost fixed, shift expenditure from labour to capital until marginal products per rupee equalize, or a corner is reached.",
+      "qhtml": "<p>What input substitution is needed if MPₗ/w &lt; MPₖ/r?</p>",
+      "ahtml": "<p>Capital yields more marginal output per rupee. With total cost fixed, shift expenditure from labour to capital until marginal products per rupee equalize, or a corner is reached.</p>"
+    },
+    {
+      "id": "E5-1(f)",
+      "paper": "E5",
+      "ref": "1(f)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "At 8%, find year-12 balance after $50,000 now, $30,000 at year 7 and an $80,000 withdrawal at year 9.",
+      "solution": "At year 12, F = 50,000(1.08)¹² + 30,000(1.08)⁵ − 80,000(1.08)³ = $69,211.39.",
+      "qhtml": "<p>At 8%, find year-12 balance after $50,000 now, $30,000 at year 7 and an $80,000 withdrawal at year 9.</p>",
+      "ahtml": "<p>At year 12, F = 50,000(1.08)¹² + 30,000(1.08)⁵ − 80,000(1.08)³ = $69,211.39.</p>"
+    },
+    {
+      "id": "E5-1(g)",
+      "paper": "E5",
+      "ref": "1(g)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 2,
+      "question": "Interpret effective and nominal rates for 8% nominal, compounded semiannually.",
+      "solution": "Each half-year earns 4%. Annual compounding effect is (1.04)² − 1 = 8.16%, which is greater than the quoted nominal 8%.",
+      "qhtml": "<p>Interpret effective and nominal rates for 8% nominal, compounded semiannually.</p>",
+      "ahtml": "<p>Each half-year earns 4%. Annual compounding effect is (1.04)² − 1 = 8.16%, which is greater than the quoted nominal 8%.</p>"
+    },
+    {
+      "id": "E5-1(h)",
+      "paper": "E5",
+      "ref": "1(h)",
+      "topic": "Depreciation",
+      "marks": 1,
+      "page": 2,
+      "question": "Find year-13 sinking-fund BV for $1 million cost, $200,000 salvage, 16 years and 12%.",
+      "solution": "D = 800,000/(F/A,12%,16) = $18,712.01. BV₁₃ = 1,000,000 − D(F/A,12%,13) = $4,75,518.9.",
+      "qhtml": "<p>Find year-13 sinking-fund BV for $1 million cost, $200,000 salvage, 16 years and 12%.</p>",
+      "ahtml": "<p>D = 800,000/(F/A,12%,16) = $18,712.01. BV₁₃ = 1,000,000 − D(F/A,12%,13) = $4,75,518.9.</p>"
+    },
+    {
+      "id": "E5-1(i)",
+      "paper": "E5",
+      "ref": "1(i)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 2,
+      "question": "Show the equilibrium conditions for a competitive firm.",
+      "solution": "At an interior profit-maximizing output, P = AR = MR = MC and MC crosses MR from below. Short-run production requires price to cover minimum AVC. Long-run competitive equilibrium with free entry gives P = minimum AC.     Price / cost  Output   P = MR   MC   E   Competitive firm chooses output where the rising MC curve crosses P = MR.  ",
+      "qhtml": "<p>Show the equilibrium conditions for a competitive firm.</p>",
+      "ahtml": "<p>At an interior profit-maximizing output, P = AR = MR = MC and MC crosses MR from below. Short-run production requires price to cover minimum AVC. Long-run competitive equilibrium with free entry gives P = minimum AC. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Competitive firm chooses output where the rising MC curve crosses P = MR.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price / cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M45 87H309\"/><text x=\"313\" y=\"89\">P = MR</text><path class=\"econ-line econ-line-1\" d=\"M64 128Q167 192 287 29\"/><text x=\"294\" y=\"32\">MC</text><circle cx=\"231\" cy=\"87\" r=\"3\"/><text x=\"237\" y=\"81\">E</text></svg><figcaption>Competitive firm chooses output where the rising MC curve crosses P = MR.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E5-1(j)",
+      "paper": "E5",
+      "ref": "1(j)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 3,
+      "question": "How does a rise in bank rate affect borrowing?",
+      "solution": "A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.",
+      "qhtml": "<p>How does a rise in bank rate affect borrowing?</p>",
+      "ahtml": "<p>A higher bank rate can raise the cost of central-bank funds and influence commercial lending rates. Borrowing and credit-financed spending tend to fall, easing demand-side inflation. The strength and speed depend on transmission and demand conditions.</p>"
+    },
+    {
+      "id": "E5-2(a)",
+      "paper": "E5",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 3,
+      "question": "Petrol price rises from ₹100 to ₹120 and daily demand falls from 20 lakh to 19 lakh litres. Find elasticity and explain it.",
+      "solution": "Using initial values, Eₚ = (−1/20)/(20/100) = −0.25; midpoint Eₚ ≈ −0.282. Petrol is inelastic over this range. Few immediate substitutes and commuting necessity help explain it. More reliable transit and alternative transport increase substitution opportunities.",
+      "qhtml": "<p>Petrol price rises from ₹100 to ₹120 and daily demand falls from 20 lakh to 19 lakh litres. Find elasticity and explain it.</p>",
+      "ahtml": "<p>Using initial values, Eₚ = (−1/20)/(20/100) = −0.25; midpoint Eₚ ≈ −0.282. Petrol is inelastic over this range. Few immediate substitutes and commuting necessity help explain it. More reliable transit and alternative transport increase substitution opportunities.</p>"
+    },
+    {
+      "id": "E5-2(b)",
+      "paper": "E5",
+      "ref": "2(b)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 3,
+      "question": "Phone sales rise 20% after own price −5%, income +4% and rival price +15%. Given income elasticity 2 and cross elasticity .40, infer own elasticity and revenue advice.",
+      "solution": "Income explains +8%, rival price explains +6%, so the remaining +6% comes from own price under the additive approximation. Eₚ ≈ 6%/−5% = −1.2. Holding the other drivers constant, a small price cut raises TR when demand is elastic.",
+      "qhtml": "<p>Phone sales rise 20% after own price −5%, income +4% and rival price +15%. Given income elasticity 2 and cross elasticity .40, infer own elasticity and revenue advice.</p>",
+      "ahtml": "<p>Income explains +8%, rival price explains +6%, so the remaining +6% comes from own price under the additive approximation. Eₚ ≈ 6%/−5% = −1.2. Holding the other drivers constant, a small price cut raises TR when demand is elastic.</p>"
+    },
+    {
+      "id": "E5-3(a)",
+      "paper": "E5",
+      "ref": "3(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 4,
+      "question": "With Qd = 1200 − 8Pc and Qs = 200 + 2Ps, find tax incidence when a 30% tax is levied on the producer price.",
+      "solution": "Before tax P = 100 and Q = 400. After tax Pc = 1.3Ps. Set 1200 − 8(1.3Ps) = 200 + 2Ps, so Ps ≈ ₹80.65, Pc ≈ ₹104.84, Q ≈ 361.29. Producer loses ₹19.35 per unit and buyer pays ₹4.84 more, so producer bears more.     Price  Quantity   D   S   S + tax      Pᶜ   Pˢ   E₀   Tax wedge at the lower post-tax quantity.  ",
+      "qhtml": "<p>With Qd = 1200 − 8Pc and Qs = 200 + 2Ps, find tax incidence when a 30% tax is levied on the producer price.</p>",
+      "ahtml": "<p>Before tax P = 100 and Q = 400. After tax Pc = 1.3Ps. Set 1200 − 8(1.3Ps) = 200 + 2Ps, so Ps ≈ ₹80.65, Pc ≈ ₹104.84, Q ≈ 361.29. Producer loses ₹19.35 per unit and buyer pays ₹4.84 more, so producer bears more. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Tax wedge at the lower post-tax quantity.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M64 37L298 150\"/><text x=\"304\" y=\"152\">D</text><path class=\"econ-line econ-line-1\" d=\"M65 151L296 48\"/><text x=\"302\" y=\"49\">S</text><path class=\"econ-line econ-line-2\" d=\"M65 116L269 25\"/><text x=\"276\" y=\"27\">S + tax</text><path class=\"econ-line econ-line-3\" d=\"M150 80V113\"/><text x=\"0\" y=\"0\"></text><circle cx=\"150\" cy=\"79\" r=\"3\"/><text x=\"156\" y=\"73\">Pᶜ</text><circle cx=\"150\" cy=\"113\" r=\"3\"/><text x=\"156\" y=\"107\">Pˢ</text><circle cx=\"184\" cy=\"98\" r=\"3\"/><text x=\"190\" y=\"92\">E₀</text></svg><figcaption>Tax wedge at the lower post-tax quantity.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E5-3(b)",
+      "paper": "E5",
+      "ref": "3(b)",
+      "topic": "Time value",
+      "marks": 5,
+      "page": 4,
+      "question": "Find a single deposit and annual deposits to accumulate ₹20 lakh in 8 years at 7.5%.",
+      "solution": "Single deposit P = 20,00,000/(1.075)⁸ = ₹11,21,404.47. End-of-year deposit A = 20,00,000/(F/A,7.5%,8) = ₹1,91,454.05. Using the unrounded amount, A(F/A) reproduces ₹20 lakh.",
+      "qhtml": "<p>Find a single deposit and annual deposits to accumulate ₹20 lakh in 8 years at 7.5%.</p>",
+      "ahtml": "<p>Single deposit P = 20,00,000/(1.075)⁸ = ₹11,21,404.47. End-of-year deposit A = 20,00,000/(F/A,7.5%,8) = ₹1,91,454.05. Using the unrounded amount, A(F/A) reproduces ₹20 lakh.</p>"
+    },
+    {
+      "id": "E5-4(a)",
+      "paper": "E5",
+      "ref": "4(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Hospital project costs ₹100 crore, returns ₹10 crore annually in years 1–10 and ₹12 crore in years 11–20, with ₹20 crore salvage. Find NPV at 12%.",
+      "solution": "In crore: NPV = −100 + 10(P/A,12%,10) + 12(P/A,12%,10)(P/F,12%,10) + 20(P/F,12%,20) = -19.59 crore. Reject on the supplied cash flows because NPV is negative.",
+      "qhtml": "<p>Hospital project costs ₹100 crore, returns ₹10 crore annually in years 1–10 and ₹12 crore in years 11–20, with ₹20 crore salvage. Find NPV at 12%.</p>",
+      "ahtml": "<p>In crore: NPV = −100 + 10(P/A,12%,10) + 12(P/A,12%,10)(P/F,12%,10) + 20(P/F,12%,20) = -19.59 crore. Reject on the supplied cash flows because NPV is negative.</p>"
+    },
+    {
+      "id": "E5-4(b)",
+      "paper": "E5",
+      "ref": "4(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 5,
+      "question": "Machine costs ₹10 lakh, returns ₹3.2 lakh in years 1–4 and ₹1 lakh in year 5. Find IRR and compare with 11%.",
+      "solution": "NPV(11%) = ₹52,127.75; NPV(12%) = ₹28,694.48; NPV(15%) = ₹-36,689.25. Bracket and refine the sign change to obtain IRR ≈ 13.277%. It exceeds 11%, so accept.",
+      "qhtml": "<p>Machine costs ₹10 lakh, returns ₹3.2 lakh in years 1–4 and ₹1 lakh in year 5. Find IRR and compare with 11%.</p>",
+      "ahtml": "<p>NPV(11%) = ₹52,127.75; NPV(12%) = ₹28,694.48; NPV(15%) = ₹-36,689.25. Bracket and refine the sign change to obtain IRR ≈ 13.277%. It exceeds 11%, so accept.</p>"
+    },
+    {
+      "id": "E5-5(a)",
+      "paper": "E5",
+      "ref": "5(a)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 6,
+      "question": "Classify returns to scale when inputs rise by 1.5× and output rises 200→450, and when f(tL,tK)=tQ.",
+      "solution": "First case: output grows by 2.25×, more than the 1.5× input scale, so increasing returns. Second case: output scales in the same proportion as inputs, so constant returns.     Output  Input scale   IRS   CRS   DRS   Proportionate input scaling versus output.  ",
+      "qhtml": "<p>Classify returns to scale when inputs rise by 1.5× and output rises 200→450, and when f(tL,tK)=tQ.</p>",
+      "ahtml": "<p>First case: output grows by 2.25×, more than the 1.5× input scale, so increasing returns. Second case: output scales in the same proportion as inputs, so constant returns. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Proportionate input scaling versus output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Output</text><text x=\"235\" y=\"195\">Input scale</text><path class=\"econ-line econ-line-0\" d=\"M43 165Q236 153 308 29\"/><text x=\"313\" y=\"29\">IRS</text><path class=\"econ-line econ-line-1\" d=\"M43 165L299 61\"/><text x=\"308\" y=\"62\">CRS</text><path class=\"econ-line econ-line-2\" d=\"M43 165Q120 100 301 104\"/><text x=\"309\" y=\"104\">DRS</text></svg><figcaption>Proportionate input scaling versus output.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E5-5(b)",
+      "paper": "E5",
+      "ref": "5(b)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 6,
+      "question": "For TC = 100 + 10Q + Q² find where AC = MC. Derive AVC = w/APₗ.",
+      "solution": "AC = 100/Q + 10 + Q, MC = 10 + 2Q. Equality gives Q² = 100, Q = 10 and both costs equal 30. AC is minimized because dAC/dQ = 1−100/Q² changes from negative to positive. With labour the sole variable input and fixed wage w, TVC=wL and AVC=wL/Q=w/APₗ. So AVC falls as AP rises and reaches its minimum when AP is maximum.     Cost  Output   AC / AVC   MC   MC crosses the average curve at its minimum.  ",
+      "qhtml": "<p>For TC = 100 + 10Q + Q² find where AC = MC. Derive AVC = w/APₗ.</p>",
+      "ahtml": "<p>AC = 100/Q + 10 + Q, MC = 10 + 2Q. Equality gives Q² = 100, Q = 10 and both costs equal 30. AC is minimized because dAC/dQ = 1−100/Q² changes from negative to positive. With labour the sole variable input and fixed wage w, TVC=wL and AVC=wL/Q=w/APₗ. So AVC falls as AP rises and reaches its minimum when AP is maximum. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"MC crosses the average curve at its minimum.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M65 54Q164 170 302 87\"/><text x=\"285\" y=\"83\">AC / AVC</text><path class=\"econ-line econ-line-1\" d=\"M64 112Q143 186 278 34\"/><text x=\"286\" y=\"37\">MC</text></svg><figcaption>MC crosses the average curve at its minimum.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E5-6(a)",
+      "paper": "E5",
+      "ref": "6(a)",
+      "topic": "Depreciation",
+      "marks": 5,
+      "page": 6,
+      "question": "Prepare five-year 200% declining-balance depreciation for a $110,000 truck with $8,000 salvage.",
+      "solution": "Rate = 2/5 = 40%. Apply to opening BV, with BV floored at salvage. The normal 40% schedule finishes at $8,553.60, above the floor. If the exercise requires an exact $8,000 terminal book value, adjust the final charge from $5,702.40 to $6,256.     Year  Year depreciation  Accumulated depreciation  Book value      1  44,000  44,000  66,000    2  26,400  70,400  39,600    3  15,840  86,240  23,760    4  9,504  95,744  14,256    5  5,702.4  1,01,446.4  8,553.6    ",
+      "qhtml": "<p>Prepare five-year 200% declining-balance depreciation for a $110,000 truck with $8,000 salvage.</p>",
+      "ahtml": "<p>Rate = 2/5 = 40%. Apply to opening BV, with BV floored at salvage. The normal 40% schedule finishes at $8,553.60, above the floor. If the exercise requires an exact $8,000 terminal book value, adjust the final charge from $5,702.40 to $6,256. </p><table><thead><tr><th>Year</th><th>Year depreciation</th><th>Accumulated depreciation</th><th>Book value</th></tr></thead><tbody><tr><td>1</td><td>44,000</td><td>44,000</td><td>66,000</td></tr><tr><td>2</td><td>26,400</td><td>70,400</td><td>39,600</td></tr><tr><td>3</td><td>15,840</td><td>86,240</td><td>23,760</td></tr><tr><td>4</td><td>9,504</td><td>95,744</td><td>14,256</td></tr><tr><td>5</td><td>5,702.4</td><td>1,01,446.4</td><td>8,553.6</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E5-6(b)",
+      "paper": "E5",
+      "ref": "6(b)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 6,
+      "question": "Bridge: ₹20 crore cost, ₹0.5 crore O&M, ₹3 crore test in year 10, ₹2 crore yearly benefits and ₹1 crore scrap in year 20. Find AW B/C at 10%.",
+      "solution": "Annual cost = 20(A/P) + .5 + 3(P/F,10%,10)(A/P) = 2.985 crore. Annual benefit = 2 + 1(A/F) = 2.0175 crore. B/C ≈ 0.676, below 1; reject on these assumptions.",
+      "qhtml": "<p>Bridge: ₹20 crore cost, ₹0.5 crore O&amp;M, ₹3 crore test in year 10, ₹2 crore yearly benefits and ₹1 crore scrap in year 20. Find AW B/C at 10%.</p>",
+      "ahtml": "<p>Annual cost = 20(A/P) + .5 + 3(P/F,10%,10)(A/P) = 2.985 crore. Annual benefit = 2 + 1(A/F) = 2.0175 crore. B/C ≈ 0.676, below 1; reject on these assumptions.</p>"
+    },
+    {
+      "id": "E5-7(a)",
+      "paper": "E5",
+      "ref": "7(a)",
+      "topic": "Break-even",
+      "marks": 5,
+      "page": 7,
+      "question": "Fixed cost ₹2 lakh, unit variable cost ₹40 and price ₹50. Find BEP, impact of a 20% price rise and MOS at 25,000 units.",
+      "solution": "Unit contribution = 10, P/V = 20%, break-even quantity = 20,000, and break-even revenue = ₹10,00,000. At 25,000 units, contribution is ₹2,50,000, profit is ₹50,000, and margin of safety is 5,000 units = ₹2,50,000 = 20% of actual sales. At the new price ₹60, unit contribution doubles to ₹20, so BEP halves to 10,000 units.     ₹  Units sold   TR   TC   MOS   BEP   Actual   The margin of safety lies between break-even and actual sales.  ",
+      "qhtml": "<p>Fixed cost ₹2 lakh, unit variable cost ₹40 and price ₹50. Find BEP, impact of a 20% price rise and MOS at 25,000 units.</p>",
+      "ahtml": "<p>Unit contribution = 10, P/V = 20%, break-even quantity = 20,000, and break-even revenue = ₹10,00,000. At 25,000 units, contribution is ₹2,50,000, profit is ₹50,000, and margin of safety is 5,000 units = ₹2,50,000 = 20% of actual sales. At the new price ₹60, unit contribution doubles to ₹20, so BEP halves to 10,000 units. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The margin of safety lies between break-even and actual sales.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">₹</text><text x=\"235\" y=\"195\">Units sold</text><path class=\"econ-line econ-line-0\" d=\"M43 165L303 26\"/><text x=\"312\" y=\"26\">TR</text><path class=\"econ-line econ-line-1\" d=\"M43 124L323 72\"/><text x=\"327\" y=\"73\">TC</text><path class=\"econ-line econ-line-2\" d=\"M160 101V164M256 51V164M160 153H256\"/><text x=\"196\" y=\"149\">MOS</text><circle cx=\"160\" cy=\"102\" r=\"3\"/><text x=\"166\" y=\"96\">BEP</text><circle cx=\"256\" cy=\"51\" r=\"3\"/><text x=\"262\" y=\"45\">Actual</text></svg><figcaption>The margin of safety lies between break-even and actual sales.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E5-7(b)",
+      "paper": "E5",
+      "ref": "7(b)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 7,
+      "question": "Explain demand-pull and cost-push inflation with diagrams.",
+      "solution": "Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls.     Price level  Real output   AD₀   AD₁   SRAS   Demand pull: AD shifts right and raises price and output.      Price level  Real output   AD   SRAS₀   SRAS₁   Cost push: SRAS shifts left and raises price while output falls.  ",
+      "qhtml": "<p>Explain demand-pull and cost-push inflation with diagrams.</p>",
+      "ahtml": "<p>Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Demand pull: AD shifts right and raises price and output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M68 40L262 151\"/><text x=\"267\" y=\"151\">AD₀</text><path class=\"econ-line econ-line-1\" d=\"M120 29L308 137\"/><text x=\"313\" y=\"139\">AD₁</text><path class=\"econ-line econ-line-2\" d=\"M73 150L288 46\"/><text x=\"296\" y=\"46\">SRAS</text></svg><figcaption>Demand pull: AD shifts right and raises price and output.</figcaption></figure><p></p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Cost push: SRAS shifts left and raises price while output falls.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M69 36L304 152\"/><text x=\"309\" y=\"153\">AD</text><path class=\"econ-line econ-line-1\" d=\"M74 154L300 56\"/><text x=\"305\" y=\"57\">SRAS₀</text><path class=\"econ-line econ-line-2\" d=\"M66 120L251 32\"/><text x=\"257\" y=\"33\">SRAS₁</text></svg><figcaption>Cost push: SRAS shifts left and raises price while output falls.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E6-1(a)",
+      "paper": "E6",
+      "ref": "1(a)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "Quantity increases 20% after price drops 8%. Find and classify price elasticity.",
+      "solution": "Signed elasticity = 20%/−8% = −2.5. Magnitude 2.5 > 1, so demand is elastic.",
+      "qhtml": "<p>Quantity increases 20% after price drops 8%. Find and classify price elasticity.</p>",
+      "ahtml": "<p>Signed elasticity = 20%/−8% = −2.5. Magnitude 2.5 > 1, so demand is elastic.</p>"
+    },
+    {
+      "id": "E6-1(b)",
+      "paper": "E6",
+      "ref": "1(b)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 1,
+      "question": "For P = 100 − 4Q, find elasticity at MR = 0.",
+      "solution": "MR = 100 − 8Q, so Q = 12.5 and P = 50. Eₚ = (−1/4)(50/12.5) = −1.",
+      "qhtml": "<p>For P = 100 − 4Q, find elasticity at MR = 0.</p>",
+      "ahtml": "<p>MR = 100 − 8Q, so Q = 12.5 and P = 50. Eₚ = (−1/4)(50/12.5) = −1.</p>"
+    },
+    {
+      "id": "E6-1(c)",
+      "paper": "E6",
+      "ref": "1(c)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 1,
+      "question": "Draw the MC and AC relationship.",
+      "solution": "MC below AC pulls AC down, MC above AC pulls AC up, and MC crosses AC at its minimum.     Cost  Output   AC / AVC   MC   MC crosses the average curve at its minimum.  ",
+      "qhtml": "<p>Draw the MC and AC relationship.</p>",
+      "ahtml": "<p>MC below AC pulls AC down, MC above AC pulls AC up, and MC crosses AC at its minimum. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"MC crosses the average curve at its minimum.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M65 54Q164 170 302 87\"/><text x=\"285\" y=\"83\">AC / AVC</text><path class=\"econ-line econ-line-1\" d=\"M64 112Q143 186 278 34\"/><text x=\"286\" y=\"37\">MC</text></svg><figcaption>MC crosses the average curve at its minimum.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E6-1(d)",
+      "paper": "E6",
+      "ref": "1(d)",
+      "topic": "Time value",
+      "marks": 1,
+      "page": 1,
+      "question": "Find the maturity value of ₹10,000 deposited annually for 25 years at 20%.",
+      "solution": "F = ₹10,000(F/A,20%,25) = ₹47,19,810.83. The first payment occurs one year from now.",
+      "qhtml": "<p>Find the maturity value of ₹10,000 deposited annually for 25 years at 20%.</p>",
+      "ahtml": "<p>F = ₹10,000(F/A,20%,25) = ₹47,19,810.83. The first payment occurs one year from now.</p>"
+    },
+    {
+      "id": "E6-1(e)",
+      "paper": "E6",
+      "ref": "1(e)",
+      "topic": "Costs",
+      "marks": 1,
+      "page": 2,
+      "question": "Define implicit cost.",
+      "solution": "Implicit cost is the opportunity cost of self-owned resources for which no direct payment is made, such as rent forgone on the owner’s building.",
+      "qhtml": "<p>Define implicit cost.</p>",
+      "ahtml": "<p>Implicit cost is the opportunity cost of self-owned resources for which no direct payment is made, such as rent forgone on the owner’s building.</p>"
+    },
+    {
+      "id": "E6-1(f)",
+      "paper": "E6",
+      "ref": "1(f)",
+      "topic": "Break-even",
+      "marks": 1,
+      "page": 2,
+      "question": "Define break-even point.",
+      "solution": "Break-even is the sales level at which total revenue equals total cost and profit is zero.",
+      "qhtml": "<p>Define break-even point.</p>",
+      "ahtml": "<p>Break-even is the sales level at which total revenue equals total cost and profit is zero.</p>"
+    },
+    {
+      "id": "E6-1(g)",
+      "paper": "E6",
+      "ref": "1(g)",
+      "topic": "Demand",
+      "marks": 1,
+      "page": 2,
+      "question": "Draw demand when price elasticity is zero.",
+      "solution": "Quantity does not change when price changes. The curve is vertical.     Price  Quantity   D   Perfectly inelastic demand keeps quantity constant at every shown price.  ",
+      "qhtml": "<p>Draw demand when price elasticity is zero.</p>",
+      "ahtml": "<p>Quantity does not change when price changes. The curve is vertical. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Perfectly inelastic demand keeps quantity constant at every shown price.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M164 29V165\"/><text x=\"172\" y=\"35\">D</text></svg><figcaption>Perfectly inelastic demand keeps quantity constant at every shown price.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E6-1(h)",
+      "paper": "E6",
+      "ref": "1(h)",
+      "topic": "Inflation",
+      "marks": 1,
+      "page": 2,
+      "question": "Explain cost-push inflation.",
+      "solution": "Input-cost increases or adverse supply shocks reduce short-run aggregate supply. In the usual model, the price level rises while output falls.",
+      "qhtml": "<p>Explain cost-push inflation.</p>",
+      "ahtml": "<p>Input-cost increases or adverse supply shocks reduce short-run aggregate supply. In the usual model, the price level rises while output falls.</p>"
+    },
+    {
+      "id": "E6-1(i)",
+      "paper": "E6",
+      "ref": "1(i)",
+      "topic": "Depreciation",
+      "marks": 1,
+      "page": 2,
+      "question": "Find period-5 depreciation for first cost ₹1 lakh, salvage ₹20,000 and life 8 years.",
+      "solution": "Assuming straight line, D₅ = (1,00,000−20,000)/8 = ₹10,000. If SYD was intended, D₅ = 80,000 × 4/36 = ₹8,888.89.",
+      "tip": "The question does not specify a depreciation method.",
+      "qhtml": "<p>Find period-5 depreciation for first cost ₹1 lakh, salvage ₹20,000 and life 8 years.</p>",
+      "ahtml": "<p>Assuming straight line, D₅ = (1,00,000−20,000)/8 = ₹10,000. If SYD was intended, D₅ = 80,000 × 4/36 = ₹8,888.89.</p>"
+    },
+    {
+      "id": "E6-1(j)",
+      "paper": "E6",
+      "ref": "1(j)",
+      "topic": "Production",
+      "marks": 1,
+      "page": 2,
+      "question": "Write a Cobb–Douglas production function.",
+      "solution": "Q = ALᵅKᵝ. With t times both inputs, output is tᵅ⁺ᵝQ. The sum α+β determines the returns to scale.",
+      "qhtml": "<p>Write a Cobb–Douglas production function.</p>",
+      "ahtml": "<p>Q = ALᵅKᵝ. With t times both inputs, output is tᵅ⁺ᵝQ. The sum α+β determines the returns to scale.</p>"
+    },
+    {
+      "id": "E6-2(a)",
+      "paper": "E6",
+      "ref": "2(a)",
+      "topic": "Demand",
+      "marks": 5,
+      "page": 2,
+      "question": "For Qd = 10000−2Pc and Qs = 7000+2Ps, find prices and incidence after a ₹100 unit GST.",
+      "solution": "Pre-tax P = ₹750 and Q = 8,500. After tax Pc = Ps + 100. Equating quantity gives Ps = ₹700, Pc = ₹800 and Q = 8,400. Buyers pay ₹50 more and sellers receive ₹50 less.     Price  Quantity   D   S   S + tax      Pᶜ   Pˢ   E₀   Tax wedge at the lower post-tax quantity.  ",
+      "qhtml": "<p>For Qd = 10000−2Pc and Qs = 7000+2Ps, find prices and incidence after a ₹100 unit GST.</p>",
+      "ahtml": "<p>Pre-tax P = ₹750 and Q = 8,500. After tax Pc = Ps + 100. Equating quantity gives Ps = ₹700, Pc = ₹800 and Q = 8,400. Buyers pay ₹50 more and sellers receive ₹50 less. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Tax wedge at the lower post-tax quantity.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M64 37L298 150\"/><text x=\"304\" y=\"152\">D</text><path class=\"econ-line econ-line-1\" d=\"M65 151L296 48\"/><text x=\"302\" y=\"49\">S</text><path class=\"econ-line econ-line-2\" d=\"M65 116L269 25\"/><text x=\"276\" y=\"27\">S + tax</text><path class=\"econ-line econ-line-3\" d=\"M150 80V113\"/><text x=\"0\" y=\"0\"></text><circle cx=\"150\" cy=\"79\" r=\"3\"/><text x=\"156\" y=\"73\">Pᶜ</text><circle cx=\"150\" cy=\"113\" r=\"3\"/><text x=\"156\" y=\"107\">Pˢ</text><circle cx=\"184\" cy=\"98\" r=\"3\"/><text x=\"190\" y=\"92\">E₀</text></svg><figcaption>Tax wedge at the lower post-tax quantity.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E6-2(b)",
+      "paper": "E6",
+      "ref": "2(b)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 2,
+      "question": "For Q = 100L + 500L² − 5L³, when does TP begin increasing at a decreasing rate, and when does Stage II start?",
+      "solution": "MP = 100+1000L−15L² and dMP/dL = 1000−30L, so TP increases at a decreasing rate beyond L=100/3≈33.33 while MP remains positive. AP = 100+500L−5L². AP is maximum at L=50, where AP=MP and Stage II begins.",
+      "qhtml": "<p>For Q = 100L + 500L² − 5L³, when does TP begin increasing at a decreasing rate, and when does Stage II start?</p>",
+      "ahtml": "<p>MP = 100+1000L−15L² and dMP/dL = 1000−30L, so TP increases at a decreasing rate beyond L=100/3≈33.33 while MP remains positive. AP = 100+500L−5L². AP is maximum at L=50, where AP=MP and Stage II begins.</p>"
+    },
+    {
+      "id": "E6-3(a)",
+      "paper": "E6",
+      "ref": "3(a)",
+      "topic": "Costs",
+      "marks": 5,
+      "page": 3,
+      "question": "For TVC = 300Q − 30Q² + Q³, when does MC cross AVC and when does MC rise?",
+      "solution": "AVC = 300−30Q+Q²; MC = 300−60Q+3Q². For Q>0, MC=AVC at Q=15 (AVC minimum). dMC/dQ = −60+6Q, so MC rises beyond Q=10.",
+      "qhtml": "<p>For TVC = 300Q − 30Q² + Q³, when does MC cross AVC and when does MC rise?</p>",
+      "ahtml": "<p>AVC = 300−30Q+Q²; MC = 300−60Q+3Q². For Q>0, MC=AVC at Q=15 (AVC minimum). dMC/dQ = −60+6Q, so MC rises beyond Q=10.</p>"
+    },
+    {
+      "id": "E6-3(b)",
+      "paper": "E6",
+      "ref": "3(b)",
+      "topic": "Time value",
+      "marks": 5,
+      "page": 3,
+      "question": "Annual deposits start at ₹20,000 and rise by ₹1,000 for the following 11 years at 4%. Find equivalent annual deposit.",
+      "solution": "There are 12 deposits. A = 20,000 + 1,000(A/G,4%,12) = ₹25,034.35. Both series have year-12 future worth ₹3,76,161.25.",
+      "qhtml": "<p>Annual deposits start at ₹20,000 and rise by ₹1,000 for the following 11 years at 4%. Find equivalent annual deposit.</p>",
+      "ahtml": "<p>There are 12 deposits. A = 20,000 + 1,000(A/G,4%,12) = ₹25,034.35. Both series have year-12 future worth ₹3,76,161.25.</p>"
+    },
+    {
+      "id": "E6-4(a)",
+      "paper": "E6",
+      "ref": "4(a)",
+      "topic": "Project appraisal",
+      "marks": 5,
+      "page": 3,
+      "question": "Compare 20-year irrigation plans by AW at 8%. A: $450k, $5k annual O&M, $90k in year 10, $80k salvage. B: $300k, $10k, $100k, $90k.",
+      "solution": "Annual cost = [P + M/(1.08)¹⁰ − S/(1.08)²⁰]/(P/A,8%,20) + annual O&M. A costs $53,331.27/year and B $43,306.69/year. Choose B for equal irrigation service.",
+      "qhtml": "<p>Compare 20-year irrigation plans by AW at 8%. A: $450k, $5k annual O&amp;M, $90k in year 10, $80k salvage. B: $300k, $10k, $100k, $90k.</p>",
+      "ahtml": "<p>Annual cost = [P + M/(1.08)¹⁰ − S/(1.08)²⁰]/(P/A,8%,20) + annual O&M. A costs $53,331.27/year and B $43,306.69/year. Choose B for equal irrigation service.</p>"
+    },
+    {
+      "id": "E6-4(b)",
+      "paper": "E6",
+      "ref": "4(b)",
+      "topic": "Depreciation",
+      "marks": 5,
+      "page": 4,
+      "question": "Tabulate sinking-fund depreciation for $400,000 cost, 25% salvage, 6 years at 12%.",
+      "solution": "Fixed deposit D = (P − S)i/[(1+i)ⁿ − 1] = 36,967.72. In year t, depreciation = D(1+i)ᵗ⁻¹, accumulated depreciation = D(F/A,i,t), and BVₜ = P − accumulated depreciation.     Year  Year depreciation  Accumulated depreciation  Book value      1  36,967.72  36,967.72  3,63,032.28    2  41,403.84  78,371.56  3,21,628.44    3  46,372.3  1,24,743.86  2,75,256.14    4  51,936.98  1,76,680.84  2,23,319.16    5  58,169.42  2,34,850.25  1,65,149.75    6  65,149.75  3,00,000  1,00,000    ",
+      "qhtml": "<p>Tabulate sinking-fund depreciation for $400,000 cost, 25% salvage, 6 years at 12%.</p>",
+      "ahtml": "<p>Fixed deposit D = (P − S)i/[(1+i)ⁿ − 1] = 36,967.72. In year t, depreciation = D(1+i)ᵗ⁻¹, accumulated depreciation = D(F/A,i,t), and BVₜ = P − accumulated depreciation. </p><table><thead><tr><th>Year</th><th>Year depreciation</th><th>Accumulated depreciation</th><th>Book value</th></tr></thead><tbody><tr><td>1</td><td>36,967.72</td><td>36,967.72</td><td>3,63,032.28</td></tr><tr><td>2</td><td>41,403.84</td><td>78,371.56</td><td>3,21,628.44</td></tr><tr><td>3</td><td>46,372.3</td><td>1,24,743.86</td><td>2,75,256.14</td></tr><tr><td>4</td><td>51,936.98</td><td>1,76,680.84</td><td>2,23,319.16</td></tr><tr><td>5</td><td>58,169.42</td><td>2,34,850.25</td><td>1,65,149.75</td></tr><tr><td>6</td><td>65,149.75</td><td>3,00,000</td><td>1,00,000</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E6-5(a)",
+      "paper": "E6",
+      "ref": "5(a)",
+      "topic": "Forecasting",
+      "marks": 5,
+      "page": 4,
+      "question": "Forecast 2021 and 2024 from 2015–20 sales of 25,32,47,53,70,85 thousand.",
+      "solution": "Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,017.5, ȳ = 52, Sxy = 210, Sxx = 17.5, and b = 12. At x = 2021, ŷ ≈ 94; At x = 2024, ŷ ≈ 130.    x  y  x − x̄  (x − x̄)(y − ȳ)      2015  25  -2.5  67.5    2016  32  -1.5  30    2017  47  -0.5  2.5    2018  53  0.5  0.5    2019  70  1.5  27    2020  85  2.5  82.5    ",
+      "qhtml": "<p>Forecast 2021 and 2024 from 2015–20 sales of 25,32,47,53,70,85 thousand.</p>",
+      "ahtml": "<p>Fit ŷ = ȳ + b(x − x̄), where b = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)². Here x̄ = 2,017.5, ȳ = 52, Sxy = 210, Sxx = 17.5, and b = 12. At x = 2021, ŷ ≈ 94; At x = 2024, ŷ ≈ 130.</p><table><thead><tr><th>x</th><th>y</th><th>x − x̄</th><th>(x − x̄)(y − ȳ)</th></tr></thead><tbody><tr><td>2015</td><td>25</td><td>-2.5</td><td>67.5</td></tr><tr><td>2016</td><td>32</td><td>-1.5</td><td>30</td></tr><tr><td>2017</td><td>47</td><td>-0.5</td><td>2.5</td></tr><tr><td>2018</td><td>53</td><td>0.5</td><td>0.5</td></tr><tr><td>2019</td><td>70</td><td>1.5</td><td>27</td></tr><tr><td>2020</td><td>85</td><td>2.5</td><td>82.5</td></tr></tbody></table><p></p>"
+    },
+    {
+      "id": "E6-5(b)",
+      "paper": "E6",
+      "ref": "5(b)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 4,
+      "question": "Find both MRTS ratios from L = 10,15,19,22 and K = 20,19,18,17.",
+      "solution": "On A→B, B→C and C→D, K given up per extra L is 1/5, 1/4, 1/3. The inverse L per K is 5, 4, 3.",
+      "qhtml": "<p>Find both MRTS ratios from L = 10,15,19,22 and K = 20,19,18,17.</p>",
+      "ahtml": "<p>On A→B, B→C and C→D, K given up per extra L is 1/5, 1/4, 1/3. The inverse L per K is 5, 4, 3.</p>"
+    },
+    {
+      "id": "E6-6(a)",
+      "paper": "E6",
+      "ref": "6(a)",
+      "topic": "Inflation",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain demand-pull and cost-push inflation with diagrams.",
+      "solution": "Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls.     Price level  Real output   AD₀   AD₁   SRAS   Demand pull: AD shifts right and raises price and output.      Price level  Real output   AD   SRAS₀   SRAS₁   Cost push: SRAS shifts left and raises price while output falls.  ",
+      "qhtml": "<p>Explain demand-pull and cost-push inflation with diagrams.</p>",
+      "ahtml": "<p>Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Demand pull: AD shifts right and raises price and output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M68 40L262 151\"/><text x=\"267\" y=\"151\">AD₀</text><path class=\"econ-line econ-line-1\" d=\"M120 29L308 137\"/><text x=\"313\" y=\"139\">AD₁</text><path class=\"econ-line econ-line-2\" d=\"M73 150L288 46\"/><text x=\"296\" y=\"46\">SRAS</text></svg><figcaption>Demand pull: AD shifts right and raises price and output.</figcaption></figure><p></p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Cost push: SRAS shifts left and raises price while output falls.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M69 36L304 152\"/><text x=\"309\" y=\"153\">AD</text><path class=\"econ-line econ-line-1\" d=\"M74 154L300 56\"/><text x=\"305\" y=\"57\">SRAS₀</text><path class=\"econ-line econ-line-2\" d=\"M66 120L251 32\"/><text x=\"257\" y=\"33\">SRAS₁</text></svg><figcaption>Cost push: SRAS shifts left and raises price while output falls.</figcaption></figure><p></p>"
+    },
+    {
+      "id": "E6-6(b)",
+      "paper": "E6",
+      "ref": "6(b)",
+      "topic": "Production",
+      "marks": 5,
+      "page": 4,
+      "question": "Explain the stages of variable proportions and relationship between AP and MP.",
+      "solution": "With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices.     AP, MP  Variable input   AP   MP   MP = AP   MP = 0   Stage I ends where MP = AP. Stage II ends where MP = 0.  ",
+      "qhtml": "<p>Explain the stages of variable proportions and relationship between AP and MP.</p>",
+      "ahtml": "<p>With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices. </p><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Stage I ends where MP = AP. Stage II ends where MP = 0.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">AP, MP</text><text x=\"235\" y=\"195\">Variable input</text><path class=\"econ-line econ-line-0\" d=\"M43 164Q134 43 295 114\"/><text x=\"299\" y=\"115\">AP</text><path class=\"econ-line econ-line-1\" d=\"M43 163Q124 -16 272 165\"/><text x=\"279\" y=\"160\">MP</text><circle cx=\"175\" cy=\"91\" r=\"3\"/><text x=\"181\" y=\"85\">MP = AP</text><circle cx=\"272\" cy=\"165\" r=\"3\"/><text x=\"278\" y=\"159\">MP = 0</text></svg><figcaption>Stage I ends where MP = AP. Stage II ends where MP = 0.</figcaption></figure><p></p>"
+    }
+  ],
+  "ORDER": [
+    "Demand",
+    "Production",
+    "Costs",
+    "Break-even",
+    "Forecasting",
+    "Time value",
+    "Project appraisal",
+    "Depreciation",
+    "Inflation"
+  ],
+  "TOPICS": {
+    "Demand": [
+      "Demand & consumer theory",
+      "Elasticity · tax incidence · indifference curves"
+    ],
+    "Production": [
+      "Production & producer equilibrium",
+      "AP and MP · isoquants · returns to scale"
+    ],
+    "Costs": [
+      "Costs & market structure",
+      "TC, AC, AVC and MC · competitive equilibrium"
+    ],
+    "Break-even": [
+      "Break-even analysis",
+      "Contribution · safety margin · target profit"
+    ],
+    "Forecasting": [
+      "Forecasting & regression",
+      "OLS · trend projection"
+    ],
+    "Time value": [
+      "Time value of money",
+      "Annuities · gradients · effective rates"
+    ],
+    "Project appraisal": [
+      "Project appraisal",
+      "PW · FW · AW · benefit–cost · IRR · payback"
+    ],
+    "Depreciation": [
+      "Depreciation",
+      "Straight-line · sinking fund · declining balance"
+    ],
+    "Inflation": [
+      "Inflation & policy",
+      "Aggregate demand and supply · monetary and fiscal measures"
+    ]
+  },
+  "NOTES": [
+    {
+      "topic": "Demand",
+      "html": "<h2>Elasticity and consumer choice</h2><p>Use signed elasticity for interpretation and absolute price elasticity for classification. Point elasticity uses the derivative. For two observations, state whether you use the starting values or midpoint denominators. Income elasticity below zero indicates an inferior good. Cross elasticity above zero suggests substitutes, and below zero suggests complements. The budget line rotates on an own-price change but shifts in parallel on a money-income change. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"A higher price moves up D₀. Higher demand shifts D₀ to D₁.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price</text><text x=\"235\" y=\"195\">Quantity</text><path class=\"econ-line econ-line-0\" d=\"M67 32L265 152\"/><text x=\"260\" y=\"147\">D₀</text><path class=\"econ-line econ-line-1\" d=\"M112 32L310 152\"/><text x=\"314\" y=\"153\">D₁</text><circle cx=\"117\" cy=\"62\" r=\"3\"/><text x=\"123\" y=\"56\">B</text><circle cx=\"183\" cy=\"102\" r=\"3\"/><text x=\"189\" y=\"96\">A</text></svg><figcaption>A higher price moves up D₀. Higher demand shifts D₀ to D₁.</figcaption></figure></p><p><small>Course material consulted · Elasticity-of-Demand-NOTES and exam papers</small></p>",
+      "text": "Elasticity and consumer choice Use signed elasticity for interpretation and absolute price elasticity for classification. Point elasticity uses the derivative. For two observations, state whether you use the starting values or midpoint denominators. Income elasticity below zero indicates an inferior good. Cross elasticity above zero suggests substitutes, and below zero suggests complements. The budget line rotates on an own-price change but shifts in parallel on a money-income change.     Price  Quantity   D₀   D₁   B   A   A higher price moves up D₀. Higher demand shifts D₀ to D₁.  "
+    },
+    {
+      "topic": "Production",
+      "html": "<h2>Short-run production and long-run scale</h2><p>With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Stage I ends where MP = AP. Stage II ends where MP = 0.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">AP, MP</text><text x=\"235\" y=\"195\">Variable input</text><path class=\"econ-line econ-line-0\" d=\"M43 164Q134 43 295 114\"/><text x=\"299\" y=\"115\">AP</text><path class=\"econ-line econ-line-1\" d=\"M43 163Q124 -16 272 165\"/><text x=\"279\" y=\"160\">MP</text><circle cx=\"175\" cy=\"91\" r=\"3\"/><text x=\"181\" y=\"85\">MP = AP</text><circle cx=\"272\" cy=\"165\" r=\"3\"/><text x=\"278\" y=\"159\">MP = 0</text></svg><figcaption>Stage I ends where MP = AP. Stage II ends where MP = 0.</figcaption></figure> Scale all inputs together by t > 1. If Q′/Q exceeds, equals or is below t, returns to scale are increasing, constant or decreasing respectively. For example, doubling all inputs can generate 2.5×, 2× or 1.5× output. This is a long-run comparison with all inputs variable. <table><thead><tr><th>Case</th><th>Input change</th><th>Output example</th></tr></thead><tbody><tr><td>Increasing</td><td>2×</td><td>2.5×</td></tr><tr><td>Constant</td><td>2×</td><td>2×</td></tr><tr><td>Decreasing</td><td>2×</td><td>1.5×</td></tr></tbody></table><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Proportionate input scaling versus output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Output</text><text x=\"235\" y=\"195\">Input scale</text><path class=\"econ-line econ-line-0\" d=\"M43 165Q236 153 308 29\"/><text x=\"313\" y=\"29\">IRS</text><path class=\"econ-line econ-line-1\" d=\"M43 165L299 61\"/><text x=\"308\" y=\"62\">CRS</text><path class=\"econ-line econ-line-2\" d=\"M43 165Q120 100 301 104\"/><text x=\"309\" y=\"104\">DRS</text></svg><figcaption>Proportionate input scaling versus output.</figcaption></figure> The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The least-cost interior mix is tangent to the target isoquant.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Capital</text><text x=\"235\" y=\"195\">Labour</text><path class=\"econ-line econ-line-0\" d=\"M53 25Q68 110 222 144\"/><text x=\"226\" y=\"145\">Q₁</text><path class=\"econ-line econ-line-1\" d=\"M86 25Q105 103 294 133\"/><text x=\"301\" y=\"134\">Q₂</text><path class=\"econ-line econ-line-2\" d=\"M56 54L274 161\"/><text x=\"274\" y=\"158\">Isocost</text><circle cx=\"123\" cy=\"86\" r=\"3\"/><text x=\"129\" y=\"80\">E</text></svg><figcaption>The least-cost interior mix is tangent to the target isoquant.</figcaption></figure></p>",
+      "text": "Short-run production and long-run scale With one variable input L and other inputs fixed, AP = TP/L and MP = dTP/dL. Stage I ends at maximum AP where MP = AP. In Stage II AP falls while MP is positive, and TP increases to its maximum. Stage III begins at MP = 0 and then MP is negative. Stage II is the economically relevant range, with the exact optimum depending on input and output prices.     AP, MP  Variable input   AP   MP   MP = AP   MP = 0   Stage I ends where MP = AP. Stage II ends where MP = 0.   Scale all inputs together by t > 1. If Q′/Q exceeds, equals or is below t, returns to scale are increasing, constant or decreasing respectively. For example, doubling all inputs can generate 2.5×, 2× or 1.5× output. This is a long-run comparison with all inputs variable.     Case  Input change  Output example      Increasing  2×  2.5×    Constant  2×  2×    Decreasing  2×  1.5×        Output  Input scale   IRS   CRS   DRS   Proportionate input scaling versus output.   The isocost wL + rK = C has slope −w/r, with intercepts C/w and C/r. For fixed cost, select the highest attainable isoquant. For fixed output, choose the lowest isocost touching its isoquant. At a smooth interior tangency MPₗ/MPₖ = w/r, equivalently MPₗ/w = MPₖ/r. Compare corner bundles where a tangency is unavailable.     Capital  Labour   Q₁   Q₂   Isocost   E   The least-cost interior mix is tangent to the target isoquant.  "
+    },
+    {
+      "topic": "Costs",
+      "html": "<h2>The average and marginal cost test</h2><p>Separate fixed and variable cost before dividing by output. TC = TFC + TVC, AC = AVC + AFC and MC = dTC/dQ. When MC is below an average it pulls that average down, and when it is above the average it pulls it up. If labour is the only variable input and w is fixed, AVC = w/AP and MC = w/MP. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"MC crosses the average curve at its minimum.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Cost</text><text x=\"235\" y=\"195\">Output</text><path class=\"econ-line econ-line-0\" d=\"M65 54Q164 170 302 87\"/><text x=\"285\" y=\"83\">AC / AVC</text><path class=\"econ-line econ-line-1\" d=\"M64 112Q143 186 278 34\"/><text x=\"286\" y=\"37\">MC</text></svg><figcaption>MC crosses the average curve at its minimum.</figcaption></figure></p><p><small>Course material consulted · Cost Concepts- EE.docx</small></p>",
+      "text": "The average and marginal cost test Separate fixed and variable cost before dividing by output. TC = TFC + TVC, AC = AVC + AFC and MC = dTC/dQ. When MC is below an average it pulls that average down, and when it is above the average it pulls it up. If labour is the only variable input and w is fixed, AVC = w/AP and MC = w/MP.     Cost  Output   AC / AVC   MC   MC crosses the average curve at its minimum.  "
+    },
+    {
+      "topic": "Break-even",
+      "html": "<h2>Contribution, break-even, and safety margin</h2><p>Each unit contributes selling price minus variable cost to fixed costs and profit. Break-even units = fixed cost/unit contribution. P/V = unit contribution ÷ price. Break-even revenue = fixed cost ÷ P/V. Profit = sales × P/V − fixed cost. Margin of safety is the gap above break-even. Round up only when the question asks for a feasible number of whole units. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"The margin of safety lies between break-even and actual sales.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">₹</text><text x=\"235\" y=\"195\">Units sold</text><path class=\"econ-line econ-line-0\" d=\"M43 165L303 26\"/><text x=\"312\" y=\"26\">TR</text><path class=\"econ-line econ-line-1\" d=\"M43 124L323 72\"/><text x=\"327\" y=\"73\">TC</text><path class=\"econ-line econ-line-2\" d=\"M160 101V164M256 51V164M160 153H256\"/><text x=\"196\" y=\"149\">MOS</text><circle cx=\"160\" cy=\"102\" r=\"3\"/><text x=\"166\" y=\"96\">BEP</text><circle cx=\"256\" cy=\"51\" r=\"3\"/><text x=\"262\" y=\"45\">Actual</text></svg><figcaption>The margin of safety lies between break-even and actual sales.</figcaption></figure></p><p><small>Course material consulted · BREAK EVEN ANALYSIS.docx</small></p>",
+      "text": "Contribution, break-even, and safety margin Each unit contributes selling price minus variable cost to fixed costs and profit. Break-even units = fixed cost/unit contribution. P/V = unit contribution ÷ price. Break-even revenue = fixed cost ÷ P/V. Profit = sales × P/V − fixed cost. Margin of safety is the gap above break-even. Round up only when the question asks for a feasible number of whole units.     ₹  Units sold   TR   TC   MOS   BEP   Actual   The margin of safety lies between break-even and actual sales.  "
+    },
+    {
+      "topic": "Forecasting",
+      "html": "<h2>Least squares and projection</h2><p>Write the observed years or prices as x and the measured sales or demand as y. Center both variables, compute Sxy and Sxx, and use b = Sxy/Sxx. Set a = ȳ−bx̄. Keep the sales units from the table. Forecasts far outside the sample require caution, especially when the question asks for a year much later than the observed range.</p>",
+      "text": "Least squares and projection Write the observed years or prices as x and the measured sales or demand as y. Center both variables, compute Sxy and Sxx, and use b = Sxy/Sxx. Set a = ȳ−bx̄. Keep the sales units from the table. Forecasts far outside the sample require caution, especially when the question asks for a year much later than the observed range."
+    },
+    {
+      "topic": "Time value",
+      "html": "<h2>Cash-flow timing and equivalence</h2><p>Pick a single comparison date. Discount later amounts or compound earlier amounts to it. An ordinary annuity starts at the end of year 1. An arithmetic gradient component starts at zero in year 1 and reaches (n−1)G at year n. Use the actual effective rate for the cash-flow period, keeping percentages and decimals distinct.</p><p><small>Course material consulted · TVM.docx</small></p>",
+      "text": "Cash-flow timing and equivalence Pick a single comparison date. Discount later amounts or compound earlier amounts to it. An ordinary annuity starts at the end of year 1. An arithmetic gradient component starts at zero in year 1 and reaches (n−1)G at year n. Use the actual effective rate for the cash-flow period, keeping percentages and decimals distinct."
+    },
+    {
+      "topic": "Project appraisal",
+      "html": "<h2>Choosing a project appraisal method</h2><p>PW discounts signed cash flows to year 0. FW compounds to the terminal year. AW converts PW into a level amount. Compare equal service or use a defensible common study period. B/C ≥ 1 screens independent projects. For mutually exclusive upgrades compare incremental B/C or IRR. Simple payback ignores the discount rate and later flows. Check the sign pattern before treating IRR as unique.</p><p><small>Course material consulted · Unit IV Topics 1–3</small></p>",
+      "text": "Choosing a project appraisal method PW discounts signed cash flows to year 0. FW compounds to the terminal year. AW converts PW into a level amount. Compare equal service or use a defensible common study period. B/C ≥ 1 screens independent projects. For mutually exclusive upgrades compare incremental B/C or IRR. Simple payback ignores the discount rate and later flows. Check the sign pattern before treating IRR as unique."
+    },
+    {
+      "topic": "Depreciation",
+      "html": "<h2>Depreciation schedules</h2><p>Keep opening book value, annual charge, accumulated depreciation and closing book value separate. Straight line allocates the depreciable amount equally. Sinking fund uses a fixed deposit, while annual depreciation includes interest earned on the previous fund balance. Declining balance applies a percentage to opening book value without crossing the salvage floor.</p><p><small>Course material consulted · Topic 4 (Unit-4).docx</small></p>",
+      "text": "Depreciation schedules Keep opening book value, annual charge, accumulated depreciation and closing book value separate. Straight line allocates the depreciable amount equally. Sinking fund uses a fixed deposit, while annual depreciation includes interest earned on the previous fund balance. Declining balance applies a percentage to opening book value without crossing the salvage floor."
+    },
+    {
+      "topic": "Inflation",
+      "html": "<h2>Inflation and stabilization tools</h2><p>Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls. <figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Demand pull: AD shifts right and raises price and output.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M68 40L262 151\"/><text x=\"267\" y=\"151\">AD₀</text><path class=\"econ-line econ-line-1\" d=\"M120 29L308 137\"/><text x=\"313\" y=\"139\">AD₁</text><path class=\"econ-line econ-line-2\" d=\"M73 150L288 46\"/><text x=\"296\" y=\"46\">SRAS</text></svg><figcaption>Demand pull: AD shifts right and raises price and output.</figcaption></figure><figure class=\"econ-figure\"><svg viewBox=\"0 0 390 202\" role=\"img\" aria-label=\"Cost push: SRAS shifts left and raises price while output falls.\"><path class=\"econ-axis\" d=\"M42 17V165H363\"/><text x=\"9\" y=\"15\">Price level</text><text x=\"235\" y=\"195\">Real output</text><path class=\"econ-line econ-line-0\" d=\"M69 36L304 152\"/><text x=\"309\" y=\"153\">AD</text><path class=\"econ-line econ-line-1\" d=\"M74 154L300 56\"/><text x=\"305\" y=\"57\">SRAS₀</text><path class=\"econ-line econ-line-2\" d=\"M66 120L251 32\"/><text x=\"257\" y=\"33\">SRAS₁</text></svg><figcaption>Cost push: SRAS shifts left and raises price while output falls.</figcaption></figure> The central bank influences credit and liquidity with policy rates, reserve requirements, and market operations. Fiscal measures change taxes and public expenditure. A contractionary demand policy can curb price pressure but may also slow output.</p><p><small>Course material consulted · Central Bank.docx</small></p>",
+      "text": "Inflation and stabilization tools Demand-pull: AD shifts right when consumption, investment, public spending or exports surge. In a standard short-run model, price and output rise. Cost-push: a wage, energy, or import-cost shock shifts SRAS left. Price rises while real output falls.     Price level  Real output   AD₀   AD₁   SRAS   Demand pull: AD shifts right and raises price and output.      Price level  Real output   AD   SRAS₀   SRAS₁   Cost push: SRAS shifts left and raises price while output falls.   The central bank influences credit and liquidity with policy rates, reserve requirements, and market operations. Fiscal measures change taxes and public expenditure. A contractionary demand policy can curb price pressure but may also slow output."
+    }
+  ],
+  "FORMULA_ENTRIES": [
+    {
+      "topic": "Demand",
+      "title": "Point price elasticity",
+      "equation": "Eₚ = (dQ/dP)(P/Q)",
+      "description": "Signed. Classify demand by |Eₚ|.",
+      "refs": [
+        "E3-2(a)",
+        "E5-2(a)"
+      ]
+    },
+    {
+      "topic": "Demand",
+      "title": "Arc elasticity",
+      "equation": "Eₚ = (ΔQ/Q̄)/(ΔP/P̄)",
+      "description": "Use midpoint quantities and prices consistently.",
+      "refs": [
+        "E5-2(a)"
+      ]
+    },
+    {
+      "topic": "Demand",
+      "title": "Income and cross-price elasticity",
+      "equation": "Eᵧ = (dQ/dY)(Y/Q); Eₓᵧ = %ΔQₓ/%ΔPᵧ",
+      "description": "Negative income elasticity indicates an inferior good. Positive cross elasticity suggests substitutes.",
+      "refs": [
+        "E2-2(a)",
+        "E4-1(b)",
+        "E3-2(a)"
+      ]
+    },
+    {
+      "topic": "Demand",
+      "title": "Price, MR and elasticity",
+      "equation": "MR = P(1 + 1/Eₚ)",
+      "description": "With a downward-sloping demand curve, MR = 0 at unit elasticity.",
+      "refs": [
+        "E2-1(f)",
+        "E6-1(b)"
+      ]
+    },
+    {
+      "topic": "Demand",
+      "title": "Budget line and marginal rate of substitution",
+      "equation": "PₓX + PᵧY = M; MRSₓᵧ = −ΔY/ΔX",
+      "description": "The budget-line slope is −Pₓ/Pᵧ.",
+      "refs": [
+        "E5-1(c)",
+        "E3-1(f)"
+      ]
+    },
+    {
+      "topic": "Demand",
+      "title": "Per-unit and ad valorem tax",
+      "equation": "P꜀ = Pₛ + t; or P꜀ = (1+τ)Pₛ",
+      "description": "Equate Qd(P꜀) to Qs(Pₛ). The ad valorem expression assumes tax is based on the producer price.",
+      "refs": [
+        "E6-2(a)",
+        "E5-3(a)"
+      ]
+    },
+    {
+      "topic": "Production",
+      "title": "Average and marginal product",
+      "equation": "AP = Q/L; MP = dQ/dL",
+      "description": "For an interior AP maximum, MP = AP. For the TP maximum, MP = 0 with a sign change.",
+      "refs": [
+        "E4-3(a)",
+        "E6-2(b)"
+      ]
+    },
+    {
+      "topic": "Production",
+      "title": "Isoquant–isocost tangency",
+      "equation": "MPₗ/MPₖ = w/r",
+      "description": "Equivalent to equal marginal output per currency unit.",
+      "refs": [
+        "E1-3(a)",
+        "E4-3(b)"
+      ]
+    },
+    {
+      "topic": "Production",
+      "title": "Cobb–Douglas scale",
+      "equation": "Q(tL,tK) = tᵅ⁺ᵝQ(L,K)",
+      "description": "Compare α+β to 1.",
+      "refs": [
+        "E2-1(d)",
+        "E3-1(j)"
+      ]
+    },
+    {
+      "topic": "Costs",
+      "title": "Cost identities",
+      "equation": "AC = TC/Q; AVC = TVC/Q; MC = dTC/dQ",
+      "description": "AC = AVC + TFC/Q.",
+      "refs": [
+        "E1-3(b)",
+        "E4-4(a)"
+      ]
+    },
+    {
+      "topic": "Costs",
+      "title": "Average-cost turning point",
+      "equation": "dAC/dQ = (MC − AC)/Q",
+      "description": "At a smooth interior minimum MC crosses AC from below. The same relation holds for AVC.",
+      "refs": [
+        "E4-1(f)",
+        "E5-5(b)"
+      ]
+    },
+    {
+      "topic": "Costs",
+      "title": "Cost–product links",
+      "equation": "AVC = w/APₗ; MC = w/MPₗ",
+      "description": "Assumes labour is the only variable input and its unit wage is fixed.",
+      "refs": [
+        "E5-5(b)"
+      ]
+    },
+    {
+      "topic": "Break-even",
+      "title": "Contribution and P/V ratio",
+      "equation": "c = p − v; P/V = c/p",
+      "description": "Use P/V as a decimal in calculations.",
+      "refs": [
+        "E2-1(b)",
+        "E5-7(a)"
+      ]
+    },
+    {
+      "topic": "Break-even",
+      "title": "Break-even and target units",
+      "equation": "Q_BE = FC/c; Q_target = (FC + target profit)/c",
+      "description": "Break-even sales value = FC/(P/V).",
+      "refs": [
+        "E2-6(b)",
+        "E4-4(b)"
+      ]
+    },
+    {
+      "topic": "Break-even",
+      "title": "Margin of safety",
+      "equation": "MOS = Actual sales − BE sales",
+      "description": "Value form also equals profit/(P/V). Divide by actual sales for the fraction.",
+      "refs": [
+        "E3-2(b)",
+        "E5-7(a)"
+      ]
+    },
+    {
+      "topic": "Forecasting",
+      "title": "OLS slope and intercept",
+      "equation": "b = Σ[(x−x̄)(y−ȳ)]/Σ(x−x̄)²; a = ȳ−bx̄",
+      "description": "Predict with ŷ = a + bx.",
+      "refs": [
+        "E1-2(b)",
+        "E3-3(b)",
+        "E6-5(a)"
+      ]
+    },
+    {
+      "topic": "Time value",
+      "title": "Effective annual interest",
+      "equation": "iₑ = (1 + j/m)ᵐ − 1",
+      "description": "j is the nominal annual rate and m is compounding frequency.",
+      "refs": [
+        "E1-1(e)",
+        "E2-1(a)",
+        "E5-1(g)"
+      ]
+    },
+    {
+      "topic": "Time value",
+      "title": "Single-sum equivalence",
+      "equation": "F = P(1+i)ⁿ; P = F/(1+i)ⁿ",
+      "description": "Choose the same date for every cash flow.",
+      "refs": [
+        "E3-1(g)",
+        "E5-1(f)",
+        "E5-3(b)"
+      ]
+    },
+    {
+      "topic": "Time value",
+      "title": "Ordinary annuity",
+      "equation": "F/A = [(1+i)ⁿ−1]/i; P/A = [1−(1+i)⁻ⁿ]/i",
+      "description": "Both factors equal n at zero interest. Payments start at year 1.",
+      "refs": [
+        "E1-1(f)",
+        "E3-3(a)",
+        "E4-1(c)"
+      ]
+    },
+    {
+      "topic": "Time value",
+      "title": "Arithmetic gradient",
+      "equation": "A/G = 1/i − n/[(1+i)ⁿ−1]",
+      "description": "A series with first payment A₁ and increment G has annual equivalent A₁+G(A/G).",
+      "refs": [
+        "E3-6(b)",
+        "E6-3(b)",
+        "E3-4(a)"
+      ]
+    },
+    {
+      "topic": "Project appraisal",
+      "title": "Present, future and annual worth",
+      "equation": "PW = Σ CFₜ/(1+i)ᵗ; FW = PW(1+i)ⁿ; AW = PW/(P/A)",
+      "description": "Use a consistent study period and sign convention.",
+      "refs": [
+        "E1-4(a)",
+        "E1-4(b)",
+        "E5-4(a)",
+        "E6-4(a)"
+      ]
+    },
+    {
+      "topic": "Project appraisal",
+      "title": "Benefit–cost ratio",
+      "equation": "B/C = PW(benefits)/PW(costs)",
+      "description": "B/C ≥ 1 for independent proposals. For mutually exclusive upgrades use ΔB/ΔC.",
+      "refs": [
+        "E2-5(a)",
+        "E3-4(a)",
+        "E5-6(b)"
+      ]
+    },
+    {
+      "topic": "Project appraisal",
+      "title": "IRR and payback",
+      "equation": "NPV(IRR) = 0; Payback = full years + unrecovered amount/next inflow",
+      "description": "The fraction assumes the next year’s cash accrues uniformly. Use incremental IRR for upgrades.",
+      "refs": [
+        "E2-6(a)",
+        "E2-7(b)",
+        "E3-4(b)"
+      ]
+    },
+    {
+      "topic": "Depreciation",
+      "title": "Straight line and SYD",
+      "equation": "D_SL = (P−S)/n; D_SYD,t = (P−S)(n−t+1)/[n(n+1)/2]",
+      "description": "Closing book value is opening value less annual depreciation.",
+      "refs": [
+        "E2-4(a)",
+        "E4-1(h)"
+      ]
+    },
+    {
+      "topic": "Depreciation",
+      "title": "Sinking fund",
+      "equation": "D = (P−S)/(F/A,i,n); BVₜ = P − D(F/A,i,t)",
+      "description": "D is the fixed deposit. Annual net depreciation is D(1+i)ᵗ⁻¹.",
+      "refs": [
+        "E3-1(i)",
+        "E5-1(h)",
+        "E6-4(b)"
+      ]
+    },
+    {
+      "topic": "Depreciation",
+      "title": "Declining balance",
+      "equation": "Dₜ = min(r × BVₜ₋₁, BVₜ₋₁ − S)",
+      "description": "Double-declining uses r = 2/n. State any terminal book-value adjustment.",
+      "refs": [
+        "E1-5(b)",
+        "E5-6(a)"
+      ]
+    }
+  ],
+  "REPEATS": [
+    {
+      "title": "Elasticity calculations and revenue",
+      "why": "State the percentage convention, interpret the sign and classify the magnitude.",
+      "refs": [
+        "E1-1(b)",
+        "E2-3(b)",
+        "E3-2(a)",
+        "E4-1(b)",
+        "E5-2(b)",
+        "E6-1(a)"
+      ]
+    },
+    {
+      "title": "Project comparison by worth or B/C",
+      "why": "Use a common comparison basis and distinguish independent screening from incremental analysis.",
+      "refs": [
+        "E1-4(a)",
+        "E2-5(a)",
+        "E3-4(a)",
+        "E4-5(a)",
+        "E5-6(b)",
+        "E6-4(a)"
+      ]
+    },
+    {
+      "title": "Depreciation and book-value schedules",
+      "why": "Identify the method and separate fixed sinking-fund deposits from annual net depreciation.",
+      "refs": [
+        "E1-5(b)",
+        "E2-4(a)",
+        "E3-1(i)",
+        "E4-6(a)",
+        "E5-6(a)",
+        "E6-4(b)"
+      ]
+    },
+    {
+      "title": "Cost functions and curve intersections",
+      "why": "Differentiate TC for MC, divide TC for AC and set the derivative to zero for turning points.",
+      "refs": [
+        "E1-3(b)",
+        "E2-4(b)",
+        "E4-4(a)",
+        "E5-5(b)",
+        "E6-3(a)"
+      ]
+    },
+    {
+      "title": "Inflation causes and policy",
+      "why": "Pair an AD or SRAS diagram with the price and output effects.",
+      "refs": [
+        "E1-6(b)",
+        "E2-7(a)",
+        "E3-6(a)",
+        "E4-6(b)",
+        "E5-7(b)",
+        "E6-6(a)"
+      ]
+    },
+    {
+      "title": "Annuities, future value and arithmetic gradients",
+      "why": "Draw the timing before choosing a factor. A gradient starts one period later than its base annuity.",
+      "refs": [
+        "E1-1(f)",
+        "E2-1(j)",
+        "E3-6(b)",
+        "E4-1(c)",
+        "E5-3(b)",
+        "E6-3(b)"
+      ]
+    },
+    {
+      "title": "Break-even and margin of safety",
+      "why": "Work from unit contribution, then report unit and sales-value measures.",
+      "refs": [
+        "E2-6(b)",
+        "E3-2(b)",
+        "E4-4(b)",
+        "E5-7(a)",
+        "E6-1(f)"
+      ]
+    },
+    {
+      "title": "Least-squares forecasting",
+      "why": "Center x, compute the slope, then substitute the requested year or price.",
+      "refs": [
+        "E1-2(b)",
+        "E2-2(b)",
+        "E3-3(b)",
+        "E6-5(a)"
+      ]
+    },
+    {
+      "title": "Production and optimal input mix",
+      "why": "Distinguish fixed-input variable proportions from proportional long-run scaling.",
+      "refs": [
+        "E1-3(a)",
+        "E2-3(a)",
+        "E3-5(b)",
+        "E4-3(b)",
+        "E5-5(a)",
+        "E6-6(b)"
+      ]
+    }
+  ],
+  "PAPERS": {
+    "E1": {
+      "label": "2024 Spring",
+      "pages": 4
+    },
+    "E2": {
+      "label": "2025 Spring",
+      "pages": 6
+    },
+    "E3": {
+      "label": "2026 Spring",
+      "pages": 6
+    },
+    "E4": {
+      "label": "2024 Autumn · 5th sem",
+      "pages": 4
+    },
+    "E5": {
+      "label": "2025 Autumn",
+      "pages": 7
+    },
+    "E6": {
+      "label": "2024 Autumn · 3rd sem",
+      "pages": 4
+    }
+  },
+  "SCANS": {
+    "E1": [
+      "assets/scans/E1-01.jpg",
+      "assets/scans/E1-02.jpg",
+      "assets/scans/E1-03.jpg",
+      "assets/scans/E1-04.jpg"
+    ],
+    "E2": [
+      "assets/scans/E2-01.jpg",
+      "assets/scans/E2-02.jpg",
+      "assets/scans/E2-03.jpg",
+      "assets/scans/E2-04.jpg",
+      "assets/scans/E2-05.jpg",
+      "assets/scans/E2-06.jpg"
+    ],
+    "E3": [
+      "assets/scans/E3-01.jpg",
+      "assets/scans/E3-02.jpg",
+      "assets/scans/E3-03.jpg",
+      "assets/scans/E3-04.jpg",
+      "assets/scans/E3-05.jpg",
+      "assets/scans/E3-06.jpg"
+    ],
+    "E4": [
+      "assets/scans/E4-01.jpg",
+      "assets/scans/E4-02.jpg",
+      "assets/scans/E4-03.jpg",
+      "assets/scans/E4-04.jpg"
+    ],
+    "E5": [
+      "assets/scans/E5-01.jpg",
+      "assets/scans/E5-02.jpg",
+      "assets/scans/E5-03.jpg",
+      "assets/scans/E5-04.jpg",
+      "assets/scans/E5-05.jpg",
+      "assets/scans/E5-06.jpg",
+      "assets/scans/E5-07.jpg"
+    ],
+    "E6": [
+      "assets/scans/E6-01.jpg",
+      "assets/scans/E6-02.jpg",
+      "assets/scans/E6-03.jpg",
+      "assets/scans/E6-04.jpg"
+    ]
+  }
+}
