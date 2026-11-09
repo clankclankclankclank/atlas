@@ -268,3 +268,55 @@ html[data-theme=light][data-subject=home] .hub-card-meta b{color:#53645a}
 @media(prefers-reduced-motion:reduce){.atlas-top{transition:none}}
 
 html[data-layout=minimal][data-subject=home] .study-hub .hub-hero{background:none;box-shadow:none}
+
+/* Shared study tools follow the active subject's palette. */
+.rail-tools{display:grid;gap:6px;min-width:0}
+.rail-collapse,.rail-timer-open,.rail-timer-toggle{display:flex;align-items:center;gap:8px;color:var(--ink);border-radius:8px;min-height:35px;padding:5px}
+.rail-collapse{color:var(--muted);justify-content:center;font-size:11px}
+.rail-collapse:hover,.rail-timer-open:hover,.rail-timer-toggle:hover{background:var(--soft);color:var(--accent)}
+.rail-timer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.rail-timer-open{text-align:left}
+.timer-ring,.timer-dial{display:grid;place-items:center;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--timer-progress) * 1turn),var(--line) 0)}
+.timer-ring{width:29px;height:29px;flex-shrink:0}
+.timer-ring svg{width:25px;height:25px;padding:4px;border-radius:50%;background:var(--panel);color:var(--accent)}
+.rail-timer[data-running=true]{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.rail-timer[data-done=true] .rail-timer-label small{color:var(--accent)}
+.rail-timer-label{display:grid;line-height:1.15}
+.rail-timer-label small,.timer-dial small{color:var(--muted);font:700 9px ui-monospace,monospace;letter-spacing:.09em}
+.rail-timer-label b{font:750 19px ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.rail-timer-toggle{width:30px;justify-content:center}
+.timer-dialog{position:fixed;inset:0;margin:auto;width:min(360px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);box-shadow:0 20px 60px #0008;overflow:auto}
+.timer-dialog::backdrop{background:#071012a0;backdrop-filter:blur(4px)}
+.timer-dialog-top,.timer-actions{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.timer-dialog-top h2{font-size:20px;font-weight:760;letter-spacing:-.04em}
+.timer-dial{width:148px;height:148px;margin:14px auto}
+.timer-dial>div{width:138px;height:138px;border-radius:50%;background:var(--panel);display:grid;align-content:center;justify-items:center;gap:4px}
+.timer-dial strong{color:var(--accent);font:800 36px/1 ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.timer-presets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:14px 0 10px}
+.timer-presets button{min-height:33px;padding:4px 2px;border:1px solid var(--line);border-radius:6px;font-size:11px}
+.timer-presets button[aria-pressed=true]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.timer-actions>button:first-child{flex:1}
+.timer-hint{margin-top:9px;color:var(--muted);font-size:12px;text-align:center}
+.timer-announcement{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+html[data-sidebar=icons] .rail :is(.brand>span:not(.brand-icon),.nav-label,.nav-item>span,.rail-progress,.rail-timer-label,.rail-timer-toggle,.rail-collapse>span){display:none}
+html[data-sidebar=icons] .rail .nav-item{display:flex;justify-content:center;padding:8px;min-width:34px}
+html[data-sidebar=icons] .rail .nav-item svg{display:block}
+html[data-sidebar=icons] .rail-timer{grid-template-columns:auto;justify-content:center;border:0;background:none;padding:0}
+html[data-sidebar=icons] .rail-tools{justify-content:center}
+@media(min-width:721px){
+ html[data-sidebar=icons]:not([data-layout=minimal]) .atlas-shell{grid-template-columns:64px minmax(0,1fr)}
+ html[data-sidebar=icons]:not([data-layout=minimal]) .atlas-shell .rail{align-items:stretch;padding:16px 7px;gap:12px;scrollbar-width:thin}
+ html[data-sidebar=icons]:not([data-layout=minimal]) .rail .brand{justify-content:center}
+ html[data-sidebar=icons]:not([data-layout=minimal]) .rail-tools{margin-top:auto}
+ html[data-layout=minimal] .rail-tools{display:flex;align-items:center}
+ html[data-layout=minimal] .rail-collapse>span{display:none}
+}
+@media(max-width:720px){
+ .atlas-shell .rail .rail-tools{grid-column:1/-1;display:flex;justify-content:space-between;gap:6px;margin-top:6px}
+ .rail-timer{padding:2px 5px}
+ .rail-timer-open{min-height:30px}
+ .rail-timer-label{display:flex;gap:5px;align-items:center}
+ .rail-timer-label b{font-size:14px}
+ html[data-sidebar=icons] .rail nav.nav-open{grid-template-columns:repeat(auto-fit,minmax(34px,1fr))}
+ html[data-sidebar=icons] .atlas-shell .rail .rail-tools{justify-content:flex-end;margin-top:2px}
+}

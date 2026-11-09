@@ -7,6 +7,8 @@ const cache=Symbol.for(key);
 const normalize=value=>({
  theme:value?.theme==='light'?'light':'dark',
  ui:value?.ui==='minimal'?'minimal':'original',
+ sidebar:value?.sidebar==='icons'?'icons':'expanded',
+ timer:value?.timer!==false,
  rewards:value?.rewards!==false
 });
 function stored(name){

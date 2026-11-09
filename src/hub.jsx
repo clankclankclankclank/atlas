@@ -174,7 +174,8 @@ function Hub(){
  useLayoutEffect(()=>{
   document.documentElement.dataset.theme=preferences.theme;
   document.documentElement.dataset.layout=preferences.ui;
- },[preferences.theme,preferences.ui]);
+  document.documentElement.dataset.sidebar=preferences.sidebar;
+ },[preferences.theme,preferences.ui,preferences.sidebar]);
  const [route,setRoute]=useState(readRoute);
  const [shown,setShown]=useState(()=>readRoute().subject==='home'?'home':null);
  const [progress,setProgress]=useState(getStudyProgress);

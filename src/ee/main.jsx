@@ -4,6 +4,8 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
+import {StudyTimer} from '../study-timer.jsx';
+import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
 import originalData from './study-data.json';
@@ -52,15 +54,16 @@ function TopicSelect({value,onChange,label='Topic'}) {
 }
 function Empty({children}) { return <p className="empty surface">{children}</p>; }
 
-function Navigation({view,go,count}) {
+function Navigation({view,go,count,display}) {
   const [open,setOpen]=useState(false);
   const navigate = id => {setOpen(false);go(id);};
   return <aside className="rail">
     <button className="brand" onClick={()=>navigate('overview')} aria-label="Economics Atlas home"><span className="brand-icon"><Activity size={21}/></span><span><strong>Economics Atlas</strong><small>ENGINEERING ECONOMICS</small></span></button>
     <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
-      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||i===4||i===7)&&<p className="nav-label">{i===0?'Study':i===4?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" onClick={()=>navigate(id)}><Icon size={17}/>{name}</button></React.Fragment>)}
+      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||i===4||i===7)&&<p className="nav-label">{i===0?'Study':i===4?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
+    <div className="rail-tools">{display.timer&&<StudyTimer/>}<button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
@@ -204,7 +207,7 @@ function App() {
     if(firstMastery&&display.rewards)showReward();
   }
   return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
-    <Navigation view={view} go={go} count={progress.done.length}/>
+    <Navigation display={display} view={view} go={go} count={progress.done.length}/>
     <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
       {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress}} onFocusQuestion={id=>{setOpened([id]);setJump(id);}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
