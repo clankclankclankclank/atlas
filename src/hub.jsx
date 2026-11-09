@@ -173,7 +173,6 @@ function Hub(){
  const host=useRef(null);
  const stage=useRef(null);
  const mounted=useRef({id:shown});
- const running=useRef(null);
  useSubjectPreviews();
  useEffect(()=>observeRoute(()=>setRoute(readRoute())),[]);
  useEffect(()=>{
@@ -196,6 +195,8 @@ function Hub(){
   destination.then(assets=>{
    if(cancelled||readRoute().subject!==id)return;
    const html=document.documentElement;
+   const animate=mounted.current.id!==null&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+   if(animate)html.dataset.atlasTransition='true';
    const commit=()=>{
     if(cancelled||readRoute().subject!==id)return;
     const previous=mounted.current;
@@ -208,20 +209,11 @@ function Hub(){
     const unmount=assets?.app.mount(host.current);
     mounted.current={id,unmount,style:assets?.style};
    };
-   const animate=mounted.current.id!==null&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
-   if(animate&&typeof document.startViewTransition==='function'){
-    running.current?.skipTransition();
-    html.dataset.atlasTransition='true';
-    const transition=document.startViewTransition(commit);
-    running.current=transition;
-    transition.finished.catch(()=>{}).finally(()=>{
-     if(running.current!==transition)return;
-     running.current=null;
-     delete html.dataset.atlasTransition;
-    });
-   }else{
-    commit();
-    if(animate)stage.current?.animate([{opacity:.78,transform:'translateY(3px)'},{opacity:1,transform:'translateY(0)'}],{duration:170,easing:'ease-out'});
+   commit();
+   if(animate){
+    const content=stage.current?.querySelector(id==='home'?'.study-hub':'.atlas-page');
+    content?.animate([{opacity:.84,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:180,easing:'cubic-bezier(.2,.72,.25,1)'});
+    delete html.dataset.atlasTransition;
    }
   }).catch(()=>{
    if(!cancelled)setProblem({id,retry});

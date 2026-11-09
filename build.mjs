@@ -1,5 +1,6 @@
 import {build,transform} from 'esbuild';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 import {access,cp,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
@@ -33,4 +34,6 @@ const cli=path.join(root,'node_modules/@tailwindcss/cli/dist/index.mjs');
 for(const id of Object.keys(subjectNames))execFileSync(process.execPath,[cli,'-i','src/'+id+'/styles.css','-o','dist/app/'+id+'.css','--minify'],{cwd:root,stdio:'inherit'});
 const css=await transform(await readFile(path.join(root,'src/hub.css'),'utf8'),{loader:'css',minify:true,target:'es2022'});
 await writeFile(path.join(target,'hub.css'),css.code);
-await cp(path.join(root,'index.html'),path.join(dist,'index.html'));
+const page=await readFile(path.join(root,'index.html'),'utf8');
+const revision=createHash('sha256').update(await readFile(path.join(target,'hub.js'))).update(css.code).digest('hex').slice(0,12);
+await writeFile(path.join(dist,'index.html'),page.replace(/app\/hub\.(?:js|css)/g,name=>name+'?v='+revision));

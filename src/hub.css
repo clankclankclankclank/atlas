@@ -148,23 +148,14 @@ html[data-layout=minimal] .ee-step{border-inline:0;border-radius:0;background:no
 .ee-table{scrollbar-width:thin;scrollbar-color:var(--line) var(--panel)}
 .question-meta .ee-trace-chip{color:var(--accent);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:10px}
 
-.atlas-stage{min-height:calc(100dvh - var(--atlas-nav-height));background:var(--bg,#101718);view-transition-name:atlas-stage}
+.atlas-stage{min-height:calc(100dvh - var(--atlas-nav-height));background:var(--bg,#101718)}
 html:not([data-subject]),html[data-subject=home]{--bg:#101718}
 .atlas-subject-host[hidden]{display:none!important}
 .atlas-top[data-switching=true]::after{position:absolute;content:"";left:0;right:0;bottom:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,#f4bf80 55%,transparent);opacity:0;animation:atlas-load-hint 1.25s .13s ease-in-out infinite}
 .atlas-subnav a[data-pending=true]{border-color:color-mix(in srgb,var(--subject-accent) 45%,transparent)}
 @keyframes atlas-load-hint{0%,100%{opacity:.3;transform:scaleX(.2)}50%{opacity:.95;transform:scaleX(.65)}}
 html[data-atlas-transition] .atlas-page,html[data-atlas-transition] :is(.hub-hero-copy,.hub-map,.hub-card){animation:none!important}
-html[data-atlas-transition]::view-transition-group(root){animation:none}
-html[data-atlas-transition]::view-transition-old(root){animation:none;opacity:0}
-html[data-atlas-transition]::view-transition-new(root){animation:none}
-html[data-atlas-transition]::view-transition-group(atlas-stage){animation-duration:210ms;animation-timing-function:cubic-bezier(.2,.72,.25,1)}
-html[data-atlas-transition]::view-transition-old(atlas-stage){animation:atlas-subject-out 180ms cubic-bezier(.2,.7,.2,1) both;mix-blend-mode:normal}
-html[data-atlas-transition]::view-transition-new(atlas-stage){animation:atlas-subject-in 210ms cubic-bezier(.2,.7,.2,1) both;mix-blend-mode:normal}
-@keyframes atlas-subject-out{to{opacity:0;transform:translateY(-4px)}}
-@keyframes atlas-subject-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .atlas-route-error{position:fixed;right:15px;bottom:15px;z-index:40;display:flex;gap:10px;align-items:center;padding:9px 11px;background:#192727;color:#fff2e2;border:1px solid #7a7766;border-radius:8px;font:650 13px system-ui,sans-serif}
 .atlas-route-error button{background:#f4bf80;color:#271b16;border:0;border-radius:5px;padding:5px 8px;font:inherit;cursor:pointer}
 @media(prefers-reduced-motion:reduce){.atlas-top[data-switching=true]::after{animation:none}}
 
-html[data-atlas-transition]::view-transition{pointer-events:none}
