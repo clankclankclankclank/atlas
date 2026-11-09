@@ -4,11 +4,16 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
+import {FormulaSymbols} from '../formula-symbols.jsx';
+import formulaDetails from './formula-details.json';
+import {DiagramRich} from '../diagram-inspector.jsx';
+import {useReadingTrail} from '../reading-trail.jsx';
 import {StudyTimer} from '../study-timer.jsx';
 import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
+import {NetworkTopology,NetworkStudio} from './topologies.jsx';
 import data from './study-data.json';
 import clips from './reward-clips.json';
 import {labs, calculate} from './calculators.js';
@@ -28,7 +33,7 @@ const strip = value => value.replace(/<[^>]*>/g, ' ');
 const matches = (query, ...values) => query.toLowerCase().trim().split(/\s+/).every(term => values.join(' ').toLowerCase().includes(term));
 const mainNav = [
   ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
-  ['formula','Formula sheet',SquareFunction], ['review','Review Studio',RotateCcw], ['repeats','Most repeated',RotateCcw],
+  ['formula','Formula sheet',SquareFunction], ['review','Review Studio',RotateCcw], ['diagrams','Network diagrams',Network], ['repeats','Most repeated',RotateCcw],
   ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
@@ -41,7 +46,7 @@ const plan = [
 function read(key, fallback) { try {return {...fallback,...JSON.parse(localStorage.getItem(key))};} catch {return fallback;} }
 function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value));} catch {} }
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
-function Rich({html,className=''}) {return <div className={'rich '+className} dangerouslySetInnerHTML={{__html:html}}/>;}
+function Rich({html,className=''}) {return <DiagramRich className={className} inspect={className!=='question-text'} html={html}/>;}
 function Heading({eyebrow,title,description,children}) {
   return <header className="section-heading flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{description&&<p className="section-description">{description}</p>}</div>{children}</header>;
 }
@@ -73,11 +78,11 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
   const [copied,setCopied]=useState(false);
   const [copyError,setCopyError]=useState(false);
   async function copy() {try {await navigator.clipboard.writeText(q.question);setCopied(true);setCopyError(false);}catch {setCopyError(true);}}
-  return <details id={'question-'+q.id} className={'question surface'+(mastered?' mastered':'')} open={isOpen} onToggle={e=>{if(e.currentTarget.open!==isOpen)toggle(q.id,e.currentTarget.open);}}>
+  return <details id={'question-'+q.id} data-trail-title={q.question} className={'question surface'+(mastered?' mastered':'')} open={isOpen} onToggle={e=>{if(e.currentTarget.open!==isOpen)toggle(q.id,e.currentTarget.open);}}>
     <summary><div><div className="question-meta"><span>{year(q.paper)} · Q{q.ref}</span><span>{q.marks} {q.marks===1?'mark':'marks'}</span>{mastered&&<span className="status"><Check size={13}/> Mastered</span>}{saved&&<span className="status saved-label"><BookmarkCheck size={13}/> Saved</span>}</div><Rich html={q.qhtml} className="question-text"/></div><ChevronDown className="question-chevron" size={19}/></summary>
     {isOpen&&<div className="answer-body">
       {q.tip&&<p className="exam-note"><strong>Exam note</strong> {q.tip}</p>}
-      {quiz&&!revealed?<button className="button primary" onClick={()=>setRevealed(true)}>Reveal solution</button>:<Rich html={q.ahtml}/>}
+      {quiz&&!revealed?<button className="button primary" onClick={()=>setRevealed(true)}>Reveal solution</button>:<><NetworkTopology id={q.id}/><Rich html={q.ahtml}/></>}
       {(!quiz||revealed)&&<RecallTools subject={subject} question={q.id}/>}
       <div className="question-actions flex flex-wrap gap-2">
         <button className={'button '+(mastered?'secondary':'primary')} onClick={()=>onMaster(q.id)}>{mastered?<RotateCcw size={16}/>:<Check size={16}/>} {mastered?'Unmark mastery':'Mark mastered'}</button>
@@ -89,7 +94,7 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
     </div>}
   </details>;
 }
-function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave,onScan,onFocusQuestion}) {
+function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave,onScan,onFocusQuestion,trail}) {
   const update=(key,value)=>setFilters(current=>({...current,[key]:value}));
   const results=QS.filter(q=>(filters.paper==='all'||q.paper===filters.paper)&&(filters.topic==='all'||q.topic===filters.topic)&&(filters.marks==='all'||(filters.marks==='long'?q.marks>=4:q.marks===Number(filters.marks)))&&(filters.scope!=='saved'||progress.saved.includes(q.id))&&(filters.scope!=='review'||!progress.done.includes(q.id))&&matches(filters.query,q.question,q.solution,reference(q),TOPICS[q.topic][0]));
   const active = Number(filters.quiz);
@@ -101,18 +106,26 @@ function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave
     <div className="study-scopes" role="group" aria-label="Question list">{[['all','All questions'],['review','To review'],['saved','Bookmarks']].map(([id,label])=><button className="scope-button" key={id} type="button" aria-pressed={filters.scope===id} onClick={()=>update('scope',id)}>{label}{id==='saved'&&<span>{progress.saved.length}</span>}</button>)}</div>
     <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>setFilters(emptyFilters)}>Clear filters</button></div></details>
     {!results.length&&<Empty>{filters.scope==='saved'&&!progress.saved.length?'No bookmarks yet. Save a question to find it here.':'No matching questions. Try a different search or clear your filters.'}</Empty>}
-    {ORDER.map(topic=>{const qs=results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper));return !!qs.length&&<section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id))} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>;})}
+    {ORDER.map(topic=>{const qs=results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper));return !!qs.length&&<section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>{if(isOpen)trail.visit('question',id,q.question);else trail.close('question',id);setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id));}} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>;})}
   </>;
 }
 
-function Notes({openTopic}) {
+function Notes({openTopic,noteRequest,trail}) {
   const [query,setQuery]=useState('');
-  const [opened,setOpened]=useState([ORDER[0]]);
+  const [opened,setOpened]=useState(()=>[noteRequest?.id??ORDER[0]]);
+  const handled=useRef(null);
+  useLayoutEffect(()=>{if(noteRequest){setQuery('');setOpened([noteRequest.id]);}},[noteRequest]);
+  const canJump=noteRequest&&opened.includes(noteRequest.id)&&!query;
+  useLayoutEffect(()=>{
+    if(!canJump||handled.current===noteRequest)return;
+    handled.current=noteRequest;
+    trail.visit('note',noteRequest.id,TOPICS[noteRequest.id][0],{restore:noteRequest.resume,jump:true});
+  },[noteRequest,canJump]);
   const notes=NOTES.filter(n=>matches(query,n.text,TOPICS[n.topic][0]));
   return <><Heading eyebrow="THEORY" title="Short notes" description="Review the ideas, comparisons, and common exam traps for each chapter."/>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={query} onChange={v=>{setQuery(v);setOpened(v?ORDER:[ORDER[0]]);}} label="Search notes" placeholder="Search short notes…"/><button className="button secondary" onClick={()=>setOpened(ORDER)}>Expand all</button><button className="button secondary" onClick={()=>setOpened([])}>Collapse all</button></div>
     {!notes.length&&<Empty>No matching notes.</Empty>}
-    {notes.map(n=><details className="notes-section surface" key={n.topic} open={opened.includes(n.topic)} onToggle={e=>{const isOpen=e.currentTarget.open;setOpened(current=>isOpen===current.includes(n.topic)?current:changed(current,n.topic));}}><summary><span><b>{TOPICS[n.topic][0]}</b><small>{TOPICS[n.topic][1]}</small></span><ChevronDown size={18}/></summary>{opened.includes(n.topic)&&<div className="answer-body"><Rich html={n.html}/><button className="button secondary" onClick={()=>openTopic(n.topic)}>Practice this chapter <ArrowRight size={16}/></button></div>}</details>)}
+    {notes.map(n=><details className="notes-section surface" id={'note-'+n.topic} data-trail-title={TOPICS[n.topic][0]} key={n.topic} open={opened.includes(n.topic)} onToggle={e=>{const isOpen=e.currentTarget.open;if(isOpen!==opened.includes(n.topic)){if(isOpen)trail.visit('note',n.topic,TOPICS[n.topic][0]);else trail.close('note',n.topic);setOpened(current=>isOpen===current.includes(n.topic)?current:changed(current,n.topic));}}}><summary><span><b>{TOPICS[n.topic][0]}</b><small>{TOPICS[n.topic][1]}</small></span><ChevronDown size={18}/></summary>{opened.includes(n.topic)&&<div className="answer-body"><Rich html={n.html}/><button className="button secondary" onClick={()=>openTopic(n.topic)}>Practice this chapter <ArrowRight size={16}/></button></div>}</details>)}
   </>;
 }
 function Reference({id,openQuestion}) {const q=byId.get(id);return <button className="reference" onClick={()=>openQuestion(id)}>{reference(q)} <ArrowUpRight size={13}/></button>;}
@@ -124,7 +137,7 @@ function Formulas({openQuestion,openReview}) {
     <button className="button secondary formula-review-link" onClick={openReview}>Recall formulas in Review Studio</button>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={query} onChange={setQuery} label="Search formulas" placeholder="Search MTU, timeout, slow start…"/><TopicSelect value={topic} onChange={setTopic}/></div>
     {!entries.length&&<Empty>No formulas match those filters.</Empty>}
-    {ORDER.map(t=>{const group=entries.filter(f=>f.topic===t);return !!group.length&&<section className="formula-group" key={t}><h2>{TOPICS[t][0]}</h2><div className="formula-grid">{group.map(f=><article className="formula-card surface" key={f.title}><h3>{f.title}</h3><Rich html={f.equation} className="equation"/><p>{f.description}</p><div className="flex flex-wrap gap-2">{f.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></section>;})}
+    {ORDER.map(t=>{const group=entries.filter(f=>f.topic===t);return !!group.length&&<section className="formula-group" key={t}><h2>{TOPICS[t][0]}</h2><div className="formula-grid">{group.map(f=><article className="formula-card surface" key={f.title}><h3>{f.title}</h3><FormulaSymbols equation={f.equation} details={formulaDetails[f.title]}/><p>{f.description}</p><div className="flex flex-wrap gap-2">{f.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></section>;})}
   </>;
 }
 function Repeats({openQuestion}) {
@@ -166,19 +179,22 @@ function App() {
   const [scan,setScan]=useState(null);
   const [reward,setReward]=useState(null);
   const [jump,setJump]=useState(null);
+  const [noteRequest,setNoteRequest]=useState(null);
+  const trail=useReadingTrail(subject,view);
   const lastClip=useRef(null);
   const main=useRef(null);
   useEffect(()=>{write('cn-atlas-2025-v1',progress);window.dispatchEvent(new Event(progressEvent));},[progress]);
-  useLayoutEffect(()=>{if(jump&&view==='questions'){const item=document.getElementById('question-'+jump);if(item){item.scrollIntoView({block:'start'});item.querySelector('summary').focus({preventScroll:true});}setJump(null);}},[jump,view]);
+  useLayoutEffect(()=>{if(jump&&view==='questions'){trail.visit('question',jump.id,byId.get(jump.id).question,{restore:jump.resume,jump:true});setJump(null);}},[jump,view]);
   useSubjectRoute(subject,route=>{
     const next=mainNav.some(([id])=>id===route.view)?route.view:'overview';
     setView(next);
+    if(next==='notes')setNoteRequest(NOTES.some(n=>n.topic===route.note)?{id:route.note,resume:route.resume}:null);
     if(next==='questions'){
       const question=byId.get(route.question);
       if(question){
         setFilters({...emptyFilters,topic:question.topic});
         setOpened([question.id]);
-        setJump(question.id);
+        setJump({id:question.id,resume:route.resume});
       }else if(route.marks!=='all'||route.scope!=='all'){
         setFilters({...emptyFilters,marks:route.marks,scope:route.scope});
         setOpened([]);
@@ -186,13 +202,14 @@ function App() {
     }
   });
   function go(next,question) {
+    trail.save();
     setView(next);
     navigate(subject,next,question?{question}:undefined);
     window.scrollTo(0,0);
     main.current?.focus({preventScroll:true});
   }
   function openTopic(topic) {setFilters({...emptyFilters,topic});setOpened([]);go('questions');}
-  function openQuestion(id) {setFilters({...emptyFilters,topic:byId.get(id).topic});setOpened([id]);go('questions',id);setJump(id);}
+  function openQuestion(id) {setFilters({...emptyFilters,topic:byId.get(id).topic});setOpened([id]);go('questions',id);setJump({id});}
   function showReward() {
     const pool=clips.filter(name=>name!==lastClip.current);
     const clip=pool[Math.floor(Math.random()*pool.length)];
@@ -213,12 +230,13 @@ function App() {
     <Navigation display={display} view={view} go={go} count={progress.done.length}/>
     <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
       {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
-      {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress}} onFocusQuestion={id=>{setOpened([id]);setJump(id);}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
-      {view==='notes'&&<Notes openTopic={openTopic}/>}
+      {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress,trail}} onFocusQuestion={id=>{setOpened([id]);setJump({id});}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
+      {view==='notes'&&<Notes openTopic={openTopic} noteRequest={noteRequest} trail={trail}/>}
       {view==='formula'&&<Formulas openQuestion={openQuestion} openReview={()=>go('review')}/>}
       {view==='review'&&<ReviewStudio subject={subject} formulas={FORMULA_ENTRIES} questions={QS} repeats={REPEATS} Rich={Rich} openQuestion={openQuestion} openBank={()=>go('questions')} openQueue={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);go('questions');}}/>}
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
       {view==='lab'&&<Lab/>}
+      {view==='diagrams'&&<><Heading eyebrow="VISUAL REVISION" title="Network diagrams" description="Trace routers and link costs from the original papers."/><NetworkStudio openQuestion={openQuestion}/></>}
       {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
       {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
       <footer><span>Network Atlas</span><span>KIIT · Autumn papers 2022–2025</span></footer>

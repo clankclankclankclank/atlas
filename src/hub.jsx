@@ -3,6 +3,8 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
 import {index,totals} from './generated-index.mjs';
+import {RecentTrail} from './reading-trail.jsx';
+import {Clock3} from 'lucide-react';
 import {useAtlasPreferences} from './preferences.js';
 import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} from './routing.mjs';
 
@@ -24,14 +26,14 @@ function smartLink(e){
  e.preventDefault();navigate(route.subject,route.view,route);
 }
 
-function Header({shown,pending,view,showSearch}){
+function Header({shown,pending,view,showSearch,showRecent}){
  const settingsSubject=subjects[shown]?shown:persistedSubject()?.subject??'daa';
  return <header className="atlas-top" data-switching={pending ? 'true' : undefined}><div className="atlas-top-inner">
   <a href="#/" onClick={smartLink} className="atlas-brand" aria-label="Study Atlas home"><span className="atlas-brand-icon"><Compass size={20}/></span><span>Study Atlas</span></a>
   <nav aria-label="Subjects" className="atlas-subnav">
    {subjectEntries.map(([id,course])=><a key={id} href={linkTo(id)} onClick={smartLink} style={{'--subject-accent':course.tone}} aria-current={shown===id?'page':undefined} data-pending={pending===id?'true':undefined} onPointerEnter={()=>warmSubject(id)} onFocus={()=>warmSubject(id)}><course.icon size={13} aria-hidden="true"/>{course.abbr}</a>)}
   </nav>
-  <div className="atlas-top-actions"><a className="atlas-global-settings" href={linkTo(settingsSubject,'settings')} onClick={smartLink} aria-label="Atlas settings" aria-current={view==='settings'?'page':undefined}><Settings2 size={17}/></a><button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button></div>
+  <div className="atlas-top-actions"><button type="button" className="atlas-global-settings atlas-history-open" aria-label="Recently opened" title="Recently opened" onClick={showRecent}><Clock3 size={17}/></button><a className="atlas-global-settings" href={linkTo(settingsSubject,'settings')} onClick={smartLink} aria-label="Atlas settings" aria-current={view==='settings'?'page':undefined}><Settings2 size={17}/></a><button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button></div>
  </div></header>;
 }
 function HeroMap({active,setActive}){
@@ -180,6 +182,7 @@ function Hub(){
  const [shown,setShown]=useState(()=>readRoute().subject==='home'?'home':null);
  const [progress,setProgress]=useState(getStudyProgress);
  const [finder,setFinder]=useState(null);
+ const [recent,setRecent]=useState(false);
  const [problem,setProblem]=useState(null);
  const [retry,setRetry]=useState(0);
  const host=useRef(null);
@@ -235,13 +238,14 @@ function Hub(){
  const error=problem?.id===route.subject&&problem.retry===retry&&shown!==route.subject;
  const pending=shown!==route.subject&&!error?route.subject:null;
  return <>
-  <Header shown={shown} pending={pending} view={route.view} showSearch={setFinder}/>
+  <Header shown={shown} pending={pending} view={route.view} showSearch={setFinder} showRecent={()=>setRecent(true)}/>
   <div ref={stage} className="atlas-stage" aria-busy={Boolean(pending)}>
    {shown==='home'&&<Home progress={progress} showSearch={setFinder}/>}
    {shown===null&&!error&&<p className="atlas-loading" role="status">Opening Study Atlas…</p>}
    <div ref={host} className="atlas-subject-host" hidden={shown===null||shown==='home'}/>
   </div>
   {error&&<div className="atlas-route-error" role="status"><span>{subjects[route.subject]?.abbr} could not load.</span><button type="button" onClick={()=>setRetry(n=>n+1)}>Retry</button></div>}
+  {recent&&<RecentTrail close={()=>setRecent(false)}/>}
   {finder&&<Finder mode={finder} close={()=>setFinder(null)} progress={progress}/>}
  </>;
 }
