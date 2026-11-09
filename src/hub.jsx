@@ -1,12 +1,13 @@
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
-import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Code2,Layers3,Network,Search,X} from 'lucide-react';
+import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
 import {index,totals} from './generated-index.mjs';
+import {useAtlasPreferences} from './preferences.js';
 import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} from './routing.mjs';
 
 const subjects={
- daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',description:'Trace recursion trees, step through tables, and recover the exact choices an algorithm makes.',tone:'#8fe5ee',icon:Code2,global:'AtlasDAA'},
+ daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',description:'Trace recursion trees, step through tables, and recover the exact choices an algorithm makes.',tone:'#8fe5ee',icon:GitBranch,global:'AtlasDAA'},
  cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',description:'Follow packets across the stack, work through subnetting and error control, and review the original diagrams.',tone:'#b5b3ff',icon:Network,global:'AtlasCN'},
  ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',description:'Work each calculation from the cash-flow timeline to the final recommendation.',tone:'#f8bc79',icon:Calculator,global:'AtlasEE'},
  se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',description:'Read system diagrams, compare process models, and practice testing and project estimation.',tone:'#acd9ab',icon:Layers3,global:'AtlasSE'}
@@ -23,13 +24,14 @@ function smartLink(e){
  e.preventDefault();navigate(route.subject,route.view,route);
 }
 
-function Header({shown,pending,showSearch}){
+function Header({shown,pending,view,showSearch}){
+ const settingsSubject=subjects[shown]?shown:persistedSubject()?.subject??'daa';
  return <header className="atlas-top" data-switching={pending ? 'true' : undefined}><div className="atlas-top-inner">
-  <a href="#/" onClick={smartLink} className="atlas-brand" aria-label="Study Atlas home"><span className="atlas-brand-icon"><Activity size={20}/></span><span>Study Atlas</span></a>
+  <a href="#/" onClick={smartLink} className="atlas-brand" aria-label="Study Atlas home"><span className="atlas-brand-icon"><Compass size={20}/></span><span>Study Atlas</span></a>
   <nav aria-label="Subjects" className="atlas-subnav">
-   {subjectEntries.map(([id,course])=><a key={id} href={linkTo(id)} onClick={smartLink} style={{'--subject-accent':course.tone}} aria-current={shown===id?'page':undefined} data-pending={pending===id?'true':undefined} onPointerEnter={()=>warmSubject(id)} onFocus={()=>warmSubject(id)}><i/>{course.abbr}</a>)}
+   {subjectEntries.map(([id,course])=><a key={id} href={linkTo(id)} onClick={smartLink} style={{'--subject-accent':course.tone}} aria-current={shown===id?'page':undefined} data-pending={pending===id?'true':undefined} onPointerEnter={()=>warmSubject(id)} onFocus={()=>warmSubject(id)}><course.icon size={13} aria-hidden="true"/>{course.abbr}</a>)}
   </nav>
-  <button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button>
+  <div className="atlas-top-actions"><a className="atlas-global-settings" href={linkTo(settingsSubject,'settings')} onClick={smartLink} aria-label="Atlas settings" aria-current={view==='settings'?'page':undefined}><Settings2 size={17}/></a><button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button></div>
  </div></header>;
 }
 function HeroMap({active,setActive}){
@@ -39,7 +41,7 @@ function HeroMap({active,setActive}){
   <div className="hub-map-body">
    <svg viewBox="0 0 434 292" aria-hidden="true"><defs><pattern id="hub-grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".85" fill="currentColor" opacity=".22"/></pattern></defs><rect width="434" height="292" fill="url(#hub-grid)"/><circle cx="217" cy="146" r="108" className="hub-orbit"/><circle cx="217" cy="146" r="75" className="hub-orbit hub-orbit-secondary"/>
    {names.map((id,j)=>{const [x,y]=points[j];return <path key={id} className={'hub-connector '+(active===id?'hub-connector-active':'')} style={{'--map-tone':subjects[id].tone}} d={'M217 146 Q217 '+y+' '+x+' '+y}/>;})}
-   <circle cx="217" cy="146" r="31" className="hub-map-core"/><path d="M202 146h7l5-9 6 18 5-9h7" className="hub-map-glyph"/></svg>
+   <circle cx="217" cy="146" r="31" className="hub-map-core"/><path d="M227 135l-5 16-16 6 6-16Z" className="hub-map-glyph"/></svg>
    {names.map((id,j)=>{const [x,y]=points[j],subject=subjects[id],Icon=subject.icon;return <button key={id} type="button" className="hub-map-node" style={{left:(x/434*100)+'%',top:(y/292*100)+'%','--map-tone':subject.tone}} aria-pressed={active===id} onClick={()=>setActive(id)}><Icon size={16}/><b>{subject.abbr}</b></button>;})}
   </div>
   <div className="hub-map-foot"><span>{subjects[active].tag}</span><a href={linkTo(active)} onClick={smartLink} style={{color:subjects[active].tone}}>Open {subjects[active].abbr} <ArrowUpRight size={15}/></a></div>
@@ -168,6 +170,11 @@ function useSubjectPreviews(){
 }
 
 function Hub(){
+ const preferences=useAtlasPreferences();
+ useLayoutEffect(()=>{
+  document.documentElement.dataset.theme=preferences.theme;
+  document.documentElement.dataset.layout=preferences.ui;
+ },[preferences.theme,preferences.ui]);
  const [route,setRoute]=useState(readRoute);
  const [shown,setShown]=useState(()=>readRoute().subject==='home'?'home':null);
  const [progress,setProgress]=useState(getStudyProgress);
@@ -227,7 +234,7 @@ function Hub(){
  const error=problem?.id===route.subject&&problem.retry===retry&&shown!==route.subject;
  const pending=shown!==route.subject&&!error?route.subject:null;
  return <>
-  <Header shown={shown} pending={pending} showSearch={setFinder}/>
+  <Header shown={shown} pending={pending} view={route.view} showSearch={setFinder}/>
   <div ref={stage} className="atlas-stage" aria-busy={Boolean(pending)}>
    {shown==='home'&&<Home progress={progress} showSearch={setFinder}/>}
    {shown===null&&!error&&<p className="atlas-loading" role="status">Opening Study Atlas…</p>}

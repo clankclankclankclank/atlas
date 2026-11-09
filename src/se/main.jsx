@@ -3,7 +3,9 @@ import React, {useEffect, useId, useLayoutEffect, useRef, useState} from 'react'
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {SubjectOverview} from '../subject-overview.jsx';
-import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Sparkles, Split, SquareFunction, X} from 'lucide-react';
+import {AtlasSettings} from '../settings.jsx';
+import {updatePreferences,useAtlasPreferences} from '../preferences.js';
+import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
 import data from './study-data.json';
 import clips from './reward-clips.json';
 import {labs, calculate} from './calculators.js';
@@ -52,7 +54,7 @@ function Navigation({view,go,count}) {
   const [open,setOpen]=useState(false);
   const navigate = id => {setOpen(false);go(id);};
   return <aside className="rail">
-    <button className="brand" onClick={()=>navigate('overview')} aria-label="Software Engineering Atlas home"><span className="brand-icon"><Network size={21}/></span><span><strong>Software Atlas</strong><small>ENGINEERING STUDIO</small></span></button>
+    <button className="brand" onClick={()=>navigate('overview')} aria-label="Software Engineering Atlas home"><span className="brand-icon"><Layers3 size={21}/></span><span><strong>Software Atlas</strong><small>ENGINEERING STUDIO</small></span></button>
     <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
       {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='diagrams'||id==='settings')&&<p className="nav-label">{i===0?'Study':id==='diagrams'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" onClick={()=>navigate(id)}><Icon size={17}/>{name}</button></React.Fragment>)}
@@ -148,19 +150,6 @@ function Lab() {
 function Plan({checked,toggle}) {
   return <><Heading eyebrow="CHECKLIST" title="Revision plan" description="Three sessions covering the main exam techniques. Check off each task as you finish it."/><div className="plan-list">{plan.map(([title,tasks],i)=><section className="formula-card surface" key={title}><p className="eyebrow">SESSION 0{i+1}</p><h2>{title}</h2>{tasks.map((task,j)=>{const id='p'+i+j;return <label className="check-label" key={id}><input type="checkbox" checked={checked.includes(id)} onChange={()=>toggle(id)}/>{task}</label>;})}</section>)}</div></>;
 }
-function Settings({display,setDisplay,rewards,setRewards,preview,onReset,mastered}) {
-  const [confirmReset,setConfirmReset]=useState(false);
-  const [resetMessage,setResetMessage]=useState('');
-  return <><Heading eyebrow="PREFERENCES" title="Settings" description="Choose a layout, a color theme, and how mastery rewards behave."/>
-  <div className="settings-composition"><div className="settings-list">
-    <section className="formula-card surface"><h2>Layout</h2><div className="choices">{[['original','Atlas','Navigation rail and dashboard overview'],['minimal','Minimalistic','Top navigation and a single study column']].map(([id,label,hint])=><button key={id} className="choice" aria-pressed={display.ui===id} onClick={()=>setDisplay({...display,ui:id})}><b>{label}</b><small>{hint}</small>{display.ui===id&&<Check size={17}/>}</button>)}</div></section>
-    <section className="formula-card surface"><h2>Theme</h2><div className="choices">{[['dark','Dark'],['light','Light']].map(([id,label])=><button key={id} className="choice" aria-pressed={display.theme===id} onClick={()=>setDisplay({...display,theme:id})}><b>{label}</b>{display.theme===id&&<Check size={17}/>}</button>)}</div></section>
-    <section className="formula-card surface"><h2>Mastery rewards</h2><label className="check-label"><input type="checkbox" checked={rewards} onChange={e=>setRewards(e.target.checked)}/>Play a reward after marking a question mastered</label><p>The first time you master a question, a random reward plays for five seconds with sparkle confetti. Re-marking the question updates your progress without replaying it. The background blurs and pauses interaction until the clip ends or you press Escape.</p><button className="button secondary" onClick={preview}><Sparkles size={17}/> Preview reward</button></section>
-    <section className="formula-card surface"><h2>Mastery progress</h2><p>Reset the mastered questions and their reward history. Your bookmarks and revision checklist are kept.</p>
-    {confirmReset?<div className="reset-confirm"><p id="reset-question">Reset all mastery progress?</p><div className="flex flex-wrap gap-2"><button className="button reset-button" onClick={()=>{onReset();setConfirmReset(false);setResetMessage('Mastery progress reset.');}}>Confirm reset</button><button className="button secondary" onClick={()=>setConfirmReset(false)}>Cancel</button></div></div>:<button className="button secondary" onClick={()=>{setResetMessage('');setConfirmReset(true);}}><RotateCcw size={16}/> Reset mastery</button>}
-    <p role="status">{resetMessage||mastered+' questions mastered'}</p></section>
-  </div><figure className="eldreda-card surface"><img src="assets/se/eldreda.jpg" alt="Eldreda artwork supplied by the user" width="2892" height="4096"/><figcaption><span className="eyebrow">STUDIO PORTRAIT</span><strong>Eldreda</strong></figcaption></figure></div></>;
-}
 function Scan({scan,setScan}) {
   const dialog=useRef(null);
   useLayoutEffect(()=>{const node=dialog.current;node.showModal();return ()=>{if(node.open)node.close();};},[]);
@@ -170,9 +159,9 @@ function Scan({scan,setScan}) {
 }
 function App() {
   const [view,setView]=useState(()=>{const v=readRoute().view;return mainNav.some(([id])=>id===v)?v:'overview';});
-  const [display,setDisplay]=useState(()=>read('se-atlas-display-v1',{ui:'original',theme:'dark'}));
+  const display=useAtlasPreferences();
   const [progress,setProgress]=useState(()=>{
-    const saved=read('se-atlas-progress-v1',{done:[],saved:[],plan:[],sunnaEnabled:true});
+    const saved=read('se-atlas-progress-v1',{done:[],saved:[],plan:[]});
     return {...saved,rewarded:[...new Set([...(saved.rewarded??[]),...saved.done])]};
   });
   const rewarded=useRef(new Set(progress.rewarded));
@@ -183,7 +172,6 @@ function App() {
   const [jump,setJump]=useState(null);
   const lastClip=useRef(null);
   const main=useRef(null);
-  useLayoutEffect(()=>{document.documentElement.dataset.theme=display.theme;document.documentElement.dataset.layout=display.ui;write('se-atlas-display-v1',display);},[display]);
   useEffect(()=>{write('se-atlas-progress-v1',progress);window.dispatchEvent(new Event(progressEvent));},[progress]);
   useLayoutEffect(()=>{if(jump&&view==='questions'){const item=document.getElementById('question-'+jump);if(item){item.scrollIntoView({block:'start'});item.querySelector('summary').focus({preventScroll:true});}setJump(null);}},[jump,view]);
   useSubjectRoute(subject,route=>{
@@ -223,7 +211,7 @@ function App() {
     const firstMastery=!progress.done.includes(id)&&!rewarded.current.has(id);
     if(firstMastery)rewarded.current.add(id);
     setProgress(current=>({...current,done:changed(current.done,id),rewarded:[...rewarded.current]}));
-    if(firstMastery&&progress.sunnaEnabled)showReward();
+    if(firstMastery&&display.rewards)showReward();
   }
   return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
     <Navigation view={view} go={go} count={progress.done.length}/>
@@ -236,7 +224,7 @@ function App() {
       {view==='lab'&&<Lab/>}
       {view==='diagrams'&&<Diagrams openQuestion={openQuestion}/>}
       {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
-      {view==='settings'&&<Settings display={display} setDisplay={setDisplay} rewards={progress.sunnaEnabled} setRewards={sunnaEnabled=>setProgress(current=>({...current,sunnaEnabled}))} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
+      {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
       <footer><span>Software Engineering Atlas</span><span>KIIT · Autumn papers 2022–2025</span></footer>
     </div></main></div>{scan&&<Scan scan={scan} setScan={setScan}/>}
     {reward&&<Reward key={reward} file={reward} onClose={()=>setReward(null)}/>}
