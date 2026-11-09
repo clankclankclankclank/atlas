@@ -58,7 +58,7 @@ function Home({progress,showSearch}){
    <div className="hub-hero-copy"><p className="hub-kicker"><span></span> KIIT EXAM WORKBENCH</p>
     <h1>Your study<br/> <em>Atlas.</em></h1>
     <p className="hub-description">Four subjects, one place to work through past papers. Pick a subject, revisit a bookmark, or jump straight into a 1-mark drill.</p>
-    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('saved')}><Bookmark size={16}/> Bookmarks</button></div>
+    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('saved')}><Bookmark size={16}/> Bookmarks</button><a className="hub-action" href={linkTo(last?.subject??'daa','review')} onClick={smartLink}><Layers3 size={16}/> Review Studio</a></div>
    </div>
    <HeroMap active={active} setActive={setActive}/>
   </section>

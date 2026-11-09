@@ -5,6 +5,7 @@ import {flushSync} from 'react-dom';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
 import {StudyTimer} from '../study-timer.jsx';
+import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
@@ -27,7 +28,7 @@ const strip = value => value.replace(/<[^>]*>/g, ' ');
 const matches = (query, ...values) => query.toLowerCase().trim().split(/\s+/).every(term => values.join(' ').toLowerCase().includes(term));
 const mainNav = [
   ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
-  ['formula','Formula sheet',SquareFunction], ['repeats','Most repeated',RotateCcw],
+  ['formula','Formula sheet',SquareFunction], ['review','Review Studio',RotateCcw], ['repeats','Most repeated',RotateCcw],
   ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
@@ -77,6 +78,7 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
     {isOpen&&<div className="answer-body">
       {q.tip&&<p className="exam-note"><strong>Exam note</strong> {q.tip}</p>}
       {quiz&&!revealed?<button className="button primary" onClick={()=>setRevealed(true)}>Reveal solution</button>:<Rich html={q.ahtml}/>}
+      {(!quiz||revealed)&&<RecallTools subject={subject} question={q.id}/>}
       <div className="question-actions flex flex-wrap gap-2">
         <button className={'button '+(mastered?'secondary':'primary')} onClick={()=>onMaster(q.id)}>{mastered?<RotateCcw size={16}/>:<Check size={16}/>} {mastered?'Unmark mastery':'Mark mastered'}</button>
         <button className="button secondary" onClick={()=>onSave(q.id)}>{saved?<BookmarkMinus size={16}/>:<Bookmark size={16}/>} {saved?'Remove bookmark':'Bookmark'}</button>
@@ -95,6 +97,7 @@ function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave
     <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Search questions and solutions across the 2022–2025 Autumn papers."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search CRC, TCP, CIDR…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>Autumn {year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
     <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
+    <PracticeQueues subject={subject} filters={filters} apply={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);}}/>
     <div className="study-scopes" role="group" aria-label="Question list">{[['all','All questions'],['review','To review'],['saved','Bookmarks']].map(([id,label])=><button className="scope-button" key={id} type="button" aria-pressed={filters.scope===id} onClick={()=>update('scope',id)}>{label}{id==='saved'&&<span>{progress.saved.length}</span>}</button>)}</div>
     <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>setFilters(emptyFilters)}>Clear filters</button></div></details>
     {!results.length&&<Empty>{filters.scope==='saved'&&!progress.saved.length?'No bookmarks yet. Save a question to find it here.':'No matching questions. Try a different search or clear your filters.'}</Empty>}
@@ -113,11 +116,12 @@ function Notes({openTopic}) {
   </>;
 }
 function Reference({id,openQuestion}) {const q=byId.get(id);return <button className="reference" onClick={()=>openQuestion(id)}>{reference(q)} <ArrowUpRight size={13}/></button>;}
-function Formulas({openQuestion}) {
+function Formulas({openQuestion,openReview}) {
   const [query,setQuery]=useState('');
   const [topic,setTopic]=useState('all');
   const entries=FORMULA_ENTRIES.filter(f=>(topic==='all'||f.topic===topic)&&matches(query,f.title,strip(f.equation),f.description,TOPICS[f.topic][0],...f.refs.map(id=>reference(byId.get(id)))));
   return <><Heading eyebrow="QUICK REFERENCE" title="Formula sheet" description="Find an equation and jump straight to the paper question that uses it."><span className="meta-pill" aria-live="polite">{entries.length} formulas</span></Heading>
+    <button className="button secondary formula-review-link" onClick={openReview}>Recall formulas in Review Studio</button>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={query} onChange={setQuery} label="Search formulas" placeholder="Search MTU, timeout, slow start…"/><TopicSelect value={topic} onChange={setTopic}/></div>
     {!entries.length&&<Empty>No formulas match those filters.</Empty>}
     {ORDER.map(t=>{const group=entries.filter(f=>f.topic===t);return !!group.length&&<section className="formula-group" key={t}><h2>{TOPICS[t][0]}</h2><div className="formula-grid">{group.map(f=><article className="formula-card surface" key={f.title}><h3>{f.title}</h3><Rich html={f.equation} className="equation"/><p>{f.description}</p><div className="flex flex-wrap gap-2">{f.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></section>;})}
@@ -211,7 +215,8 @@ function App() {
       {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress}} onFocusQuestion={id=>{setOpened([id]);setJump(id);}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
       {view==='notes'&&<Notes openTopic={openTopic}/>}
-      {view==='formula'&&<Formulas openQuestion={openQuestion}/>}
+      {view==='formula'&&<Formulas openQuestion={openQuestion} openReview={()=>go('review')}/>}
+      {view==='review'&&<ReviewStudio subject={subject} formulas={FORMULA_ENTRIES} questions={QS} repeats={REPEATS} Rich={Rich} openQuestion={openQuestion} openBank={()=>go('questions')} openQueue={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);go('questions');}}/>}
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
       {view==='lab'&&<Lab/>}
       {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
