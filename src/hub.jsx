@@ -1,3 +1,4 @@
+import {DirectionalCursor} from './directional-cursor.jsx';
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
@@ -263,6 +264,7 @@ function Hub(){
  const error=problem?.id===route.subject&&problem.retry===retry&&shown!==route.subject;
  const pending=shown!==route.subject&&!error?route.subject:null;
  return <>
+  <DirectionalCursor enabled={preferences.ui!=='minimal'}/>
   <Header shown={shown} pending={pending} view={route.view} showSearch={setFinder} showRecent={()=>setRecent(true)}/>
   <div ref={stage} className="atlas-stage" aria-busy={Boolean(pending)}>
    {shown==='home'&&<Home progress={progress} showSearch={setFinder}/>}

@@ -1,3 +1,4 @@
+import RubberSegment from './react-bits/RubberSegment.jsx';
 import {questionTypeLabels} from './question-types.js';
 import React,{useLayoutEffect,useRef,useState} from 'react';
 import {ArrowLeft,ArrowRight,Check,Link2} from 'lucide-react';
@@ -11,8 +12,16 @@ export function useSubjectRoute(subject,apply){
   return observeRoute(update);
  },[subject]);
 }
+export function matches(query,...values){
+ const normalized=query.toLowerCase().trim();
+ if(!normalized)return true;
+ const text=values.join(' ').toLowerCase();
+ return normalized.split(/\s+/).every(term=>text.includes(term));
+}
+
 export function MarkFilter({marks,setMarks,values}){
- return <div className="atlas-mark-filter" role="group" aria-label="Filter by question marks"><span>Marks</span>{[['all','All'],...values.map(n=>[String(n),n+' '+(n===1?'mark':'marks')]),['long','4+ marks']].map(([id,label])=><button key={id} type="button" aria-pressed={marks===id} onClick={()=>setMarks(id)}>{label}</button>)}</div>;
+ const items=[{value:'all',label:'All'},...values.map(n=>({value:String(n),label:n+' '+(n===1?'mark':'marks')})),{value:'long',label:'4+ marks'}];
+ return <div className="atlas-mark-filter"><span aria-hidden="true">Marks</span><RubberSegment label="Filter by question marks" items={items} value={marks} onChange={setMarks}/></div>;
 }
 export function CopyQuestionLink({subject,id}){
  const [copied,setCopied]=useState(false);
@@ -53,7 +62,8 @@ export function EEWorked({question,Rich}){
 
 export function QuestionTypeFilter({subject,type,setType}){
  const values=subject==='daa'?['all','numerical','coding','pseudocode','code']:['all','numerical'];
- return <div className="atlas-mark-filter atlas-question-types" role="group" aria-label="Filter by question type"><span>Type</span>{values.map(value=><button key={value} type="button" aria-pressed={type===value} onClick={()=>setType(value)}>{questionTypeLabels[value]}</button>)}</div>;
+ const items=values.map(value=>({value,label:questionTypeLabels[value]}));
+ return <div className="atlas-mark-filter"><span aria-hidden="true">Type</span><RubberSegment label="Filter by question type" items={items} value={type} onChange={setType}/></div>;
 }
 
 export function DailyVariants({groups,questions,openQuestion}){

@@ -1,7 +1,7 @@
-import {FilterGlow,StudyAction,StudyHeading,StudyScope,StudySelect,SubjectBranchNav} from '../subject-fx.jsx';
+import {StudyAction,StudyHeading,StudyScope,StudySelect,SubjectBranchNav} from '../subject-fx.jsx';
 import {matchesQuestionType} from '../question-types.js';
 
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useDeferredValue, useMemo, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {RevisionPlan} from '../revision-plan.jsx';
@@ -23,7 +23,7 @@ import clips from './reward-clips.json';
 import {labs, calculate} from './calculators.js';
 import {Reward} from '../reward.jsx';
 import {useReward} from '../use-reward.js';
-import {DailyVariants,QuestionTypeFilter,MarkFilter,CopyQuestionLink,useSubjectRoute,EEWorked} from '../shared.jsx';
+import {matches,DailyVariants,QuestionTypeFilter,MarkFilter,CopyQuestionLink,useSubjectRoute,EEWorked} from '../shared.jsx';
 import {navigate,readRoute,progressEvent,replaceQuestionType} from '../routing.mjs';
 
 const {QS, SCANS:sourceScans, TOPICS, ORDER, REPEATS, NOTES, FORMULA_ENTRIES, PAPERS} = data;
@@ -35,7 +35,6 @@ const papers = ['E3','E5','E2','E4','E6','E1'];
 const year = paper => PAPERS[paper].label;
 const reference = q => year(q.paper) + ' Q' + q.ref;
 const strip = value => value.replace(/<[^>]*>/g, ' ');
-const matches = (query, ...values) => query.toLowerCase().trim().split(/\s+/).every(term => values.join(' ').toLowerCase().includes(term));
 const mainNav = [
   ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
   ['formula','Formula sheet',SquareFunction], ['repeats','Most repeated',RotateCcw],
@@ -93,19 +92,24 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
 }
 function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave,onScan,onFocusQuestion,trail}) {
   const update=(key,value)=>setFilters(current=>({...current,[key]:value}));
-  const results=QS.filter(q=>matchesQuestionType(subject,q.id,filters.type)&&(filters.paper==='all'||q.paper===filters.paper)&&(filters.topic==='all'||q.topic===filters.topic)&&(filters.marks==='all'||(filters.marks==='long'?q.marks>=4:q.marks===Number(filters.marks)))&&(filters.scope!=='saved'||progress.saved.includes(q.id))&&(filters.scope!=='review'||!progress.done.includes(q.id))&&matches(filters.query,q.question,q.solution,reference(q),TOPICS[q.topic][0]));
+  const search=useDeferredValue(filters.query);
+  const {paper,topic,marks,scope,type}=filters;
+  const results=useMemo(()=>QS.filter(q=>matchesQuestionType(subject,q.id,type)&&(paper==='all'||q.paper===paper)&&(topic==='all'||q.topic===topic)&&(marks==='all'||(marks==='long'?q.marks>=4:q.marks===Number(marks)))&&(scope!=='saved'||progress.saved.includes(q.id))&&(scope!=='review'||!progress.done.includes(q.id))&&(!search||matches(search,q.question,q.solution,reference(q),TOPICS[q.topic][0]))),[search,paper,topic,marks,scope,type,progress.done,progress.saved]);
+  const groups=useMemo(()=>ORDER.map(topic=>[topic,results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper))]).filter(([,qs])=>qs.length),[results]);
   const active = Number(filters.quiz);
   return <>
     <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Search worked questions across six Spring and Autumn papers."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
-    <FilterGlow subject={subject}><section className="workbench-filter-panel" aria-label="Question bank controls"><div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search depreciation, IRR, elasticity…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
-    <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
+    <section className="workbench-filter-panel" aria-label="Question bank controls"><div className="filters atlas-bank-fields"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search depreciation, IRR, elasticity…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
+    <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length||search!==filters.query} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
     <QuestionTypeFilter subject={subject} type={filters.type} setType={value=>{replaceQuestionType(subject,value);update('type',value);setOpened([]);}}/>
-    <PracticeQueues subject={subject} filters={filters} apply={queue=>{replaceQuestionType(subject,queue.type);setFilters({...emptyFilters,...queue});setOpened([]);}}/>
     <StudyScope value={filters.scope} onChange={value=>update('scope',value)} options={[{value:'all',label:'All questions'},{value:'review',label:'Unmastered'},{value:'saved',label:'Bookmarks ('+progress.saved.length+')'}]}/>
+    <div className="atlas-bank-extras">
     <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>{replaceQuestionType(subject,'all');setFilters(emptyFilters);}}>Clear filters</button></div></details>
-    </section></FilterGlow>
+    <PracticeQueues subject={subject} filters={filters} apply={queue=>{replaceQuestionType(subject,queue.type);setFilters({...emptyFilters,...queue});setOpened([]);}}/>
+    </div>
+    </section>
     {!results.length&&<Empty>{filters.scope==='saved'&&!progress.saved.length?'No bookmarks yet. Save a question to find it here.':'No matching questions. Try a different search or clear your filters.'}</Empty>}
-    {ORDER.map(topic=>{const qs=results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper));return !!qs.length&&<section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>{if(isOpen)trail.visit('question',id,q.question);else trail.close('question',id);setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id));}} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>;})}
+    {groups.map(([topic,qs])=><section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>{if(isOpen)trail.visit('question',id,q.question);else trail.close('question',id);setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id));}} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>)}
   </>;
 }
 

@@ -7,11 +7,10 @@ import PatternWaves from './react-bits/PatternWaves.jsx';
 import GlowCursor from './react-bits/GlowCursor.jsx';
 import BranchedMenu from './react-bits/BranchedMenu.jsx';
 import GlideSelect from './react-bits/GlideSelect.jsx';
-import RubberSegment from './react-bits/RubberSegment.jsx';
 import SpecularButton from './react-bits/SpecularButton.jsx';
-import BorderGlow from './react-bits/BorderGlow.jsx';
 
 const media='(prefers-reduced-motion: reduce)';
+const metalColors={light:['#7746c6','#a35ed5','#5e2ab5'],dark:['#5425ab','#a864e8']};
 const palettes={
  daa:['#4b92ae','#75e6ed','#c7f9ff'],
  cn:['#5425ab','#a864e8','#efd3ff'],
@@ -28,17 +27,17 @@ function useEffects(){
  },[]);
  return {minimal:ui==='minimal',light:theme==='light',animated:ui!=='minimal'&&!reduce};
 }
-export function SubjectBackdrop({subject,diagram=false}){
+export function SubjectBackdrop({subject,live=false,diagram=false}){
  const {minimal,light,animated}=useEffects();
  if(minimal)return null;
  const [base,mid,bright]=palettes[subject];
  const trail=diagram&&matchMedia('(hover:hover) and (pointer:fine)').matches;
  return <div className="atlas-subject-backdrop" data-scene={subject} aria-hidden="true">
   <div className="atlas-scene-art">
-   {animated&&subject==='daa'&&<Scanner color1={light?'#356986':base} color2={light?'#007c92':mid} color3={light?'#005665':bright} lightMode={light} dpr={1} speed={.28} sweepSpeed={.21} bandDensity={15} glow={.72} grain={false} clickEffect="ping" intro={false}/>}
-   {animated&&subject==='cn'&&<MoltenMetal colors={light?['#7746c6','#a35ed5','#5e2ab5']:[base,mid]} coreColor={light?'#54268b':bright} lightMode={light} dpr={.8} speed={.19} scale={2.6} detail={3} thickness={1.45} glow={2} brightness={1.48} grain={0} intro={false}/>}
-   {animated&&subject==='ee'&&<GradientWaves horizonColor={light?'#bc7a47':base} waveColor={light?'#be8137':mid} crestColor={light?'#9b5821':bright} lightMode={light} quality="low" dpr={.75} speed={.21} amplitude={2.25} tilt={62} sheen={.3} grain={0} intro={false}/>}
-   {animated&&subject==='se'&&<PatternWaves preset="lines" wave="silk" pattern="line" color={light?'#277653':bright} backgroundColor="transparent" fade="edges" spacing={16} speed={.25} depth={1.7} interactive intro={false}/>}
+   {live&&animated&&subject==='daa'&&<Scanner color1={light?'#356986':base} color2={light?'#007c92':mid} color3={light?'#005665':bright} lightMode={light} dpr={.8} speed={.28} sweepSpeed={.21} bandDensity={15} glow={.72} grain={false} clickEffect="ping" intro={false}/>}
+   {live&&animated&&subject==='cn'&&<MoltenMetal colors={light?metalColors.light:metalColors.dark} coreColor={light?'#54268b':bright} lightMode={light} dpr={.8} speed={.19} scale={2.6} detail={3} thickness={1.45} glow={2} brightness={1.48} grain={0} intro={false}/>}
+   {live&&animated&&subject==='ee'&&<GradientWaves horizonColor={light?'#bc7a47':base} waveColor={light?'#be8137':mid} crestColor={light?'#9b5821':bright} lightMode={light} quality="low" dpr={.75} speed={.21} amplitude={2.25} tilt={62} sheen={.3} grain={0} intro={false}/>}
+   {live&&animated&&subject==='se'&&<PatternWaves preset="lines" wave="silk" pattern="line" color={light?'#277653':bright} backgroundColor="transparent" fade="edges" spacing={16} speed={.25} depth={1.7} interactive intro={false}/>}
    {animated&&trail&&<GlowCursor className="atlas-scene-trail" color={light?base:bright} quality="low" theme={light?'light':'dark'} maxDevicePixelRatio={1} trailWidth={1.6} intensity={.9} linger={.48} clickBurst={false}/>}
   </div>
  </div>;
@@ -67,17 +66,10 @@ export function StudySelect({options,value,onChange,label}){
  return <GlideSelect className="atlas-glide-filter" options={options} value={value} onChange={onChange} ariaLabel={label} showTags={false} size="sm" menuWidth={225} surfaceColor="var(--panel)" textColor="var(--ink)" accentColor="var(--accent)" highlightColor="var(--soft)"/>;
 }
 export function StudyScope({options,value,onChange}){
- const {minimal}=useEffects();
- if(minimal)return <div className="study-scopes" role="group" aria-label="Question list">{options.map(({value:id,label})=><button key={id} type="button" className="scope-button" aria-pressed={value===id} onClick={()=>onChange(id)}>{label}</button>)}</div>;
- return <RubberSegment className="atlas-study-scope" aria-label="Question list" items={options} value={value} onChange={onChange} size="sm" equalSlots={false} draggable={false} trackColor="var(--soft)" thumbColor="var(--accent)" activeTextColor="var(--accent-ink)" textColor="var(--ink)" radius={9}/>;
+ return <div className="study-scopes" role="group" aria-label="Question list">{options.map(({value:id,label})=><button key={id} type="button" className="scope-button" aria-pressed={value===id} onClick={()=>onChange(id)}>{label}</button>)}</div>;
 }
 export function StudyAction({children,...props}){
  const {animated}=useEffects();
  if(!animated)return <button type="button" className="button primary" {...props}>{children}</button>;
- return <SpecularButton className="atlas-specular-action" tint="var(--accent)" textColor="var(--accent-ink)" lineColor="#ffffff" baseColor="#9eb9d8" tintOpacity={1} radius={9} idleIntensity={.32} size="sm" {...props}>{children}</SpecularButton>;
-}
-export function FilterGlow({subject,children}){
- const {animated}=useEffects();
- if(!animated)return children;
- return <BorderGlow className="atlas-filter-glow" colors={palettes[subject]} glowColor={{daa:'186 82 65',cn:'271 81 68',ee:'36 78 61',se:'154 60 55'}[subject]} backgroundColor="var(--panel)" borderRadius={15} glowRadius={23} glowIntensity={.74} fillOpacity={.18}>{children}</BorderGlow>;
+ return <SpecularButton className="atlas-specular-action" tint="var(--accent)" textColor="var(--accent-ink)" lineColor="#ffffff" baseColor="#9eb9d8" tintOpacity={1} radius={9} idleIntensity={.32} proximity={42} size="sm" {...props}>{children}</SpecularButton>;
 }
