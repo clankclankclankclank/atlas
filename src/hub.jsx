@@ -60,7 +60,7 @@ function HeroMap({active,setActive}){
    </svg>
    {subjectEntries.map(([id,item],j)=>{const [x,y]=points[j],Icon=item.icon;return <button key={id} type="button" className="hub-map-node" style={{left:(x/440*100)+'%',top:(y/280*100)+'%','--map-tone':item.tone,'--map-tone-light':item.light}} aria-pressed={active===id} onClick={()=>setActive(id)}><Icon size={16}/><b>{item.abbr}</b></button>;})}
   </div>
-  <div className="hub-map-foot"><div key={active} className="hub-map-selection" aria-live="polite"><b>{course.short}</b><span>{course.tag}</span></div><a href={linkTo(active)} onClick={smartLink}>Open {course.abbr} <ArrowUpRight size={15}/></a></div>
+  <div className="hub-map-foot"><div key={active} className="hub-map-selection" aria-live="polite"><b>{course.short}</b><span>{course.tag} · {totals[active].questions} questions</span></div><a href={linkTo(active)} onClick={smartLink}>Open {course.abbr} <ArrowUpRight size={15}/></a></div>
  </div>;
 }
 function SubjectGlyph({subject}){
@@ -87,12 +87,12 @@ function Home({progress,showSearch}){
    </div>
    <HeroMap active={active} setActive={setActive}/>
   </section>
-  <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions'],[countPapers,'exam papers'],[done,'mastered'],[saved,'bookmarks']].map(([number,label])=><div key={label}><b>{number}</b><span>{label}</span></div>)}</section>
+  <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions',BookOpen],[countPapers,'exam papers',Layers3],[done,'mastered',Activity],[saved,'bookmarks',Bookmark]].map(([number,label,Icon])=><div key={label}><Icon size={16} aria-hidden="true"/><b>{number}</b><span>{label}</span></div>)}</section>
   <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div></header>
    <div className="hub-cards">{subjectEntries.map(([id,course],j)=>{
     const Icon=course.icon,stats=totals[id],mastered=index.filter(q=>q.subject===id&&progress[id].done.has(q.id)).length;
     return <article className="hub-card" key={id} onPointerMove={trackSpotlight} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
-     <SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b>0{j+1}</b></span></div>
+     <SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b> / 0{j+1}</b></span></div>
      <h3><a href={linkTo(id)} onClick={smartLink}>{course.title}<ArrowUpRight size={18}/></a></h3>
      <p>{course.tag}</p>
      <div className="hub-card-progress"><span>{mastered} / {stats.questions} mastered</span><progress aria-label={course.abbr+' mastery'} max={stats.questions} value={mastered}/></div>
@@ -104,6 +104,7 @@ function Home({progress,showSearch}){
    <div className="hub-shortcut-grid">
     <a href={linkTo('ee','questions',{marks:'long'})} onClick={smartLink}><Calculator size={20}/><span><b>EE worked solutions</b><small>64 rewritten long answers with formulas, tables, and a step player.</small></span><ArrowDownRight size={17}/></a>
     <a href={linkTo('daa','diagrams')} onClick={smartLink}><BookOpen size={20}/><span><b>DAA Trace Studio</b><small>Step through recursion, Huffman, and graph diagrams.</small></span><ArrowDownRight size={17}/></a>
+    <a href={linkTo('cn','diagrams')} onClick={smartLink}><Network size={20}/><span><b>CN network diagrams</b><small>Explore routers, links, and past-paper topologies.</small></span><ArrowDownRight size={17}/></a>
     <button type="button" onClick={()=>showSearch('saved')}><Bookmark size={20}/><span><b>All bookmarks</b><small>Open saved questions across all four subjects.</small></span><ArrowDownRight size={17}/></button>
    </div>
   </section>

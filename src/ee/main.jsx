@@ -1,3 +1,4 @@
+import {RevealLine} from '../visual-effects.jsx';
 import {matchesQuestionType} from '../question-types.js';
 
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
@@ -47,7 +48,7 @@ function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value)
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
 function Rich({html,className=''}) {return <DiagramRich className={className} inspect={className!=='question-text'} html={html}/>;}
 function Heading({eyebrow,title,description,children}) {
-  return <header className="section-heading flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{description&&<p className="section-description">{description}</p>}</div>{children}</header>;
+  return <header className="section-heading flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">{eyebrow}</p><h1><RevealLine>{title}</RevealLine></h1>{description&&<p className="section-description">{description}</p>}</div>{children}</header>;
 }
 function SearchBox({value,onChange,label,placeholder}) {
   return <label className="search-field"><Search size={17}/><input type="search" aria-label={label} placeholder={placeholder} value={value} onChange={e=>onChange(e.target.value)}/></label>;
@@ -64,7 +65,7 @@ function Navigation({view,go,count,display}) {
     <button className="brand" onClick={()=>navigate('overview')} aria-label="Economics Atlas home"><span className="brand-icon"><Activity size={21}/></span><span><strong>Economics Atlas</strong><small>ENGINEERING ECONOMICS</small></span></button>
     <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
-      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='repeats'||id==='plan')&&<p className="nav-label">{i===0?'Study':id==='review'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
+      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='repeats'||id==='settings')&&<p className="nav-label">{i===0?'Study':id==='repeats'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
     <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
@@ -98,12 +99,13 @@ function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave
   const active = Number(filters.quiz);
   return <>
     <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Search worked questions across six Spring and Autumn papers."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
-    <div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search depreciation, IRR, elasticity…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
+    <section className="workbench-filter-panel" aria-label="Question bank controls"><div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search depreciation, IRR, elasticity…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
     <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
     <QuestionTypeFilter subject={subject} type={filters.type} setType={value=>{replaceQuestionType(subject,value);update('type',value);setOpened([]);}}/>
     <PracticeQueues subject={subject} filters={filters} apply={queue=>{replaceQuestionType(subject,queue.type);setFilters({...emptyFilters,...queue});setOpened([]);}}/>
     <div className="study-scopes" role="group" aria-label="Question list">{[['all','All questions'],['review','Unmastered'],['saved','Bookmarks']].map(([id,label])=><button className="scope-button" key={id} type="button" aria-pressed={filters.scope===id} onClick={()=>update('scope',id)}>{label}{id==='saved'&&<span>{progress.saved.length}</span>}</button>)}</div>
     <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>{replaceQuestionType(subject,'all');setFilters(emptyFilters);}}>Clear filters</button></div></details>
+    </section>
     {!results.length&&<Empty>{filters.scope==='saved'&&!progress.saved.length?'No bookmarks yet. Save a question to find it here.':'No matching questions. Try a different search or clear your filters.'}</Empty>}
     {ORDER.map(topic=>{const qs=results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper));return !!qs.length&&<section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>{if(isOpen)trail.visit('question',id,q.question);else trail.close('question',id);setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id));}} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>;})}
   </>;
