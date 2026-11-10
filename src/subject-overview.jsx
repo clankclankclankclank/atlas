@@ -1,4 +1,5 @@
 import React from 'react';
+import {StudyAction,SubjectBackdrop} from './subject-fx.jsx';
 import {AlgorithmBoard,CashFlowBoard,TraceabilityBoard} from './workbench-board.jsx';
 import {CountStat,RevealGrid,RevealLine,trackSpotlight} from './visual-effects.jsx';
 import {SignalBoard} from './cn/signal-board.jsx';
