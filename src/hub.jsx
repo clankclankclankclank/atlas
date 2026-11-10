@@ -2,6 +2,7 @@ import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
+import {RevealLine,SignalPath,trackSpotlight} from './visual-effects.jsx';
 import {index,totals} from './generated-index.mjs';
 import {RecentTrail} from './reading-trail.jsx';
 import {Clock3} from 'lucide-react';
@@ -10,10 +11,10 @@ import {useAtlasPreferences} from './preferences.js';
 import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} from './routing.mjs';
 
 const subjects={
- daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',description:'Trace recursion trees, step through tables, and recover the exact choices an algorithm makes.',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
- cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',description:'Follow packets across the stack, work through subnetting and error control, and review the original diagrams.',tone:'#b5b3ff',light:'#573ca1',icon:Network,global:'AtlasCN'},
- ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',description:'Work each calculation from the cash-flow timeline to the final recommendation.',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'},
- se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',description:'Read system diagrams, compare process models, and practice testing and project estimation.',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'}
+ daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
+ cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',tone:'#b5b3ff',light:'#573ca1',icon:Network,global:'AtlasCN'},
+ ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'},
+ se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'}
 };
 const subjectEntries=Object.entries(subjects);
 const lastKey='study-atlas-last-route';
@@ -37,18 +38,39 @@ function Header({shown,pending,view,showSearch,showRecent}){
   <div className="atlas-top-actions"><button type="button" className="atlas-global-settings atlas-history-open" aria-label="Recently opened" title="Recently opened" onClick={showRecent}><Clock3 size={17}/></button><a className="atlas-global-settings" href={linkTo(settingsSubject,'settings')} onClick={smartLink} aria-label="Atlas settings" aria-current={view==='settings'?'page':undefined}><Settings2 size={17}/></a><button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button></div>
  </div></header>;
 }
+
 function HeroMap({active,setActive}){
- const names=['daa','cn','ee','se'], points=[[94,67],[339,67],[94,228],[339,228]];
- return <div className="hub-map" aria-label="Choose a subject to preview">
-  <div className="hub-map-head"><span><i/> YOUR STUDY SPACE</span><span>04 SUBJECTS</span></div>
+ const points=[[82,68],[358,68],[82,214],[358,214]];
+ const course=subjects[active];
+ return <div className="hub-map" aria-label="Choose a subject to preview" style={{'--map-active':course.tone,'--map-active-light':course.light}}>
+  <div className="hub-map-head"><span><i/> SUBJECT MAP</span><span>01–04 / ATLAS</span></div>
   <div className="hub-map-body">
-   <svg viewBox="0 0 434 292" aria-hidden="true"><defs><pattern id="hub-grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".85" fill="currentColor" opacity=".22"/></pattern></defs><rect width="434" height="292" fill="url(#hub-grid)"/><circle cx="217" cy="146" r="108" className="hub-orbit"/><circle cx="217" cy="146" r="75" className="hub-orbit hub-orbit-secondary"/>
-   {names.map((id,j)=>{const [x,y]=points[j];return <path key={id} className={'hub-connector '+(active===id?'hub-connector-active':'')} style={{'--map-tone':subjects[id].tone}} d={'M217 146 Q217 '+y+' '+x+' '+y}/>;})}
-   <circle cx="217" cy="146" r="31" className="hub-map-core"/><path d="M227 135l-5 16-16 6 6-16Z" className="hub-map-glyph"/></svg>
-   {names.map((id,j)=>{const [x,y]=points[j],subject=subjects[id],Icon=subject.icon;return <button key={id} type="button" className="hub-map-node" style={{left:(x/434*100)+'%',top:(y/292*100)+'%','--map-tone':subject.tone}} aria-pressed={active===id} onClick={()=>setActive(id)}><Icon size={16}/><b>{subject.abbr}</b></button>;})}
+   <svg viewBox="0 0 440 280" aria-hidden="true">
+    <defs><pattern id="hub-grid" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="currentColor" opacity=".25"/></pattern></defs>
+    <rect width="440" height="280" fill="url(#hub-grid)"/>
+    <path className="hub-map-crosshair" d="M220 20V260M20 140H420"/>
+    <circle cx="220" cy="140" r="105" className="hub-orbit"/>
+    <circle cx="220" cy="140" r="77" className="hub-orbit hub-orbit-secondary"/>
+    <circle cx="220" cy="140" r="48" className="hub-orbit"/>
+    <path className="hub-map-ticks" d="M220 32v12m0 192v12m-108-108h12m192 0h12M144 64l8 8m136 136 8 8m-152 0 8-8m136-136 8-8"/>
+    {subjectEntries.map(([id],j)=>{const [x,y]=points[j];return <SignalPath key={id} path={'M220 140H'+(x<220?149:291)+'L'+(x<220?112:328)+' '+y+'H'+x} active={active===id}/>;})}
+    <circle cx="220" cy="140" r="33" className="hub-map-core"/>
+    <path d="M235 125l-9 21-21 9 9-21Z" className="hub-map-glyph"/>
+    <circle cx="220" cy="140" r="3" className="hub-map-dot"/>
+   </svg>
+   {subjectEntries.map(([id,item],j)=>{const [x,y]=points[j],Icon=item.icon;return <button key={id} type="button" className="hub-map-node" style={{left:(x/440*100)+'%',top:(y/280*100)+'%','--map-tone':item.tone,'--map-tone-light':item.light}} aria-pressed={active===id} onClick={()=>setActive(id)}><Icon size={16}/><b>{item.abbr}</b></button>;})}
   </div>
-  <div className="hub-map-foot"><span>{subjects[active].tag}</span><a href={linkTo(active)} onClick={smartLink} style={{color:subjects[active].tone}}>Open {subjects[active].abbr} <ArrowUpRight size={15}/></a></div>
+  <div className="hub-map-foot"><div key={active} className="hub-map-selection" aria-live="polite"><b>{course.short}</b><span>{course.tag}</span></div><a href={linkTo(active)} onClick={smartLink}>Open {course.abbr} <ArrowUpRight size={15}/></a></div>
  </div>;
+}
+function SubjectGlyph({subject}){
+ const art={
+  daa:<><path d="M90 24v25m0 0-52 40m52-40 52 40m-52-40v40"/><circle cx="90" cy="21" r="8"/><circle cx="38" cy="92" r="8"/><circle cx="90" cy="92" r="8"/><circle cx="142" cy="92" r="8"/></>,
+  cn:<><path d="M24 77h40l27-45h55M64 77h44l33 22M91 32l17 45"/>{[[24,77],[64,77],[91,32],[146,32],[108,77],[141,99]].map(([x,y])=><circle key={x+':'+y} cx={x} cy={y} r="6"/>)}</>,
+  ee:<><path d="M20 101h139M24 101V21m22 67 34-19 26-28 44-19"/>{[[46,88],[80,69],[106,41],[150,22]].map(([x,y])=><circle key={x} cx={x} cy={y} r="5"/>)}</>,
+  se:<><rect x="64" y="17" width="52" height="28" rx="5"/><rect x="21" y="79" width="52" height="28" rx="5"/><rect x="107" y="79" width="52" height="28" rx="5"/><path d="M90 45v18H47v16m43-16h43v16"/></>
+ };
+ return <svg className="hub-card-art" viewBox="0 0 180 125" aria-hidden="true">{art[subject]}</svg>;
 }
 function Home({progress,showSearch}){
  const last=persistedSubject();
@@ -59,20 +81,20 @@ function Home({progress,showSearch}){
  return <main className="study-hub" id="hub-main" tabIndex={-1}>
   <section className="hub-hero">
    <div className="hub-hero-copy"><p className="hub-kicker"><span></span> PAST-PAPER STUDY</p>
-    <h1>Your study<br/> <em>Atlas.</em></h1>
-    <p className="hub-description">Four subjects, one place to work through past papers. Pick a subject, revisit a bookmark, or jump straight into a 1-mark drill.</p>
-    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('saved')}><Bookmark size={16}/> Bookmarks</button></div>
+    <h1 aria-label="Study Atlas"><RevealLine>Study</RevealLine><RevealLine delay={85} accent>Atlas.</RevealLine></h1>
+    <p className="hub-description">Past papers, worked solutions, and practice tools across four subjects.</p>
+    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('all')}><Search size={16}/> Find a question</button></div>
    </div>
    <HeroMap active={active} setActive={setActive}/>
   </section>
   <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions'],[countPapers,'exam papers'],[done,'mastered'],[saved,'bookmarks']].map(([number,label])=><div key={label}><b>{number}</b><span>{label}</span></div>)}</section>
-  <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div><span>Four designs. One question finder.</span></header>
+  <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div></header>
    <div className="hub-cards">{subjectEntries.map(([id,course],j)=>{
     const Icon=course.icon,stats=totals[id],mastered=index.filter(q=>q.subject===id&&progress[id].done.has(q.id)).length;
-    return <article className="hub-card" key={id} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
-     <div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b>0{j+1}</b></span></div>
+    return <article className="hub-card" key={id} onPointerMove={trackSpotlight} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
+     <SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b>0{j+1}</b></span></div>
      <h3><a href={linkTo(id)} onClick={smartLink}>{course.title}<ArrowUpRight size={18}/></a></h3>
-     <p>{course.description}</p>
+     <p>{course.tag}</p>
      <div className="hub-card-progress"><span>{mastered} / {stats.questions} mastered</span><progress aria-label={course.abbr+' mastery'} max={stats.questions} value={mastered}/></div>
      <div className="hub-card-actions"><a href={linkTo(id,'questions')} onClick={smartLink}>Question bank <ChevronRight size={14}/></a><a href={linkTo(id,'questions',{marks:'1'})} onClick={smartLink}>1-mark drill <ChevronRight size={14}/></a></div>
     </article>;
@@ -200,6 +222,7 @@ function Hub(){
  },[]);
  useLayoutEffect(()=>{
   if(shown==null)return;
+  if(shown==='home')document.documentElement.dataset.subject='home';
   document.title=shown==='home'?'Study Atlas · Past Papers and Practice':subjects[shown].title+' · Study Atlas';
   if(shown===route.subject&&shown!=='home')remember(location.hash||linkTo(shown));
  },[shown,route]);

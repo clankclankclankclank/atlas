@@ -1,4 +1,6 @@
 import React,{useState} from 'react';
+import {RevealLine,trackSpotlight} from './visual-effects.jsx';
+import {SignalBoard} from './cn/signal-board.jsx';
 import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction} from 'lucide-react';
 
 const models={
@@ -14,8 +16,7 @@ const models={
  },
  cn:{
   heading:['Computer','Networks'],date:'2022–2025',
-  tool:['Formula sheet','formula'],caption:'PACKET PATH',
-  steps:[['Send','The source hands a packet to its gateway'],['Route','The router forwards it to the next hop'],['Deliver','The packet arrives at its destination']],
+  tool:['Network diagrams','diagrams'],
   features:[
    ['Numerical lab','Practice subnet masks, timing, and error checks.',Calculator,{view:'lab'}],
    ['Most repeated','Start with recurring exam patterns.',Network,{view:'repeats'}],
@@ -48,10 +49,6 @@ const drawings={
   nodes:[[220,30,'T(n)',0],[115,99,'T(n/4)',1],[325,99,'T(3n/4)',1],[63,169,'T(n/16)',2],[169,169,'T(3n/16)',2],[273,169,'T(3n/16)',2],[379,169,'T(9n/16)',2]],
   edges:[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]]
  },
- cn:{
-  nodes:[[70,102,'Source',0],[220,102,'Router',1],[370,102,'Destination',2]],
-  edges:[[0,1],[1,2]]
- },
  se:{
   nodes:[[66,101,'Requirements',0],[220,52,'Design',1],[373,101,'Tests',2]],
   edges:[[0,1],[1,2]]
@@ -68,7 +65,6 @@ function BoardGraph({subject,step}){
  }
  const {nodes,edges}=drawings[subject];
  return <>
-  {subject==='cn'&&<><circle cx="220" cy="102" r="68" className="subject-orbit"/><circle cx="220" cy="102" r="84" className="subject-orbit"/></>}
   {edges.map(([a,b])=>{const [x,y]=nodes[a],[nx,ny,,level]=nodes[b],flat=y===ny;return <path key={b} className={'subject-edge '+(step>=level?'is-active':'')} d={flat?'M'+(x+51)+' '+y+'H'+(nx-51):'M'+x+' '+(y+(ny>y?16:-16))+'C'+x+' '+(y+32)+' '+nx+' '+(ny-32)+' '+nx+' '+(ny+(ny>y?-16:16))}/>;})}
   {subject==='se'&&<><path className={'subject-return '+(step===2?'is-active':'')} d="M373 124v34H66v-34m-5 8 5-8 5 8"/><text className="subject-return-label" x="220" y="179">TRACEABILITY LOOP</text></>}
   {nodes.map(([x,y,label,level])=><g key={x+'-'+y} className={'subject-graph-node '+(level===step?'is-active':'')}><rect x={x-51} y={y-16} width="102" height="32" rx="8"/><text x={x} y={y+4}>{label}</text></g>)}
@@ -84,20 +80,20 @@ function SubjectBoard({subject,model}){
  </section>;
 }
 export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers}){
- const model=models[subject],mastered=new Set(done);
+ const model=models[subject],mastered=new Set(done),network=subject==='cn';
  return <div className="subject-overview">
   <section className="subject-hero">
-   <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1>{model.heading[0]} <em>{model.heading[1]}.</em></h1>
+   <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={network?'Computer Networks':undefined}>{network?<><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></>:<>{model.heading[0]} <em>{model.heading[1]}.</em></>}</h1>
     <div className="subject-actions"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></button><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
-   <SubjectBoard subject={subject} model={model}/>
+   {network?<SignalBoard/>:<SubjectBoard subject={subject} model={model}/>}
   </section>
   <div className="subject-stats">{[[questions.length,'worked questions'],[papers.length,'exam papers'],[topics.length,'topics'],[mastered.size,'mastered']].map(([n,label])=><div key={label}><b>{n}</b><span>{label}</span></div>)}</div>
   <section className="subject-section" aria-labelledby="subject-practice"><div className="subject-section-heading"><div><p className="subject-kicker">01 / QUICK ACCESS</p><h2 id="subject-practice">Start with a worked example</h2></div></div>
-   <div className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" type="button" onClick={()=>target.question?openQuestion(target.question):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span><small>0{i+1}</small></span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</div>
+   <div className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" onPointerMove={network?trackSpotlight:undefined} type="button" onClick={()=>target.question?openQuestion(target.question):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span><small>0{i+1}</small></span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</div>
   </section>
   <section className="subject-section" aria-labelledby="subject-library"><div className="subject-section-heading"><div><p className="subject-kicker">02 / STUDY BY TOPIC</p><h2 id="subject-library">Chapter library</h2></div><button className="button secondary" onClick={openSaved}><Bookmark size={16}/> Bookmarks{savedCount?' · '+savedCount:''}</button></div>
-   <div className="subject-library">{topics.map(({id,title,description,Icon})=>{const list=questions.filter(q=>q.topic===id),count=list.length,complete=list.filter(q=>mastered.has(q.id)).length;return <button key={id} className="subject-card subject-chapter" type="button" onClick={()=>openTopic(id)}><span className="subject-icon"><Icon size={18}/></span><span><strong>{title}</strong><small>{description}</small><span className="subject-chapter-count">{complete?complete+' / '+count+' mastered':count+' questions'}</span>{count>0&&<progress value={complete} max={count} aria-label={title+' mastery'}/>}</span><ArrowUpRight size={16}/></button>;})}</div>
+   <div className="subject-library">{topics.map(({id,title,description,Icon})=>{const list=questions.filter(q=>q.topic===id),count=list.length,complete=list.filter(q=>mastered.has(q.id)).length;return <button key={id} className="subject-card subject-chapter" onPointerMove={network?trackSpotlight:undefined} type="button" onClick={()=>openTopic(id)}><span className="subject-icon"><Icon size={18}/></span><span><strong>{title}</strong><small>{description}</small><span className="subject-chapter-count">{complete?complete+' / '+count+' mastered':count+' questions'}</span>{count>0&&<progress value={complete} max={count} aria-label={title+' mastery'}/>}</span><ArrowUpRight size={16}/></button>;})}</div>
   </section>
   <section className="subject-section" aria-labelledby="subject-archive"><div className="subject-section-heading"><div><p className="subject-kicker">03 / ORIGINAL PAPERS</p><h2 id="subject-archive">Exam archive</h2></div><BookOpen size={19}/></div>
    <div className="subject-library">{papers.map(({id,label,pages})=><button className="subject-card subject-chapter" key={id} type="button" onClick={()=>openPaper(id)}><span className="subject-icon"><FileText size={17}/></span><span><strong>{label}</strong><small>{questions.filter(q=>q.paper===id).length} worked questions · {pages} scan pages</small></span><ArrowUpRight size={16}/></button>)}</div>
