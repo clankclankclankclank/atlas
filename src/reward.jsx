@@ -1,5 +1,5 @@
 
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 const duration = 5000;
 const colors = ['#fce5a2','#92ddff','#fbadff','#a3ffdc','#ffeefe','#fff'];
@@ -19,7 +19,19 @@ function makeParticles() {
   });
 }
 
-export function Reward({file,onClose}) {
+export function Reward({item,onClose}) {
+ const [src,setSrc]=useState(null);
+ useEffect(()=>{
+  if(!item.blob)return;
+  const url=URL.createObjectURL(item.blob);
+  setSrc(url);
+  return ()=>URL.revokeObjectURL(url);
+ },[item]);
+ const media=item.blob?src:'media/'+encodeURIComponent(item.file);
+ return media?<RewardPlayback src={media} image={!item.blob&&/\.gif$/i.test(item.file)} onClose={onClose}/>:null;
+}
+
+function RewardPlayback({src,image,onClose}) {
   const dialog=useRef(null);
   const video=useRef(null);
   const timer=useRef(null);
@@ -27,7 +39,6 @@ export function Reward({file,onClose}) {
   const close=useRef(onClose);
   close.current=onClose;
   const [particles]=useState(makeParticles);
-  const src='media/'+encodeURIComponent(file);
   useLayoutEffect(()=>{
     const node=dialog.current;
     const clip=video.current;
@@ -53,7 +64,7 @@ export function Reward({file,onClose}) {
     timer.current=setTimeout(()=>close.current(),duration);
   }
   return <dialog ref={dialog} className="reward-dialog" aria-label="Question mastered celebration" onCancel={e=>{e.preventDefault();close.current();}}>
-    {/\.gif$/i.test(file)
+    {image
       ? <img src={src} alt="" onLoad={start} onError={()=>close.current()}/>
       : <video ref={video} src={src} autoPlay loop muted playsInline preload="auto" aria-hidden="true" onPlaying={start} onError={()=>close.current()}/>}
     <div className="reward-particles" aria-hidden="true">{particles.map((style,i)=><i key={i} className={i%3===0?'star':''} style={style}/>)}</div>

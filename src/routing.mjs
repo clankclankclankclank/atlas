@@ -1,3 +1,5 @@
+import {normalizeQuestionType} from './question-types.js';
+
 export const subjects=['daa','cn','ee','se'];
 export const studyKeys={
  daa:'daa-atlas-progress-v1',
@@ -13,12 +15,14 @@ export function readRoute(hash=location.hash){
  if(!subjects.includes(subject))return {subject:'home',view:'overview'};
  const params=new URLSearchParams(query);
  const marks=params.get('marks')??'all';
- return {subject,view,marks:/^(all|long|[1-9]\d*)$/.test(marks)?marks:'all',question:params.get('q'),note:params.get('note'),resume:params.get('resume')==='1',scope:params.get('scope')==='saved'?'saved':'all'};
+ return {subject,view:view==='review'?'questions':view,marks:/^(all|long|[1-9]\d*)$/.test(marks)?marks:'all',type:normalizeQuestionType(subject,params.get('type')),question:params.get('q'),note:params.get('note'),resume:params.get('resume')==='1',scope:params.get('scope')==='saved'?'saved':'all'};
 }
 export function linkTo(subject,view='overview',options={}){
  if(subject==='home')return '#/';
  const query=new URLSearchParams();
  if(options.question)query.set('q',options.question);
+ const type=normalizeQuestionType(subject,options.type);
+ if(type!=='all')query.set('type',type);
  if(options.note)query.set('note',options.note);
  if(options.resume)query.set('resume','1');
  if(options.marks&&options.marks!=='all')query.set('marks',options.marks);
@@ -46,4 +50,11 @@ export function getStudyProgress(){
    return [subject,{done:new Set(),saved:new Set()}];
   }
  }));
+}
+
+export function replaceQuestionType(subject,value){
+ const route=readRoute();
+ if(route.subject!==subject||route.view!=='questions')return;
+ const hash=linkTo(subject,'questions',{marks:route.marks,scope:route.scope,type:value});
+ if(hash!==location.hash)history.replaceState(null,'',hash);
 }

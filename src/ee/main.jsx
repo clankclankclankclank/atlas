@@ -1,3 +1,4 @@
+import {matchesQuestionType} from '../question-types.js';
 
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
@@ -9,7 +10,7 @@ import {FormulaSymbols} from '../formula-symbols.jsx';
 import formulaDetails from './formula-details.json';
 import {DiagramRich} from '../diagram-inspector.jsx';
 import {useReadingTrail} from '../reading-trail.jsx';
-import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
+import {PracticeQueues} from '../practice-queues.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
@@ -19,9 +20,10 @@ import {upgradeQuestions} from './worked.mjs';
 const data={...originalData,QS:upgradeQuestions(originalData.QS)};
 import clips from './reward-clips.json';
 import {labs, calculate} from './calculators.js';
-import {Reward} from './reward.jsx';
-import {MarkFilter,CopyQuestionLink,useSubjectRoute,EEWorked} from '../shared.jsx';
-import {navigate,readRoute,progressEvent} from '../routing.mjs';
+import {Reward} from '../reward.jsx';
+import {useReward} from '../use-reward.js';
+import {DailyVariants,QuestionTypeFilter,MarkFilter,CopyQuestionLink,useSubjectRoute,EEWorked} from '../shared.jsx';
+import {navigate,readRoute,progressEvent,replaceQuestionType} from '../routing.mjs';
 
 const {QS, SCANS:sourceScans, TOPICS, ORDER, REPEATS, NOTES, FORMULA_ENTRIES, PAPERS} = data;
 const subject='ee';
@@ -35,11 +37,11 @@ const strip = value => value.replace(/<[^>]*>/g, ' ');
 const matches = (query, ...values) => query.toLowerCase().trim().split(/\s+/).every(term => values.join(' ').toLowerCase().includes(term));
 const mainNav = [
   ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
-  ['formula','Formula sheet',SquareFunction], ['review','Review Studio',RotateCcw], ['repeats','Most repeated',RotateCcw],
+  ['formula','Formula sheet',SquareFunction], ['repeats','Most repeated',RotateCcw],
   ['drills','Formula drills',SquareFunction], ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
-const emptyFilters = {query:'',paper:'all',topic:'all',marks:'all',quiz:false,scope:'all'};
+const emptyFilters = {query:'',paper:'all',topic:'all',marks:'all',type:'all',quiz:false,scope:'all'};
 function read(key, fallback) { try {return {...fallback,...JSON.parse(localStorage.getItem(key))};} catch {return fallback;} }
 function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value));} catch {} }
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
@@ -62,7 +64,7 @@ function Navigation({view,go,count,display}) {
     <button className="brand" onClick={()=>navigate('overview')} aria-label="Economics Atlas home"><span className="brand-icon"><Activity size={21}/></span><span><strong>Economics Atlas</strong><small>ENGINEERING ECONOMICS</small></span></button>
     <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
-      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='review'||id==='plan')&&<p className="nav-label">{i===0?'Study':id==='review'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
+      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='repeats'||id==='plan')&&<p className="nav-label">{i===0?'Study':id==='review'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
     <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
@@ -80,7 +82,6 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
     {isOpen&&<div className="answer-body">
       {q.tip&&<p className="exam-note"><strong>Exam note</strong> {q.tip}</p>}
       {quiz&&!revealed?<button className="button primary" onClick={()=>setRevealed(true)}>Reveal solution</button> :<EEWorked key={q.id} question={q} Rich={Rich}/> }
-      {(!quiz||revealed)&&<RecallTools subject={subject} question={q.id}/>}
       <div className="question-actions flex flex-wrap gap-2">
         <button className={'button '+(mastered?'secondary':'primary')} onClick={()=>onMaster(q.id)}>{mastered?<RotateCcw size={16}/>:<Check size={16}/>} {mastered?'Unmark mastery':'Mark mastered'}</button>
         <button className="button secondary" onClick={()=>onSave(q.id)}>{saved?<BookmarkMinus size={16}/>:<Bookmark size={16}/>} {saved?'Remove bookmark':'Bookmark'}</button>
@@ -93,15 +94,16 @@ function Question({q,isOpen,toggle,quiz,mastered,saved,onMaster,onSave,onScan}) 
 }
 function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave,onScan,onFocusQuestion,trail}) {
   const update=(key,value)=>setFilters(current=>({...current,[key]:value}));
-  const results=QS.filter(q=>(filters.paper==='all'||q.paper===filters.paper)&&(filters.topic==='all'||q.topic===filters.topic)&&(filters.marks==='all'||(filters.marks==='long'?q.marks>=4:q.marks===Number(filters.marks)))&&(filters.scope!=='saved'||progress.saved.includes(q.id))&&(filters.scope!=='review'||!progress.done.includes(q.id))&&matches(filters.query,q.question,q.solution,reference(q),TOPICS[q.topic][0]));
+  const results=QS.filter(q=>matchesQuestionType(subject,q.id,filters.type)&&(filters.paper==='all'||q.paper===filters.paper)&&(filters.topic==='all'||q.topic===filters.topic)&&(filters.marks==='all'||(filters.marks==='long'?q.marks>=4:q.marks===Number(filters.marks)))&&(filters.scope!=='saved'||progress.saved.includes(q.id))&&(filters.scope!=='review'||!progress.done.includes(q.id))&&matches(filters.query,q.question,q.solution,reference(q),TOPICS[q.topic][0]));
   const active = Number(filters.quiz);
   return <>
     <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Search worked questions across six Spring and Autumn papers."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search depreciation, IRR, elasticity…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
     <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
-    <PracticeQueues subject={subject} filters={filters} apply={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);}}/>
-    <div className="study-scopes" role="group" aria-label="Question list">{[['all','All questions'],['review','To review'],['saved','Bookmarks']].map(([id,label])=><button className="scope-button" key={id} type="button" aria-pressed={filters.scope===id} onClick={()=>update('scope',id)}>{label}{id==='saved'&&<span>{progress.saved.length}</span>}</button>)}</div>
-    <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>setFilters(emptyFilters)}>Clear filters</button></div></details>
+    <QuestionTypeFilter subject={subject} type={filters.type} setType={value=>{replaceQuestionType(subject,value);update('type',value);setOpened([]);}}/>
+    <PracticeQueues subject={subject} filters={filters} apply={queue=>{replaceQuestionType(subject,queue.type);setFilters({...emptyFilters,...queue});setOpened([]);}}/>
+    <div className="study-scopes" role="group" aria-label="Question list">{[['all','All questions'],['review','Unmastered'],['saved','Bookmarks']].map(([id,label])=><button className="scope-button" key={id} type="button" aria-pressed={filters.scope===id} onClick={()=>update('scope',id)}>{label}{id==='saved'&&<span>{progress.saved.length}</span>}</button>)}</div>
+    <details className="study-filters"><summary>Study filters{active?' · '+active+' active':''}</summary><div className="flex flex-wrap items-center gap-x-5 gap-y-3">{[['quiz','Quiz mode']].map(([key,label])=><label key={key} className="check-label"><input type="checkbox" checked={filters[key]} onChange={e=>{if(key==='quiz')setOpened([]);update(key,e.target.checked);}}/>{label}</label>)}<button className="text-button" onClick={()=>{replaceQuestionType(subject,'all');setFilters(emptyFilters);}}>Clear filters</button></div></details>
     {!results.length&&<Empty>{filters.scope==='saved'&&!progress.saved.length?'No bookmarks yet. Save a question to find it here.':'No matching questions. Try a different search or clear your filters.'}</Empty>}
     {ORDER.map(topic=>{const qs=results.filter(q=>q.topic===topic).sort((a,b)=>b.marks-a.marks||b.paper.localeCompare(a.paper));return !!qs.length&&<section key={topic} className="question-group"><h2>{TOPICS[topic][0]} <small>{qs.length}</small></h2>{qs.map(q=><Question key={q.id} q={q} isOpen={opened.includes(q.id)} toggle={(id,isOpen)=>{if(isOpen)trail.visit('question',id,q.question);else trail.close('question',id);setOpened(current=>isOpen?[...new Set([...current,id])]:current.filter(x=>x!==id));}} quiz={filters.quiz} mastered={progress.done.includes(q.id)} saved={progress.saved.includes(q.id)} onMaster={onMaster} onSave={onSave} onScan={onScan}/>)}</section>;})}
   </>;
@@ -126,19 +128,19 @@ function Notes({openTopic,noteRequest,trail}) {
   </>;
 }
 function Reference({id,openQuestion}) {const q=byId.get(id);return <button className="reference" onClick={()=>openQuestion(id)}>{reference(q)} <ArrowUpRight size={13}/></button>;}
-function Formulas({openQuestion,openReview,openDrills}) {
+function Formulas({openQuestion,openDrills}) {
   const [query,setQuery]=useState('');
   const [topic,setTopic]=useState('all');
   const entries=FORMULA_ENTRIES.filter(f=>(topic==='all'||f.topic===topic)&&matches(query,f.title,strip(f.equation),f.description,TOPICS[f.topic][0],...f.refs.map(id=>reference(byId.get(id)))));
   return <><Heading eyebrow="QUICK REFERENCE" title="Formula sheet" description="Find an equation and jump straight to the paper question that uses it."><span className="meta-pill" aria-live="polite">{entries.length} formulas</span></Heading>
-    <button className="button secondary formula-review-link" onClick={openReview}>Recall formulas in Review Studio</button> <button className="button secondary formula-review-link" onClick={openDrills}>Practice formula selection</button>
+<button className="button secondary formula-review-link" onClick={openDrills}>Practice formula selection</button>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={query} onChange={setQuery} label="Search formulas" placeholder="Search sinking fund, break-even, NPV…"/><TopicSelect value={topic} onChange={setTopic}/></div>
     {!entries.length&&<Empty>No formulas match those filters.</Empty>}
     {ORDER.map(t=>{const group=entries.filter(f=>f.topic===t);return !!group.length&&<section className="formula-group" key={t}><h2>{TOPICS[t][0]}</h2><div className="formula-grid">{group.map(f=><article className="formula-card surface" key={f.title}><h3>{f.title}</h3><FormulaSymbols equation={f.equation} details={formulaDetails[f.title]}/><p>{f.description}</p><div className="flex flex-wrap gap-2">{f.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></section>;})}
   </>;
 }
 function Repeats({openQuestion}) {
-  return <><Heading eyebrow="EXAM PATTERNS" title="Most repeated" description="Recurring question types across the six papers, with links to each worked example."/><div className="formula-grid">{REPEATS.map(r=><article className="formula-card surface" key={r.title}><p className="eyebrow">{new Set(r.refs.map(id=>byId.get(id).paper)).size} / 6 PAPERS</p><h3>{r.title}</h3><p>{r.why}</p><div className="flex flex-wrap gap-2">{r.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></>;
+  return <><Heading eyebrow="EXAM PATTERNS" title="Most repeated" description="Recurring question types across the six papers, with links to each worked example."/><DailyVariants groups={REPEATS} questions={byId} openQuestion={openQuestion}/><div className="formula-grid">{REPEATS.map(r=><article className="formula-card surface" key={r.title}><p className="eyebrow">{new Set(r.refs.map(id=>byId.get(id).paper)).size} / 6 PAPERS</p><h3>{r.title}</h3><p>{r.why}</p><div className="flex flex-wrap gap-2">{r.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></>;
 }
 const defaults=lab=>Object.fromEntries(lab.fields.map(field=>[field.id,field.value]));
 function LabForm({lab}) {
@@ -170,11 +172,10 @@ function App() {
   const [filters,setFilters]=useState(emptyFilters);
   const [opened,setOpened]=useState([]);
   const [scan,setScan]=useState(null);
-  const [reward,setReward]=useState(null);
+  const {reward,play:showReward,close:closeReward}=useReward(clips);
   const [jump,setJump]=useState(null);
   const [noteRequest,setNoteRequest]=useState(null);
   const trail=useReadingTrail(subject,view);
-  const lastClip=useRef(null);
   const main=useRef(null);
   useEffect(()=>{write('ee-atlas-progress-v1',progress);window.dispatchEvent(new Event(progressEvent));},[progress]);
   useLayoutEffect(()=>{if(jump&&view==='questions'){trail.visit('question',jump.id,byId.get(jump.id).question,{restore:jump.resume,jump:true});setJump(null);}},[jump,view]);
@@ -188,27 +189,21 @@ function App() {
         setFilters({...emptyFilters,topic:question.topic});
         setOpened([question.id]);
         setJump({id:question.id,resume:route.resume});
-      }else if(route.marks!=='all'||route.scope!=='all'){
-        setFilters({...emptyFilters,marks:route.marks,scope:route.scope});
+      }else if(route.marks!=='all'||route.scope!=='all'||route.type!=='all'){
+        setFilters({...emptyFilters,marks:route.marks,scope:route.scope,type:route.type});
         setOpened([]);
       }
     }
   });
-  function go(next,question) {
+  function go(next,question,options) {
     trail.save();
     setView(next);
-    navigate(subject,next,question?{question}:undefined);
+    navigate(subject,next,question?{question}:options);
     window.scrollTo(0,0);
     main.current?.focus({preventScroll:true});
   }
   function openTopic(topic) {setFilters({...emptyFilters,topic});setOpened([]);go('questions');}
   function openQuestion(id) {setFilters({...emptyFilters,topic:byId.get(id).topic});setOpened([id]);go('questions',id);setJump({id});}
-  function showReward() {
-    const pool=clips.filter(name=>name!==lastClip.current);
-    const clip=pool[Math.floor(Math.random()*pool.length)];
-    lastClip.current=clip;
-    setReward(clip);
-  }
   function resetMastery() {
     rewarded.current.clear();
     setProgress(current=>({...current,done:[],rewarded:[]}));
@@ -222,11 +217,10 @@ function App() {
   return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
     <Navigation display={display} view={view} go={go} count={progress.done.length}/>
     <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
-      {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
+      {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openNumericals={()=>go('questions',null,{type:'numerical'})} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress,trail}} onFocusQuestion={id=>{setOpened([id]);setJump({id});}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
       {view==='notes'&&<Notes openTopic={openTopic} noteRequest={noteRequest} trail={trail}/>}
-      {view==='formula'&&<Formulas openQuestion={openQuestion} openReview={()=>go('review')} openDrills={()=>go('drills')}/>}
-      {view==='review'&&<ReviewStudio subject={subject} formulas={FORMULA_ENTRIES} questions={QS} repeats={REPEATS} Rich={Rich} openQuestion={openQuestion} openBank={()=>go('questions')} openQueue={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);go('questions');}}/>}
+      {view==='formula'&&<Formulas openQuestion={openQuestion} openDrills={()=>go('drills')}/>}
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
       {view==='drills'&&<FormulaDrills Heading={Heading} Rich={Rich} questions={byId} topics={overviewTopics} reference={reference}/>}
       {view==='lab'&&<Lab/>}
@@ -234,7 +228,7 @@ function App() {
       {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
       <footer><span>Economics Atlas</span><span>Spring and Autumn papers 2024–2026</span></footer>
     </div></main></div>{scan&&<Scan scan={scan} setScan={setScan}/>}
-    {reward&&<Reward key={reward} file={reward} onClose={()=>setReward(null)}/>}
+    {reward&&<Reward key={reward.version} item={reward} onClose={closeReward}/>}
   </>;
 }
 

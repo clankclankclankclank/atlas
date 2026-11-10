@@ -1,3 +1,4 @@
+import {questionTypeLabels} from './question-types.js';
 import React,{useLayoutEffect,useRef,useState} from 'react';
 import {ArrowLeft,ArrowRight,Check,Link2} from 'lucide-react';
 import {linkTo,observeRoute,readRoute} from './routing.mjs';
@@ -48,4 +49,22 @@ export function EEWorked({question,Rich}){
     {index===question.steps.length-1&&<p className="ee-result"><small>FINAL ANSWER</small><strong>{question.result}</strong></p>}
    </>}
  </div>;
+}
+
+export function QuestionTypeFilter({subject,type,setType}){
+ const values=subject==='daa'?['all','numerical','coding','pseudocode','code']:['all','numerical'];
+ return <div className="atlas-mark-filter atlas-question-types" role="group" aria-label="Filter by question type"><span>Type</span>{values.map(value=><button key={value} type="button" aria-pressed={type===value} onClick={()=>setType(value)}>{questionTypeLabels[value]}</button>)}</div>;
+}
+
+export function DailyVariants({groups,questions,openQuestion}){
+ const now=new Date();
+ const day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
+ return <details className="practice-queues surface"><summary>Today’s past-paper variants</summary>
+  <ul className="practice-queue-list">{groups.map((group,i)=>{
+   const ids=[...new Set(group.refs)].filter(id=>questions.has(id));
+   if(!ids.length)return null;
+   const id=ids[(day+i)%ids.length];
+   return <li key={group.title}><div><b>{group.title}</b><p>{questions.get(id).question}</p></div><button type="button" className="button secondary" onClick={()=>openQuestion(id)}>Open variant</button></li>;
+  })}</ul>
+ </details>;
 }

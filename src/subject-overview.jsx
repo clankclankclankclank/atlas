@@ -83,12 +83,12 @@ function SubjectBoard({subject,model}){
   <p aria-live="polite">{model.steps[step][1]}</p>
  </section>;
 }
-export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,done,savedCount,openSaved,questions,topics,papers}){
+export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers}){
  const model=models[subject],mastered=new Set(done);
  return <div className="subject-overview">
   <section className="subject-hero">
    <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1>{model.heading[0]} <em>{model.heading[1]}.</em></h1>
-    <div className="subject-actions"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
+    <div className="subject-actions"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></button><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
    <SubjectBoard subject={subject} model={model}/>
   </section>
