@@ -1,7 +1,7 @@
 import {build,transform} from 'esbuild';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {access,cp,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
+import {access,cp,mkdir,readFile,readdir,rm,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import * as daa from './src/daa/course.mjs';
@@ -32,7 +32,10 @@ await Promise.all([
 ]);
 const cli=path.join(root,'node_modules/@tailwindcss/cli/dist/index.mjs');
 for(const id of Object.keys(subjectNames))execFileSync(process.execPath,[cli,'-i','src/'+id+'/styles.css','-o','dist/app/'+id+'.css','--minify'],{cwd:root,stdio:'inherit'});
-const css=await transform(await readFile(path.join(root,'src/hub.css'),'utf8'),{loader:'css',minify:true,target:'es2022'});
+const bitsDir=path.join(root,'src/react-bits');
+await cp(path.join(bitsDir,'LICENSE.md'),path.join(dist,'react-bits-license.txt'));
+const bitsStyles=await Promise.all((await readdir(bitsDir)).filter(name=>name.endsWith('.css')).sort().map(name=>readFile(path.join(bitsDir,name),'utf8')));
+const css=await transform([...bitsStyles,await readFile(path.join(root,'src/hub.css'),'utf8')].join('\n'),{loader:'css',minify:true,target:'es2022'});
 await writeFile(path.join(target,'hub.css'),css.code);
 const page=await readFile(path.join(root,'index.html'),'utf8');
 const hash=createHash('sha256');

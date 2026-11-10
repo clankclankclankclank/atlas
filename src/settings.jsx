@@ -116,8 +116,8 @@ function MasteryReset({mastered,onReset}){
  function endPointer(event){if(active.current?.input===event.pointerId)cancel();}
  return <section className="formula-card surface mastery-reset">
   <h2>Mastery progress</h2>
-  <p>Reset mastery and reward history for this subject. Bookmarks and revision checklists are kept.</p>
-  <button type="button" className="button hold-reset-button" aria-describedby="mastery-reset-hint" data-holding={holding} style={{'--hold-time':resetHoldTime+'ms'}}
+
+  <button type="button" className="button hold-reset-button" aria-description="Hold for 1.8 seconds using a pointer, Space, or Enter." data-holding={holding} style={{'--hold-time':resetHoldTime+'ms'}}
    onPointerDown={event=>{if(!event.isPrimary||event.button!==0)return;event.currentTarget.setPointerCapture(event.pointerId);begin(event.pointerId);}}
    onContextMenu={event=>{if(active.current)event.preventDefault();}}
    onPointerMove={move} onPointerUp={endPointer} onPointerCancel={endPointer} onLostPointerCapture={endPointer} onBlur={cancel}
@@ -125,18 +125,17 @@ function MasteryReset({mastered,onReset}){
    onKeyUp={event=>{if(isHoldKey(event.key))event.preventDefault();if(active.current?.input===event.key)cancel();}}>
    <span><RotateCcw size={16}/> Hold to reset mastery</span>
   </button>
-  <p id="mastery-reset-hint">Hold for 1.8 seconds. On a keyboard, hold Space or Enter.</p>
   <p role="status">{reset?'Mastery progress reset.':mastered+' questions mastered'}</p>
  </section>;
 }
 
 export function AtlasSettings({Heading,display,setDisplay,rewards,setRewards,preview,onReset,mastered,clips}) {
-  return <><Heading eyebrow="PREFERENCES" title="Settings" description="Appearance, study tools, and reward preferences apply across Study Atlas."/>
+  return <><Heading eyebrow="PREFERENCES" title="Settings"/>
   <div className="settings-composition"><div className="settings-list">
     <section className="formula-card surface"><h2>Layout</h2><div className="choices">{[['original','Atlas','Navigation rail and dashboard overview'],['minimal','Minimalistic','Top navigation and a single study column']].map(([id,label,hint])=><button key={id} className="choice" aria-pressed={display.ui===id} onClick={()=>setDisplay({ui:id})}><b>{label}</b><small>{hint}</small>{display.ui===id&&<Check size={17}/>}</button>)}</div></section>
     <section className="formula-card surface"><h2>Sidebar</h2><div className="choices">{[['expanded','Expanded','Show section icons and labels'],['icons','Icons only','Keep the subject logo and section icons']].map(([id,label,hint])=><button key={id} className="choice" aria-pressed={display.sidebar===id} onClick={()=>setDisplay({sidebar:id})}><b>{label}</b><small>{hint}</small>{display.sidebar===id&&<Check size={17}/>}</button>)}</div></section>
     <section className="formula-card surface"><h2>Theme</h2><div className="choices">{[['dark','Dark'],['light','Light']].map(([id,label])=><button key={id} className="choice" aria-pressed={display.theme===id} onClick={()=>setDisplay({theme:id})}><b>{label}</b>{display.theme===id&&<Check size={17}/>}</button>)}</div></section>
-    <section className="formula-card surface"><h2>Mastery rewards</h2><label className="check-label"><input type="checkbox" checked={rewards} onChange={e=>setRewards(e.target.checked)}/>Play a reward after marking a question mastered</label><p>The first time you master a question, a random reward plays for five seconds with sparkle confetti. Re-marking the question updates your progress without replaying it. The background blurs and pauses interaction until the clip ends or you press Escape.</p><button className="button secondary" onClick={()=>preview()}><Sparkles size={17}/> Preview reward</button></section>
+    <section className="formula-card surface"><h2>Mastery rewards</h2><label className="check-label"><input type="checkbox" checked={rewards} onChange={e=>setRewards(e.target.checked)}/>Play a reward after marking a question mastered</label><button className="button secondary" onClick={()=>preview()}><Sparkles size={17}/> Preview reward</button></section>
     <LocalRewardVideos preview={preview}/>
     <MasteryReset mastered={mastered} onReset={onReset}/>
   </div><SettingsLoop clips={clips}/></div></>;

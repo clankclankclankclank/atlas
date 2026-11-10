@@ -1,4 +1,7 @@
-import React,{useEffect,useLayoutEffect,useRef} from 'react';
+import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
+import Counter from './react-bits/Counter.jsx';
+import Particles from './react-bits/Particles.jsx';
+import {useAtlasPreferences} from './preferences.js';
 
 // React Bits Spotlight Card pattern. Keep pointer coordinates out of React state.
 export function trackSpotlight(event){
@@ -35,30 +38,21 @@ function whenVisible(node,activate){
  return ()=>observer.disconnect();
 }
 
-// Adapted from React Bits Count Up. The final value remains available to assistive tech.
 export function CountStat({value}){
- const ref=useRef(null);
- const label=formatNumber.format(value);
- useLayoutEffect(()=>{
-  const node=ref.current;
-  node.textContent=label;
-  if(!value||!allowEffects())return;
-  node.textContent='0';
-  let frame=0;
-  const stop=whenVisible(node,()=>{
-   if(!allowEffects()){node.textContent=label;return;}
-   const start=performance.now();
-   function tick(now){
-    const elapsed=Math.min(1,(now-start)/680);
-    if(!allowEffects()||elapsed===1){node.textContent=label;return;}
-    node.textContent=formatNumber.format(Math.round(value*(1-(1-elapsed)**3)));
-    frame=requestAnimationFrame(tick);
-   }
-   frame=requestAnimationFrame(tick);
-  });
-  return ()=>{stop();cancelAnimationFrame(frame);};
- },[value,label]);
- return <b className="atlas-count-stat"><span className="atlas-sr-only">{label}</span><span aria-hidden="true" ref={ref}>{label}</span></b>;
+ const {ui}=useAtlasPreferences();
+ return <b className="atlas-count-stat">{ui==='minimal'?formatNumber.format(value):<Counter value={value} fontSize="inherit" fontWeight="inherit" duration={.58} bounce={.12} stagger={.05} fade={.16} motionBlur={false}/>}</b>;
+}
+export function MapParticles(){
+ const {ui,theme}=useAtlasPreferences();
+ const [enabled,setEnabled]=useState(allowEffects);
+ useEffect(()=>{
+  const query=matchMedia('(prefers-reduced-motion: reduce)');
+  const update=()=>setEnabled(!query.matches);
+  update();query.addEventListener('change',update);
+  return ()=>query.removeEventListener('change',update);
+ },[]);
+ if(!enabled||ui==='minimal')return null;
+ return <Particles className="atlas-map-particles" particleCount={85} particleColors={theme==='light'?['#52755a','#9a6b36']:['#edbd87','#a1e9cc']} lightMode={theme==='light'} speed={.15} particleBaseSize={66} pixelRatio={1} shape="sparkle" glow={.68} twinkle={.35} opacity={.8} disableRotation intro={false}/>;
 }
 
 // React Bits Animated Content pattern, applied once when a grid enters the viewport.

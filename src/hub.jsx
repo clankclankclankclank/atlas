@@ -2,7 +2,7 @@ import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
-import {CountStat,CursorGrid,RevealGrid,RevealLine,SignalPath,SubjectPillNav,trackSpotlight} from './visual-effects.jsx';
+import {CountStat,MapParticles,RevealGrid,RevealLine,SignalPath,SubjectPillNav,trackSpotlight} from './visual-effects.jsx';
 import {index,totals} from './generated-index.mjs';
 import {RecentTrail} from './reading-trail.jsx';
 import {Clock3} from 'lucide-react';
@@ -44,7 +44,7 @@ function HeroMap({active,setActive}){
  const course=subjects[active];
  return <div className="hub-map" aria-label="Choose a subject to preview" style={{'--map-active':course.tone,'--map-active-light':course.light}}>
   <div className="hub-map-head"><span><i/> SUBJECT MAP</span><span>01–04 / ATLAS</span></div>
-  <div className="hub-map-body"><CursorGrid/>
+  <div className="hub-map-body"><MapParticles/>
    <svg viewBox="0 0 440 280" aria-hidden="true">
     <defs><pattern id="hub-grid" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="currentColor" opacity=".25"/></pattern></defs>
     <rect width="440" height="280" fill="url(#hub-grid)"/>
@@ -185,7 +185,7 @@ function warmSubject(id){loadSubject(id).catch(()=>{});}
 function useSubjectPreviews(){
  useEffect(()=>{
   if(navigator.connection?.saveData)return;
-  const warm=()=>{if(!document.hidden)subjectEntries.forEach(([id])=>warmSubject(id));};
+  const warm=()=>{if(!document.hidden)warmSubject(persistedSubject()?.subject??'daa');};
   if(typeof requestIdleCallback==='function'){
    const handle=requestIdleCallback(warm,{timeout:1800});
    return ()=>cancelIdleCallback(handle);

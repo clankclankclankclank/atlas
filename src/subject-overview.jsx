@@ -46,9 +46,9 @@ const boards={daa:AlgorithmBoard,cn:SignalBoard,ee:CashFlowBoard,se:Traceability
 export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers}){
  const model=models[subject],mastered=new Set(done),Board=boards[subject];
  return <div className="subject-overview">
-  <section className="subject-hero">
+  <section className="subject-hero atlas-scene-hero"><SubjectBackdrop subject={subject}/>
    <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={model.heading.join(' ')}><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></h1>
-    <div className="subject-actions"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></button><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
+    <div className="subject-actions"><StudyAction onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></StudyAction><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
    <Board/>
   </section>
