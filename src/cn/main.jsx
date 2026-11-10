@@ -2,13 +2,13 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {RevisionPlan} from '../revision-plan.jsx';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
 import {FormulaSymbols} from '../formula-symbols.jsx';
 import formulaDetails from './formula-details.json';
 import {DiagramRich} from '../diagram-inspector.jsx';
 import {useReadingTrail} from '../reading-trail.jsx';
-import {StudyTimer} from '../study-timer.jsx';
 import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
@@ -38,11 +38,6 @@ const mainNav = [
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
 const emptyFilters = {query:'',paper:'all',topic:'all',marks:'all',quiz:false,scope:'all'};
-const plan = [
-  ['Congestion and addressing',['2022/2023/2025 AIMD 10-round table','TCP header + timers + receive window','2025 equal subnets /26 and 2024 VLSM /21','2024 fragmentation & IPv4 header offset']],
-  ['Error control and routing',['CRC: all 3 paper problems without peeking','2025 distance vector rounds 0→2','2024 Dijkstra full settled-node table','ALOHA and Stop-and-Wait utilization']],
-  ['Application protocols and mock exam',['DNS iterative / recursive resolution','HTTP persistent vs nonpersistent','Email HTTPS→SMTP→POP3 and DHCP DORA','Timed 2025 paper: 10 one-mark + four 5+5 questions']]
-];
 function read(key, fallback) { try {return {...fallback,...JSON.parse(localStorage.getItem(key))};} catch {return fallback;} }
 function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value));} catch {} }
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
@@ -67,7 +62,7 @@ function Navigation({view,go,count,display}) {
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
       {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||i===4||i===7)&&<p className="nav-label">{i===0?'Study':i===4?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
-    <div className="rail-tools">{display.timer&&<StudyTimer/>}<button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
+    <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
@@ -156,9 +151,6 @@ function Lab() {
   const [index,setIndex]=useState(0);
   return <><Heading eyebrow="INTERACTIVE PRACTICE" title="Numerical lab" description="Change the inputs and follow the intermediate steps for eight exam techniques."/><label className="lab-picker">Calculator<select aria-label="Calculator" className="field" value={index} onChange={e=>setIndex(+e.target.value)}>{labs.map((lab,i)=><option key={lab.method} value={i}>{lab.title}</option>)}</select></label><LabForm key={index} lab={labs[index]}/></>;
 }
-function Plan({checked,toggle}) {
-  return <><Heading eyebrow="CHECKLIST" title="Revision plan" description="Three sessions covering the main exam techniques. Check off each task as you finish it."/><div className="plan-list">{plan.map(([title,tasks],i)=><section className="formula-card surface" key={title}><p className="eyebrow">SESSION 0{i+1}</p><h2>{title}</h2>{tasks.map((task,j)=>{const id='p'+i+j;return <label className="check-label" key={id}><input type="checkbox" checked={checked.includes(id)} onChange={()=>toggle(id)}/>{task}</label>;})}</section>)}</div></>;
-}
 function Scan({scan,setScan}) {
   const dialog=useRef(null);
   useLayoutEffect(()=>{const node=dialog.current;node.showModal();return ()=>{if(node.open)node.close();};},[]);
@@ -237,9 +229,9 @@ function App() {
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
       {view==='lab'&&<Lab/>}
       {view==='diagrams'&&<><Heading eyebrow="VISUAL REVISION" title="Network diagrams" description="Trace routers and link costs from the original papers."/><NetworkStudio openQuestion={openQuestion}/></>}
-      {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
+      {view==='plan'&&<RevisionPlan Heading={Heading} topics={overviewTopics} questions={QS} papers={overviewPapers} repeats={REPEATS} done={progress.done} openTopic={openTopic} openQuestion={openQuestion} reference={reference} checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
       {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
-      <footer><span>Network Atlas</span><span>KIIT · Autumn papers 2022–2025</span></footer>
+      <footer><span>Network Atlas</span><span>Autumn papers 2022–2025</span></footer>
     </div></main></div>{scan&&<Scan scan={scan} setScan={setScan}/>}
     {reward&&<Reward key={reward} file={reward} onClose={()=>setReward(null)}/>}
   </>;

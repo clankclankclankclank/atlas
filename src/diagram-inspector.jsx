@@ -1,4 +1,5 @@
 import React,{useLayoutEffect,useRef,useState} from 'react';
+import {TableCalculation,useTableCalculations} from './table-calculations.jsx';
 import {Maximize2,Minus,Plus,X} from 'lucide-react';
 
 const textOf=node=>node?.textContent.trim()??'';
@@ -121,6 +122,7 @@ function Inspector({figure,close}){
 export function DiagramRich({html,className='',inspect=true}){
  const host=useRef(null);
  const [figure,setFigure]=useState(null);
+ const calculation=useTableCalculations(host,html);
  useLayoutEffect(()=>{
   if(!inspect||!/<svg|<img/i.test(html))return;
   const visuals=[...host.current.querySelectorAll('svg,figure img')];
@@ -149,5 +151,5 @@ export function DiagramRich({html,className='',inspect=true}){
   });
   return ()=>buttons.forEach(button=>button.remove());
  },[html,inspect]);
- return <><div ref={host} className={'rich '+className} dangerouslySetInnerHTML={{__html:html}}/>{figure&&<Inspector figure={figure} close={()=>setFigure(null)}/>}</>;
+ return <><div ref={host} className={'rich '+className} dangerouslySetInnerHTML={{__html:html}}/><TableCalculation active={calculation}/>{figure&&<Inspector figure={figure} close={()=>setFigure(null)}/>}</>;
 }

@@ -2,18 +2,19 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {RevisionPlan} from '../revision-plan.jsx';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
 import {FormulaSymbols} from '../formula-symbols.jsx';
 import formulaDetails from './formula-details.json';
 import {DiagramRich} from '../diagram-inspector.jsx';
 import {useReadingTrail} from '../reading-trail.jsx';
-import {StudyTimer} from '../study-timer.jsx';
 import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
 import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
 import originalData from './study-data.json';
+import {FormulaDrills} from './formula-drills.jsx';
 import {upgradeQuestions} from './worked.mjs';
 const data={...originalData,QS:upgradeQuestions(originalData.QS)};
 import clips from './reward-clips.json';
@@ -35,15 +36,10 @@ const matches = (query, ...values) => query.toLowerCase().trim().split(/\s+/).ev
 const mainNav = [
   ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
   ['formula','Formula sheet',SquareFunction], ['review','Review Studio',RotateCcw], ['repeats','Most repeated',RotateCcw],
-  ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
+  ['drills','Formula drills',SquareFunction], ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
 const emptyFilters = {query:'',paper:'all',topic:'all',marks:'all',quiz:false,scope:'all'};
-const plan = [
- ['Microeconomics',['Draw demand shifts and calculate elasticity','Find producer equilibrium and returns to scale','Differentiate cost curves and solve break-even problems','Fit a least-squares trend from a paper table']],
- ['Engineering finance',['Practice compound interest, annuities and gradients','Compare PW, FW and AW','Use incremental B/C and IRR for competing projects','Rebuild straight-line, sinking-fund and declining-balance schedules']],
- ['Macroeconomics and timed paper',['Draw demand-pull and cost-push inflation','Compare fiscal and monetary measures','Attempt one full paper under the official time limit','Review errors and repeat one numerical from each topic']]
-];
 function read(key, fallback) { try {return {...fallback,...JSON.parse(localStorage.getItem(key))};} catch {return fallback;} }
 function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value));} catch {} }
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
@@ -66,9 +62,9 @@ function Navigation({view,go,count,display}) {
     <button className="brand" onClick={()=>navigate('overview')} aria-label="Economics Atlas home"><span className="brand-icon"><Activity size={21}/></span><span><strong>Economics Atlas</strong><small>ENGINEERING ECONOMICS</small></span></button>
     <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
-      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||i===4||i===7)&&<p className="nav-label">{i===0?'Study':i===4?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
+      {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='review'||id==='plan')&&<p className="nav-label">{i===0?'Study':id==='review'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
-    <div className="rail-tools">{display.timer&&<StudyTimer/>}<button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
+    <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
@@ -130,12 +126,12 @@ function Notes({openTopic,noteRequest,trail}) {
   </>;
 }
 function Reference({id,openQuestion}) {const q=byId.get(id);return <button className="reference" onClick={()=>openQuestion(id)}>{reference(q)} <ArrowUpRight size={13}/></button>;}
-function Formulas({openQuestion,openReview}) {
+function Formulas({openQuestion,openReview,openDrills}) {
   const [query,setQuery]=useState('');
   const [topic,setTopic]=useState('all');
   const entries=FORMULA_ENTRIES.filter(f=>(topic==='all'||f.topic===topic)&&matches(query,f.title,strip(f.equation),f.description,TOPICS[f.topic][0],...f.refs.map(id=>reference(byId.get(id)))));
   return <><Heading eyebrow="QUICK REFERENCE" title="Formula sheet" description="Find an equation and jump straight to the paper question that uses it."><span className="meta-pill" aria-live="polite">{entries.length} formulas</span></Heading>
-    <button className="button secondary formula-review-link" onClick={openReview}>Recall formulas in Review Studio</button>
+    <button className="button secondary formula-review-link" onClick={openReview}>Recall formulas in Review Studio</button> <button className="button secondary formula-review-link" onClick={openDrills}>Practice formula selection</button>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={query} onChange={setQuery} label="Search formulas" placeholder="Search sinking fund, break-even, NPV…"/><TopicSelect value={topic} onChange={setTopic}/></div>
     {!entries.length&&<Empty>No formulas match those filters.</Empty>}
     {ORDER.map(t=>{const group=entries.filter(f=>f.topic===t);return !!group.length&&<section className="formula-group" key={t}><h2>{TOPICS[t][0]}</h2><div className="formula-grid">{group.map(f=><article className="formula-card surface" key={f.title}><h3>{f.title}</h3><FormulaSymbols equation={f.equation} details={formulaDetails[f.title]}/><p>{f.description}</p><div className="flex flex-wrap gap-2">{f.refs.map(id=><Reference key={id} id={id} openQuestion={openQuestion}/>)}</div></article>)}</div></section>;})}
@@ -155,9 +151,6 @@ function LabForm({lab}) {
 function Lab() {
   const [index,setIndex]=useState(0);
   return <><Heading eyebrow="INTERACTIVE PRACTICE" title="Numerical lab" description="Work through eight calculation methods using your own numbers."/><label className="lab-picker">Calculator<select aria-label="Calculator" className="field" value={index} onChange={e=>setIndex(+e.target.value)}>{labs.map((lab,i)=><option key={lab.method} value={i}>{lab.title}</option>)}</select></label><LabForm key={index} lab={labs[index]}/></>;
-}
-function Plan({checked,toggle}) {
-  return <><Heading eyebrow="CHECKLIST" title="Revision plan" description="Three sessions covering the main exam techniques. Check off each task as you finish it."/><div className="plan-list">{plan.map(([title,tasks],i)=><section className="formula-card surface" key={title}><p className="eyebrow">SESSION 0{i+1}</p><h2>{title}</h2>{tasks.map((task,j)=>{const id='p'+i+j;return <label className="check-label" key={id}><input type="checkbox" checked={checked.includes(id)} onChange={()=>toggle(id)}/>{task}</label>;})}</section>)}</div></>;
 }
 function Scan({scan,setScan}) {
   const dialog=useRef(null);
@@ -232,13 +225,14 @@ function App() {
       {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
       {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress,trail}} onFocusQuestion={id=>{setOpened([id]);setJump({id});}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
       {view==='notes'&&<Notes openTopic={openTopic} noteRequest={noteRequest} trail={trail}/>}
-      {view==='formula'&&<Formulas openQuestion={openQuestion} openReview={()=>go('review')}/>}
+      {view==='formula'&&<Formulas openQuestion={openQuestion} openReview={()=>go('review')} openDrills={()=>go('drills')}/>}
       {view==='review'&&<ReviewStudio subject={subject} formulas={FORMULA_ENTRIES} questions={QS} repeats={REPEATS} Rich={Rich} openQuestion={openQuestion} openBank={()=>go('questions')} openQueue={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);go('questions');}}/>}
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
+      {view==='drills'&&<FormulaDrills Heading={Heading} Rich={Rich} questions={byId} topics={overviewTopics} reference={reference}/>}
       {view==='lab'&&<Lab/>}
-      {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
+      {view==='plan'&&<RevisionPlan Heading={Heading} topics={overviewTopics} questions={QS} papers={overviewPapers} repeats={REPEATS} done={progress.done} openTopic={openTopic} openQuestion={openQuestion} reference={reference} checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
       {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
-      <footer><span>Economics Atlas</span><span>KIIT · Spring and Autumn papers 2024–2026</span></footer>
+      <footer><span>Economics Atlas</span><span>Spring and Autumn papers 2024–2026</span></footer>
     </div></main></div>{scan&&<Scan scan={scan} setScan={setScan}/>}
     {reward&&<Reward key={reward} file={reward} onClose={()=>setReward(null)}/>}
   </>;

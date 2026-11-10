@@ -2,13 +2,13 @@
 import React, {useEffect, useId, useLayoutEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {RevisionPlan} from '../revision-plan.jsx';
 import {SubjectOverview} from '../subject-overview.jsx';
 import {AtlasSettings} from '../settings.jsx';
 import {FormulaSymbols} from '../formula-symbols.jsx';
 import formulaDetails from './formula-details.json';
 import {DiagramRich} from '../diagram-inspector.jsx';
 import {useReadingTrail} from '../reading-trail.jsx';
-import {StudyTimer} from '../study-timer.jsx';
 import {PracticeQueues,RecallTools,ReviewStudio} from '../review-studio.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from '../preferences.js';
@@ -37,11 +37,6 @@ const mainNav = [
 ];
 const topicIcons = [Activity,Network,ShieldCheck,Split,Layers3,Orbit,RotateCcw,Clock3,Activity,CircuitBoard];
 const emptyFilters = {query:'',paper:'all',topic:'all',marks:'all',quiz:false,scope:'all'};
-const plan = [
- ['Foundations',['Compare growth rates by taking logs','Solve one case of each Master theorem pattern','Draw a full early level for an unequal split','Trace last-pivot partition and a bottom-up heap']],
- ['Tables and greedy choices',['Fill an LCS table and recover one sequence','Compute matrix-chain costs and split positions','Trace an optimal 0/1 knapsack selection','Build and decode one Huffman tree']],
- ['Graphs and proofs',['Write the disjoint sets after each Kruskal edge','Run Dijkstra and rebuild predecessor paths','Prove an amortized bound for doubling','Write a CLIQUE verifier and a TSP reduction']]
-];
 function read(key, fallback) { try {return {...fallback,...JSON.parse(localStorage.getItem(key))};} catch {return fallback;} }
 function write(key, value) { try {localStorage.setItem(key,JSON.stringify(value));} catch {} }
 function changed(items,id) { return items.includes(id) ? items.filter(item=>item!==id) : [...items,id]; }
@@ -84,7 +79,7 @@ function Navigation({view,go,count,display}) {
     <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
       {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='diagrams'||id==='settings')&&<p className="nav-label">{i===0?'Study':id==='diagrams'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
     </nav>
-    <div className="rail-tools">{display.timer&&<StudyTimer/>}<button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
+    <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
     <div className="rail-progress"><div className="flex justify-between gap-2"><span>Mastered</span><b>{count} / {QS.length}</b></div><progress aria-label="Question mastery" max={QS.length} value={count}/></div>
   </aside>;
 }
@@ -116,7 +111,7 @@ function Questions({filters,setFilters,opened,setOpened,progress,onMaster,onSave
   const results=QS.filter(q=>(filters.paper==='all'||q.paper===filters.paper)&&(filters.topic==='all'||q.topic===filters.topic)&&(filters.marks==='all'||(filters.marks==='long'?q.marks>=4:q.marks===Number(filters.marks)))&&(filters.scope!=='saved'||progress.saved.includes(q.id))&&(filters.scope!=='review'||!progress.done.includes(q.id))&&matches(filters.query,q.question,q.solution,reference(q),TOPICS[q.topic][0]));
   const active = Number(filters.quiz);
   return <>
-    <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Filter seven KIIT exam papers by session or topic. Every solution links back to the original scan."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
+    <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Filter seven exam papers by session or topic. Every solution links back to the original scan."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
     <div className="filters flex flex-wrap gap-2.5"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder="Search LCS, Huffman, quicksort…"/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
     <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
     <PracticeQueues subject={subject} filters={filters} apply={queue=>{setFilters({...emptyFilters,...queue});setOpened([]);}}/>
@@ -183,9 +178,6 @@ function LabForm({lab}) {
 function Lab() {
   const [index,setIndex]=useState(0);
   return <><Heading eyebrow="INTERACTIVE PRACTICE" title="Algorithm lab" description="Edit the inputs and inspect the same step-by-step traces used in the worked answers."/><label className="lab-picker">Calculator<select aria-label="Calculator" className="field" value={index} onChange={e=>setIndex(+e.target.value)}>{labs.map((lab,i)=><option key={lab.method} value={i}>{lab.title}</option>)}</select></label><LabForm key={index} lab={labs[index]}/></>;
-}
-function Plan({checked,toggle}) {
-  return <><Heading eyebrow="CHECKLIST" title="Revision plan" description="Three sessions covering the main exam techniques. Check off each task as you finish it."/><div className="plan-list">{plan.map(([title,tasks],i)=><section className="formula-card surface" key={title}><p className="eyebrow">SESSION 0{i+1}</p><h2>{title}</h2>{tasks.map((task,j)=>{const id='p'+i+j;return <label className="check-label" key={id}><input type="checkbox" checked={checked.includes(id)} onChange={()=>toggle(id)}/>{task}</label>;})}</section>)}</div></>;
 }
 function Scan({scan,setScan}) {
   const dialog=useRef(null);
@@ -265,9 +257,9 @@ function App() {
       {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}
       {view==='lab'&&<Lab/>}
       {view==='diagrams'&&<Diagrams openQuestion={openQuestion}/>}
-      {view==='plan'&&<Plan checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
+      {view==='plan'&&<RevisionPlan Heading={Heading} topics={overviewTopics} questions={QS} papers={overviewPapers} repeats={REPEATS} done={progress.done} openTopic={openTopic} openQuestion={openQuestion} reference={reference} checked={progress.plan} toggle={id=>setProgress(current=>({...current,plan:changed(current.plan,id)}))}/>}
       {view==='settings'&&<AtlasSettings Heading={Heading} clips={clips} display={display} setDisplay={updatePreferences} rewards={display.rewards} setRewards={rewards=>updatePreferences({rewards})} preview={showReward} onReset={resetMastery} mastered={progress.done.length}/>}
-      <footer><span>DAA Atlas</span><span>KIIT · Spring & Autumn papers 2022–2025</span></footer>
+      <footer><span>DAA Atlas</span><span>Spring & Autumn papers 2022–2025</span></footer>
     </div></main></div>{scan&&<Scan scan={scan} setScan={setScan}/>}
     {reward&&<Reward key={reward} file={reward} onClose={()=>setReward(null)}/>}
   </>;

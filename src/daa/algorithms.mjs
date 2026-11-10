@@ -1,9 +1,11 @@
+import {calculationCell} from '../calculation-markup.mjs';
+
 export const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const para = s => '<p>'+s+'</p>';
 export const title = s => '<h3>'+s+'</h3>';
 export const code = s => '<pre><code>'+esc(s)+'</code></pre>';
 export const answer = (result,why) => '<p class="result"><strong>'+result+'</strong></p>'+para(why);
-export const tab = (heads,rows,hot=new Set(),rowHead=false) => '<div class="trace-table" tabindex="0" role="region" aria-label="Scrollable algorithm table"><table><thead><tr>'+heads.map(c=>'<th scope="col">'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+rows.map((row,i)=>'<tr>'+row.map((c,j)=>{const tag=rowHead&&j===0?'th':'td';return '<'+tag+(tag==='th'?' scope="row"':'')+(hot.has(i+','+j)?' class="trace-hot"':'')+'>'+esc(c)+'</'+tag+'>';}).join('')+'</tr>').join('')+'</tbody></table></div>';
+export const tab = (heads,rows,hot=new Set(),rowHead=false,explain) => '<div class="trace-table" tabindex="0" role="region" aria-label="Scrollable algorithm table"><table><thead><tr>'+heads.map(c=>'<th scope="col">'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+rows.map((row,i)=>'<tr>'+row.map((c,j)=>{const tag=rowHead&&j===0?'th':'td';return '<'+tag+(tag==='th'?' scope="row"':'')+(hot.has(i+','+j)?' class="trace-hot"':'')+'>'+(tag==='td'&&explain?calculationCell(c,explain(i,j)):esc(c))+'</'+tag+'>';}).join('')+'</tr>').join('')+'</tbody></table></div>';
 const part=(label,html)=>({label,html});
 const grid=(r,c,seed=0)=>Array.from({length:r},()=>Array(c).fill(seed));
 export function treeDrawing(root,caption,{level=Infinity,focus=-1,note=''}={}) {
@@ -37,7 +39,13 @@ export function lcs(x,y){
   const d=grid(x.length+1,y.length+1);
   for(let i=1;i<=x.length;i++)for(let j=1;j<=y.length;j++)d[i][j]=x[i-1]===y[j-1]?1+d[i-1][j-1]:Math.max(d[i-1][j],d[i][j-1]);
   let i=x.length,j=y.length,seq='', path=new Set([i+','+(j+1)]);
-  const table=(last=x.length,marked=path)=>tab(['X ∖ Y','∅',...y],d.slice(0,last+1).map((r,k)=>[x[k-1]??'∅',...r]),marked,true);
+  const explain=(i,column)=>{
+    const j=column-1, title='L['+i+','+j+']';
+    if(!i||!j)return {title,inputs:[],lines:['An empty prefix has no common subsequence. '+title+' = 0.']};
+    if(x[i-1]===y[j-1])return {title,inputs:[[i-1,j]],lines:['The symbols match ('+x[i-1]+'). Extend the diagonal prefix by one.',title+' = 1 + '+d[i-1][j-1]+' = '+d[i][j]]};
+    return {title,inputs:[[i-1,j+1],[i,j]],lines:['The symbols differ ('+x[i-1]+' and '+y[j-1]+'). Try dropping either last symbol.',title+' = max('+d[i-1][j]+', '+d[i][j-1]+') = '+d[i][j]]};
+  };
+  const table=(last=x.length,marked=path)=>tab(['X ∖ Y','∅',...y],d.slice(0,last+1).map((r,k)=>[x[k-1]??'∅',...r]),marked,true,explain);
   const moves=[], traceback=[];
   while(i&&j){
     const from='('+i+', '+j+')';
@@ -49,12 +57,22 @@ export function lcs(x,y){
     traceback.push(part(move,table(x.length,path)+para('Reached ('+i+', '+j+'). Recovered suffix: '+esc(seq||'∅')+'.')));
   }
   const full=table();
-  const steps=[part('Initialize row and column 0',tab(['X ∖ Y','∅',...y],[['∅',...d[0]]],new Set(),true)),...d.slice(1).map((_,k)=>part('Fill row '+(k+1)+' for '+x[k],tab(['X ∖ Y','∅',...y],d.slice(0,k+2).map((r,t)=>[x[t-1]??'∅',...r]),new Set(d[k+1].map((v,c)=>(k+1)+','+(c+1))),true))),...traceback,part('Backtracking complete · '+seq,full+tab(['From','Move','To','Suffix found'],moves))];
+  const steps=[part('Initialize row and column 0',table(0,new Set())),...d.slice(1).map((_,k)=>part('Fill row '+(k+1)+' for '+x[k],table(k+1,new Set(d[k+1].map((v,c)=>(k+1)+','+(c+1)))))),...traceback,part('Backtracking complete · '+seq,full+tab(['From','Move','To','Suffix found'],moves))];
   return {html:answer('LCS '+esc(seq||'∅')+' · length '+seq.length,'For matching symbols, L[i,j] = 1 + L[i−1,j−1]. Otherwise take max(L[i−1,j], L[i,j−1]). Initialize row and column 0 to zero. Green cells show one optimal traceback, choosing up on equal values.')+full+title('Traceback from the bottom-right')+tab(['From','Move','To','Suffix found'],moves)+para('The table takes Θ(mn) time and space. The direct recursive version below can take exponential time. Memoizing the same states gives Θ(mn) worst-case time.')+code('L(i, j):\n  if i == 0 or j == 0: return 0\n  if X[i-1] == Y[j-1]: return 1 + L(i-1, j-1)\n  return max(L(i-1, j), L(i, j-1))'),steps,value:seq};
 }
 export function matrixChain(p){
   const n=p.length-1,m=grid(n,n),s=grid(n,n,null),steps=[];
-  const show=(data,spot=new Set())=>tab(['i ∖ j',...Array.from({length:n},(_,i)=>i+1)],data.map((row,i)=>[i+1,...row.map((v,j)=>j<i?'—':v??'·')]),spot,true);
+  const explain=(i,column)=>{
+    const j=column-1,title='M['+(i+1)+','+(j+1)+']';
+    if(i>j)return null;
+    if(i===j)return {title,inputs:[],lines:['One matrix requires no multiplication.']};
+    const choices=Array.from({length:j-i},(_,offset)=>{
+      const k=i+offset, product=p[i]*p[k+1]*p[j+1], left=m[i][k],right=m[k+1][j];
+      return 'k='+ (k+1)+': '+left+' + '+right+' + '+p[i]+' × '+p[k+1]+' × '+p[j+1]+' = '+(left+right+product);
+    });
+    return {title,inputs:[[i,s[i][j]],[s[i][j],j+1]],lines:[...choices,'Minimum '+m[i][j]+' at k='+s[i][j]+'. The two costs used by that split are highlighted.']};
+  };
+  const show=(data,spot=new Set(),cell)=>tab(['i ∖ j',...Array.from({length:n},(_,i)=>i+1)],data.map((row,i)=>[i+1,...row.map((v,j)=>j<i?'—':v??'·')]),spot,true,cell);
   const matrixInputs=tab(['Matrix','Dimensions'],p.slice(0,-1).map((x,i)=>['A'+(i+1),x+' × '+p[i+1]]));
   for(let len=2;len<=n;len++){
     const hot=new Set(),tries=[];
@@ -67,11 +85,11 @@ export function matrixChain(p){
       }
     }
     const snapshot=m.map((row,i)=>row.map((v,j)=>j-i>=len?null:v));
-    steps.push(part('Chains of length '+len,show(snapshot,hot)+tab(['Start','End','Split','Candidate','Cost'],tries)));
+    steps.push(part('Chains of length '+len,show(snapshot,hot,(i,c)=>snapshot[i][c-1]===null?null:explain(i,c))+tab(['Start','End','Split','Candidate','Cost'],tries)));
   }
   function build(i,j){if(i===j)return 'A'+(i+1);const k=s[i][j]-1;return '('+build(i,k)+' × '+build(k+1,j)+')';}
   const expression=build(0,n-1);
-  return {html:answer(m[0][n-1]+' scalar multiplications · '+expression,'For each interval [i,j], try split k. Combining the two products costs p[i−1]·p[k]·p[j] using one-based matrix indices.')+matrixInputs+title('Minimum cost m[i,j]')+show(m,new Set(['0,'+n]))+title('Best split s[i,j]')+show(s)+code('M(i, j):\n  if i == j: return 0\n  return min over i <= k < j of\n    M(i,k) + M(k+1,j) + p[i-1]*p[k]*p[j]')+para('Fill diagonals by increasing length or memoize. Θ(n³) time and Θ(n²) space. The split table reconstructs the parentheses.'),steps,value:m[0][n-1]};
+  return {html:answer(m[0][n-1]+' scalar multiplications · '+expression,'For each interval [i,j], try split k. Combining the two products costs p[i−1]·p[k]·p[j] using one-based matrix indices.')+matrixInputs+title('Minimum cost m[i,j]')+show(m,new Set(['0,'+n]),explain)+title('Best split s[i,j]')+show(s)+code('M(i, j):\n  if i == j: return 0\n  return min over i <= k < j of\n    M(i,k) + M(k+1,j) + p[i-1]*p[k]*p[j]')+para('Fill diagonals by increasing length or memoize. Θ(n³) time and Θ(n²) space. The split table reconstructs the parentheses.'),steps,value:m[0][n-1]};
 }
 export function knapsack(weights,values,W){
   const n=weights.length,d=grid(n+1,W+1),names=weights.map((_,i)=>String.fromCharCode(97+i));
@@ -82,7 +100,15 @@ export function knapsack(weights,values,W){
     if(take){chosen.unshift(names[i-1]);rem-=weights[i-1];}
     moves.push([names[i-1],before,d[i][before],take?'Take':'Skip',rem]);path.add((i-1)+','+(rem+1));
   }
-  const table=(last,marks)=>tab(['Item ∖ capacity',...Array.from({length:W+1},(_,i)=>i)],d.slice(0,last+1).map((r,i)=>[names[i-1]??'∅',...r]),marks,true);
+  const explain=(i,column)=>{
+    const w=column-1,title='K['+i+','+w+']';
+    if(!i)return {title,inputs:[],lines:['With no items available, the best value is 0.']};
+    const weight=weights[i-1],value=values[i-1],skip=d[i-1][w];
+    if(w<weight)return {title,inputs:[[i-1,column]],lines:['Item '+names[i-1]+' weighs '+weight+' and cannot fit at capacity '+w+'.','Skip it and keep '+skip+' from the row above.']};
+    const take=d[i-1][w-weight];
+    return {title,inputs:[[i-1,column],[i-1,w-weight+1]],lines:['Skip item '+names[i-1]+' for '+skip+', or take it for '+value+' and use capacity '+(w-weight)+' from the previous row.',title+' = max('+skip+', '+value+' + '+take+') = '+d[i][w]]};
+  };
+  const table=(last,marks)=>tab(['Item ∖ capacity',...Array.from({length:W+1},(_,i)=>i)],d.slice(0,last+1).map((r,i)=>[names[i-1]??'∅',...r]),marks,true,explain);
   const choices=tab(['Item','Capacity','Current value','Decision','Capacity left'],moves);
   const steps=weights.map((w,i)=>part('Item '+names[i]+' · weight '+w+' · value '+values[i],table(i+1,new Set(d[i+1].map((_,c)=>(i+1)+','+(c+1))))));
   steps.push(part('Trace the optimal selection',table(n,path)+choices));

@@ -1,6 +1,6 @@
 # Study Atlas
 
-One KIIT exam workbench for DAA, Computer Networks, Engineering Economics, and Software Engineering.
+One exam workbench for DAA, Computer Networks, Engineering Economics, and Software Engineering.
 
 [Open Study Atlas](https://clankclankclankclank.github.io/atlas/)
 

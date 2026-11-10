@@ -9,11 +9,3 @@ export const irr=cash=>{let a=-.999999,b=1;while(npv(cash,b)>0)b=b*2+1;for(let j
 export const flows=(p,a,s,n)=>[-p,...Array.from({length:n},(_,i)=>a+(i===n-1?s:0))];
 const money=(n,c='₹')=>c+fmt(n);
 export const table=(head,rows)=>'<table><thead><tr>'+head.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
-export function dep(p,s,n,kind,i=0){
- const rows=[];let b=p;
- for(let t=1;t<=n;t++){
-  let d=kind==='SL'?(p-s)/n:kind==='SF'?(p-s)/F(i,n)*(1+i)**(t-1):kind==='SYD'?(p-s)*(n-t+1)/(n*(n+1)/2):Math.min(b-s,b*i);
-  b-=d;rows.push([t,d,p-b,b]);
- }
- return rows;
-}

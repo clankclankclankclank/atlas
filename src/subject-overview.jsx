@@ -4,7 +4,6 @@ import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,File
 const models={
  daa:{
   heading:['Design & Analysis','of Algorithms'],date:'2022–2025',
-  description:'Work through past papers, trace recursive calls, and follow the decisions behind each algorithm.',
   tool:['Trace Studio','diagrams'],caption:'RECURSION TREE',
   steps:[['Root','T(n) · one original problem'],['Split','T(n/4) and T(3n/4)'],['Expand','Work across each complete level sums to n']],
   features:[
@@ -15,7 +14,6 @@ const models={
  },
  cn:{
   heading:['Computer','Networks'],date:'2022–2025',
-  description:'Follow a packet across the network and practice routing, subnetting, and error control with worked papers.',
   tool:['Formula sheet','formula'],caption:'PACKET PATH',
   steps:[['Send','The source hands a packet to its gateway'],['Route','The router forwards it to the next hop'],['Deliver','The packet arrives at its destination']],
   features:[
@@ -26,8 +24,7 @@ const models={
  },
  ee:{
   heading:['Engineering','Economics'],date:'2024–2026',
-  description:'Start with the cash-flow timeline, work through the calculations, and check the final decision.',
-  tool:['Formula sheet','formula'],caption:'CASH-FLOW TIMELINE',
+  tool:['Formula drills','drills'],caption:'CASH-FLOW TIMELINE',
   steps:[['Invest','Year 0 · initial cost is an outflow'],['Operate','Year 1 · the first operating inflow arrives'],['Compare','Discount cash flows to the same date']],
   features:[
    ['Present worth','Compare two projects on a common date.',Activity,{question:'E1-4(a)'}],
@@ -37,7 +34,6 @@ const models={
  },
  se:{
   heading:['Software','Engineering'],date:'2022–2025',
-  description:'Follow a system from requirements to release. Practice design, testing, and estimation with worked papers.',
   tool:['Diagram Studio','diagrams'],caption:'SYSTEM DELIVERY MAP',
   steps:[['Define','Turn stakeholder needs into requirements'],['Model','Use the requirements to guide system design'],['Verify','Trace test results back to requirements']],
   features:[
@@ -91,7 +87,7 @@ export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,don
  const model=models[subject],mastered=new Set(done);
  return <div className="subject-overview">
   <section className="subject-hero">
-   <div className="subject-hero-copy"><p className="subject-kicker"><i/> KIIT / {model.date}</p><h1>{model.heading[0]} <em>{model.heading[1]}.</em></h1><p className="subject-description">{model.description}</p>
+   <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1>{model.heading[0]} <em>{model.heading[1]}.</em></h1>
     <div className="subject-actions"><button className="button primary" onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
    <SubjectBoard subject={subject} model={model}/>

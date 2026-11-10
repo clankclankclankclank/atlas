@@ -1,3 +1,6 @@
+import {depreciationSchedule} from './depreciation.mjs';
+import {expandFactors,factorEntry} from './factor-expansion.mjs';
+
 const esc=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const num=(n,d=2)=>new Intl.NumberFormat('en-IN',{maximumFractionDigits:d}).format(Math.abs(n)<1e-10?0:n);
 const A=(i,n)=>(1-(1+i)**-n)/i;
@@ -28,7 +31,7 @@ function pw(id,i,n,projects,unit){
  const best=[...out].sort((a,b)=>b.pw-a.pw)[0], decision=best.pw>=0?'Choose '+best.name:'Choose '+best.name+' if compulsory. Otherwise reject both.';
  add(id,decision,steps(
  ['Put every amount at year 0',projectTimeline([['0',projects.map(([nm,p])=>nm+': −'+p).join(' / '),'Pay initial cost'],['1–'+n,projects.map(([nm,p,a])=>nm+': +'+a+' yearly').join(' / '),'Discount a uniform series'],[String(n),projects.map(([nm,p,a,s])=>nm+': +'+s).join(' / '),'Discount salvage separately']],unit)+eq('PW = −P + A(P/A, i, n) + S(P/F, i, n)')],
- ['Calculate the two factors',eq('(P/A, '+fmtPct(i)+', '+n+') = [1 − (1 + '+i+')<sup>−'+n+'</sup>] / '+i+' = '+num(factor,7))+eq('(P/F, '+fmtPct(i)+', '+n+') = (1 + '+i+')<sup>−'+n+'</sup> = '+num(single,7))],
+ ['Calculate the two factors',eq('(P/A, '+fmtPct(i)+', '+n+') = [1 − (1 + '+i+')<sup>−'+n+'</sup>] / '+i+' = '+num(factor,7))+eq('(P/F, '+fmtPct(i)+', '+n+') = (1 + '+i+')<sup>−'+n+'</sup> = '+num(single,7))+expandFactors([['P/A',i,n,factor],['P/F',i,n,single]],[['Project calculator entry','-'+projects[0][1]+' + '+projects[0][2]+' * ('+factorEntry('P/A',i,n)+') + '+projects[0][3]+' * ('+factorEntry('P/F',i,n)+')']])],
  ['Substitute and compare',table(['Project','Initial ('+unit+')','PW of receipts','PW of salvage','Net PW'],out.map(x=>[x.name,...[-x.p,x.pva,x.pvs,x.pw].map(z=>num(z,5))]))+out.map(x=>eq('PW('+x.name+') = −'+x.p+' + '+x.a+'('+num(factor,7)+') + '+x.s+'('+num(single,7)+') = '+num(x.pw,5)+' '+unit)).join('')+p('Choose the higher net present worth. A zero-worth do-nothing alternative outranks either project when both PWs are negative.') ]));
 }
 function bcCompare(id,i,projects,unit){
@@ -46,7 +49,7 @@ function bcPW(id,i,initial,benefits,operations,salvage,n,unit,lead=''){
  const c=initial+operations*A(i,n), r=b/c;
  add(id,'B/C = '+num(r,5)+' · '+(r>=1?'accept':'reject'),steps(
  ['Lay out the cash flows',p(lead)+projectTimeline([['0','−'+initial,'Initial construction cost'],['1–'+n,'−'+operations+' per year','Operating and maintenance costs'],[String(n),'+'+salvage,'Terminal receipt, if any']],unit)+table(['Benefit stream','Year 1','Year '+n],rows.map(([nm,cash])=>[nm,cash[0],cash.at(-1)]))],
- ['Discount benefits and costs separately',eq('(P/A, '+fmtPct(i)+', '+n+') = '+num(A(i,n),7)+' · (P/F, '+fmtPct(i)+', '+n+') = '+num(disc(i,n),7))+table(['Cash-flow component','Calculation','PW ('+unit+')'],[...rows.map(([nm,cash,v])=>[nm,cash.every(z=>z===cash[0])?cash[0]+' × '+num(A(i,n),7):'Σ Bₜ/(1+i)ᵗ',v]),['Salvage',salvage+' × '+num(disc(i,n),7),num(salvage*disc(i,n),6)],['Initial cost','Already at time 0',num(initial,6)],['Annual O&M',operations+' × '+num(A(i,n),7),num(operations*A(i,n),6)]])],
+ ['Discount benefits and costs separately',eq('(P/A, '+fmtPct(i)+', '+n+') = '+num(A(i,n),7)+' · (P/F, '+fmtPct(i)+', '+n+') = '+num(disc(i,n),7))+expandFactors([['P/A',i,n,A(i,n)],['P/F',i,n,disc(i,n)]])+table(['Cash-flow component','Calculation','PW ('+unit+')'],[...rows.map(([nm,cash,v])=>[nm,cash.every(z=>z===cash[0])?cash[0]+' × '+num(A(i,n),7):'Σ Bₜ/(1+i)ᵗ',v]),['Salvage',salvage+' × '+num(disc(i,n),7),num(salvage*disc(i,n),6)],['Initial cost','Already at time 0',num(initial,6)],['Annual O&M',operations+' × '+num(A(i,n),7),num(operations*A(i,n),6)]])],
  ['Apply the B/C test',eq('PW(B) = '+num(b,6)+' · PW(C) = '+num(c,6)+' '+unit)+eq('B/C = '+num(b,6)+' / '+num(c,6)+' = '+num(r,6))+p(r>=1?'At the stated discount rate, present benefits exceed present costs. The project is justified under the supplied assumptions.':'At the stated discount rate, present benefits fall short of present costs. Reject on these cash flows.') ]));
 }
 function irrBetween(cash){
@@ -72,19 +75,13 @@ function reg(id,xs,ys,targets,unit){
  ['Substitute the requested inputs',table(['x','x−x̄','Calculation','Forecast ('+unit+')'],targets.map((x,j)=>[x,num(x-xbar,6),num(ybar,8)+' + ('+num(b,8)+') × ('+num(x-xbar,6)+')',num(pred[j],4)]))+p(targets.some(t=>t>Math.max(...xs)||t<Math.min(...xs))?'These are extrapolations. They assume the fitted linear trend continues beyond the observed range.':'The forecast is interpolation inside the observed range.') ]));
 }
 function depreciation(label,P,S,n,method,i,unit){
- const uniform=method==='SL'?(P-S)/n:method==='SF'?(P-S)/F(i,n):0;
- let bv=P;
- const row=Array.from({length:n},(_,idx)=>{
-  const t=idx+1, open=bv, d=method==='SL'?uniform:method==='SF'?uniform*(1+i)**idx:Math.min(open-S,open*i);
-  bv=open-d;
-  return [t,...[open,method==='SF'?d-uniform:null,d,P-bv,bv].map(x=>x==null?'—':num(x))];
- });
+ const {schedule,expansion,uniform,balance:bv}=depreciationSchedule(P,S,n,method,i,unit);
  const rule=method==='SL'?'D = (P − S)/n = ('+num(P)+' − '+num(S)+') / '+n+' = '+num(uniform):
  method==='SF'?'A = (P − S)/(F/A,i,n) = ('+num(P)+' − '+num(S)+') / '+num(F(i,n),7)+' = '+num(uniform):
  'Dₜ = '+fmtPct(i)+' × opening BV, capped at opening BV − '+num(S);
- return {label,rule,row,unit,uniform,bv,method,steps:steps(
- ['Set the depreciation rule',eq(rule)+p(method==='SF'?'A is the fixed fund deposit. This year’s net depreciation is A plus interest on the fund accumulated by last year. Equivalent form: Dₜ=A(1+i)<sup>t−1</sup>.':method==='SL'?'Subtract the same annual depreciation from the opening book value every year.':'Use the same percentage on a changing opening book value. A salvage floor only stops the book value from falling below the specified salvage.')],
- ['Build the full yearly schedule',table(['Year','Opening BV ('+unit+')',...(method==='SF'?['Interest on fund']:[]),'Year depreciation','Accumulated','Closing BV'],row.map(r=>method==='SF'?r:r.filter((_,i)=>i!==2)))+p('Accumulated depreciation = purchase cost − closing book value. The table displays rounded figures but keeps full precision during calculation.')],
+ return {label,rule,unit,uniform,bv,method,steps:steps(
+ ['Set the depreciation rule',eq(rule)+expansion+p(method==='SF'?'A is the fixed fund deposit. This year’s net depreciation is A plus interest on the fund accumulated by last year. Equivalent form: Dₜ=A(1+i)<sup>t−1</sup>.':method==='SL'?'Subtract the same annual depreciation from the opening book value every year.':'Use the same percentage on a changing opening book value. A salvage floor only stops the book value from falling below the specified salvage.')],
+ ['Build the full yearly schedule',schedule+p('Accumulated depreciation = purchase cost − closing book value. The table displays rounded figures but keeps full precision during calculation.')],
  ['Check the last row',eq('Closing book value after '+n+' years = '+num(bv)+' '+unit)+p(method==='DB'?'A fixed-rate declining balance schedule may end above salvage. Adjust the final year only if the question requires the terminal book value to equal salvage.':'The ending book value equals the specified salvage value.')])};
 }
 function breakEven(P,V,fc,q){
@@ -165,7 +162,7 @@ pw('E1-4(a)',.16,17,[['A',50,3,.03],['B',65,5,.05]],'₹ lakh');
  const m=[[1,20,1],[2,15,1.5]];
  add('E1-4(b)','Choose Machine 2. Its year-20 future cost is lower.',steps(
  ['Set a common comparison date',p('Both machines provide 20 years of service. Move the purchase cost from year 0 and every end-of-year O&M payment to year 20.')+eq('FW(cost) = P(F/P,i,n) + A(F/A,i,n)')],
- ['Compute the factors',eq('(F/P) = 1.18²⁰ = '+num(g,7)+' · (F/A) = (1.18²⁰ − 1)/0.18 = '+num(f,7))],
+ ['Compute the factors',eq('(F/P) = 1.18²⁰ = '+num(g,7)+' · (F/A) = (1.18²⁰ − 1)/0.18 = '+num(f,7))+expandFactors([['F/P',i,n,g],['F/A',i,n,f]])],
  ['Calculate and select',table(['Machine','Purchase FW (₹ lakh)','O&M FW','Total FW cost'],m.map(([k,p,a])=>[k,num(p*g,5),num(a*f,5),num(p*g+a*f,5)]))+eq('Machine 1: 20('+num(g,7)+') + 1('+num(f,7)+') = '+num(20*g+f,5))+eq('Machine 2: 15('+num(g,7)+') + 1.5('+num(f,7)+') = '+num(15*g+1.5*f,5))+p('For equal benefits, minimize cost. No salvage was supplied.') ]));
 }
 bcCompare('E1-5(a)',.10,[['A',35,8.5,10],['B',40,9,12]],'₹ lakh');
@@ -244,7 +241,7 @@ lesson('E3-2(a)','Eₚ = −1.5094, Eᵧ = +0.1509. The separate effects are −
  const i=.20,n=25,a=10000,amount=a*F(i,n);
  lesson('E3-3(a)','The age-60 maturity value is ₹'+num(amount)+'.',
  s('Count the deposits and their growth periods',projectTimeline([['1','10,000','Accrues for 24 years'],['2','10,000','Accrues for 23 years'],['25','10,000','No interest after the last deposit']],'₹')+p('The first deposit is one year from now. This is an ordinary end-of-year annuity.')),
- s('Sum the geometric series',eq('F = A[1 + 1.2 + … + 1.2²⁴] = A[(1.2²⁵ − 1)/0.20]')+eq('F = 10,000 × '+num(F(i,n),8)+' = ₹'+num(amount))),
+ s('Sum the geometric series',eq('F = A[1 + 1.2 + … + 1.2²⁴] = A[(1.2²⁵ − 1)/0.20]')+eq('F = 10,000 × '+num(F(i,n),8)+' = ₹'+num(amount))+expandFactors([['F/A',i,n,F(i,n)]],[['Calculator entry','10000 * ('+factorEntry('F/A',i,n)+')']])),
  s('Check the total',p('Principal deposited is 25 × ₹10,000 = ₹2,50,000. The remainder, ₹'+num(amount-a*n)+', is compound growth.')));
 }
 reg('E3-3(b)',[1,2,3,4,5],[18,12,10,9,4],[3.5],'units');
@@ -275,7 +272,7 @@ lesson('E3-6(a)','Inflation means the general price level keeps rising. Classify
  const i=.15,n=10,g=500,d=4000, future=(d+g*G(i,n))*F(i,n), alt=(800+g*G(i,n))*F(i,n);
  lesson('E3-6(b)','If ₹4,000 is the first deposit, the year-10 fund is ₹'+num(future)+'.',
  s('Separate uniform deposits and gradient',eq('Deposit in year t = 4000 + 500(t−1), t=1,…,10')+p('The final deposit is ₹8,500. Use end-of-year timing.')),
- s('Convert to a future amount',eq('(A/G,15%,10) = '+num(G(i,n),8)+' · (F/A,15%,10) = '+num(F(i,n),8))+eq('F = [4000 + 500('+num(G(i,n),8)+')] × '+num(F(i,n),8)+' = ₹'+num(future))),
+ s('Convert to a future amount',eq('(A/G,15%,10) = '+num(G(i,n),8)+' · (F/A,15%,10) = '+num(F(i,n),8))+eq('F = [4000 + 500('+num(G(i,n),8)+')] × '+num(F(i,n),8)+' = ₹'+num(future))+expandFactors([['A/G',i,n,G(i,n)],['F/A',i,n,F(i,n)]],[['Calculator entry','(4000 + 500 * ('+factorEntry('A/G',i,n)+')) * ('+factorEntry('F/A',i,n)+')']])),
  s('Check by compounding each deposit',arcSeries(d,g,n,i)+p('The phrase “20% of the salary, which is ₹4,000” is ambiguous. If ₹4,000 means salary, start with 20% × ₹4,000 = ₹800, keep the printed ₹500 deposit increase, and get ₹'+num(alt)+'.')));
 }
 const elasticityCurves=[
@@ -341,7 +338,7 @@ tax('E5-3(a)',1200,8,200,2,{rate:.30});
  const f=2000000,i=.075,n=8,pv=f*disc(i,n),a=f/F(i,n);
  lesson('E5-3(b)','Deposit ₹'+num(pv)+' now or ₹'+num(a)+' at each year-end.',
  s('Discount the target to year 0',eq('P = F/(1+i)ⁿ = 20,00,000/(1.075)⁸ = ₹'+num(pv))),
- s('Find the equal end-of-year deposit',eq('(F/A,7.5%,8) = [(1.075)⁸−1]/0.075 = '+num(F(i,n),8))+eq('A = 20,00,000/'+num(F(i,n),8)+' = ₹'+num(a))),
+ s('Find the equal end-of-year deposit',eq('(F/A,7.5%,8) = [(1.075)⁸−1]/0.075 = '+num(F(i,n),8))+eq('A = 20,00,000/'+num(F(i,n),8)+' = ₹'+num(a))+expandFactors([['F/A',i,n,F(i,n)]],[['Calculator entry','2000000 / ('+factorEntry('F/A',i,n)+')']])),
  s('Verify the accumulation',arcSeries(a,0,n,i)+eq('A(F/A,7.5%,8) = ₹20,00,000 using the unrounded annual deposit.')));
 }
 {
@@ -395,7 +392,7 @@ lesson('E6-3(a)','MC crosses AVC at Q=15 and starts rising after Q=10.',
  const i=.04,n=12,a=20000,g=1000,ann=a+g*G(i,n),f=ann*F(i,n);
  lesson('E6-3(b)','Elisha should deposit ₹'+num(ann)+' each year for 12 years.',
  s('Count Sophia’s 12 deposits',eq('Aₜ = 20,000 + 1,000(t−1), t=1,…,12')+p('The amounts run from ₹20,000 to ₹31,000. The gradient contributes zero in year 1.')),
- s('Convert the gradient to an annuity',eq('(A/G,4%,12) = 1/0.04 − 12/[(1.04)¹²−1] = '+num(G(i,n),8))+eq('A<sub>equiv</sub> = 20,000 + 1,000×'+num(G(i,n),8)+' = ₹'+num(ann))),
+ s('Convert the gradient to an annuity',eq('(A/G,4%,12) = 1/0.04 − 12/[(1.04)¹²−1] = '+num(G(i,n),8))+eq('A<sub>equiv</sub> = 20,000 + 1,000×'+num(G(i,n),8)+' = ₹'+num(ann))+expandFactors([['A/G',i,n,G(i,n)]],[['Calculator entry','20000 + 1000 * ('+factorEntry('A/G',i,n)+')']])),
  s('Check the common future value',arcSeries(a,g,n,i)+eq('A<sub>equiv</sub>(F/A,4%,12) = ₹'+num(f)+'.')));
 }
 {
@@ -422,7 +419,13 @@ export function upgradeQuestions(questions){
  if(long.length!==solutions.size||long.some(q=>!solutions.has(q.id)))throw Error('EE worked-answer coverage is incomplete.');
  return questions.map(q=>{
   const replacement=solutions.get(q.id);
-  if(!replacement)return q;
+  if(!replacement){
+   if(q.id!=='E5-1(h)')return q;
+   const i=.12,full=16,elapsed=13,cost=1000000,base=800000;
+   const entry=cost+' - ('+base+' / ('+factorEntry('F/A',i,full)+')) * ('+factorEntry('F/A',i,elapsed)+')';
+   const remaining=cost-base/F(i,full)*F(i,elapsed);
+   return {...q,ahtml:q.ahtml+expandFactors([['F/A',i,full,F(i,full)],['F/A',i,elapsed,F(i,elapsed)]],[['Book value calculator entry',entry],['Year 13 book value',num(remaining)+' dollars']])};
+  }
   return {...q,...replacement,question:replacement.question??q.question,solution:replacement.ahtml.replace(/<[^>]*>/g,' ')};
  });
 }

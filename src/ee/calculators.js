@@ -1,6 +1,8 @@
 
+import {depreciationSchedule} from './depreciation.mjs';
+import {expandFactors,factorEntry} from './factor-expansion.mjs';
 import labs from './lab-config.json';
-import {A,F,G,fmt,pv,irr,npv,flows,table,dep} from './economics-math.js';
+import {A,F,G,fmt,pv,irr,npv,flows,table} from './economics-math.js';
 export {labs};
 const metric=s=>'<div class="metric">'+s+'</div>';
 export function calculate(lab,values){
@@ -18,9 +20,9 @@ export function calculate(lab,values){
  case 'single':
   html=metric('Future value '+fmt(p*(1+rate)**n))+'<p>Multiply '+fmt(p)+' by (1 + '+fmt(i)+'%)ⁿ with n = '+n+'.</p>';break;
  case 'annuity':
-  html=metric('Future worth '+fmt(a*F(rate,n)))+'<p>Present worth '+fmt(a*A(rate,n))+' · F/A = '+fmt(F(rate,n),5)+' · P/A = '+fmt(A(rate,n),5)+'. Payments occur at year end.</p>';break;
+  html=metric('Future worth '+fmt(a*F(rate,n)))+'<p>Present worth '+fmt(a*A(rate,n))+' · F/A = '+fmt(F(rate,n),5)+' · P/A = '+fmt(A(rate,n),5)+'. Payments occur at year end.</p>'+expandFactors([['F/A',rate,n,F(rate,n)],['P/A',rate,n,A(rate,n)]],[['Future worth calculator entry',a+' * ('+factorEntry('F/A',rate,n)+')']]);break;
  case 'gradient':
-  html=metric('Future worth '+fmt((a+g*G(rate,n))*F(rate,n)))+'<p>Annual equivalent '+fmt(a+g*G(rate,n))+' · A/G = '+fmt(G(rate,n),5)+'. The first payment is '+fmt(a)+' and the final payment is '+fmt(a+(n-1)*g)+'.</p>';break;
+  html=metric('Future worth '+fmt((a+g*G(rate,n))*F(rate,n)))+'<p>Annual equivalent '+fmt(a+g*G(rate,n))+' · A/G = '+fmt(G(rate,n),5)+'. The first payment is '+fmt(a)+' and the final payment is '+fmt(a+(n-1)*g)+'.</p>'+expandFactors([['A/G',rate,n,G(rate,n)],['F/A',rate,n,F(rate,n)]],[['Future worth calculator entry','('+a+' + '+g+' * ('+factorEntry('A/G',rate,n)+')) * ('+factorEntry('F/A',rate,n)+')']]);break;
  case 'worth': {
   if(p<=0||om<0||a<0||s<0)return {error:'Use a positive initial cost and nonnegative benefits, salvage and O&M.'};
   const present=pv(p,a-om,s,rate,n);
@@ -36,8 +38,8 @@ export function calculate(lab,values){
  }
  case 'depreciation': {
   if(p<0||s<0||s>p||i>100)return {error:'Require 0 ≤ salvage ≤ first cost and a rate between 0% and 100%.'};
-  const rows=dep(p,s,n,kind,rate);
-  html=metric('Final book value '+fmt(rows.at(-1)[3]))+'<p>'+({SL:'Equal annual charges.',SF:'Annual charge includes interest on the prior fund balance.',DB:'Apply the rate to opening book value with a salvage floor.',SYD:'Apply remaining life divided by the sum of year digits.'}[kind])+'</p>'+table(['Year','Depreciation','Accumulated','Book value'],rows.map(([t,d,c,b])=>[t,fmt(d),fmt(c),fmt(b)]));
+  const {schedule,expansion,balance}=depreciationSchedule(p,s,n,kind,rate);
+  html=metric('Final book value '+fmt(balance))+'<p>'+({SL:'Equal annual charges.',SF:'Annual charge includes interest on the prior fund balance.',DB:'Apply the rate to opening book value with a salvage floor.',SYD:'Apply remaining life divided by the sum of year digits.'}[kind])+'</p>'+expansion+schedule;
   break;
  }
  case 'break': {

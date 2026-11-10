@@ -9,10 +9,10 @@ import {useAtlasPreferences} from './preferences.js';
 import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} from './routing.mjs';
 
 const subjects={
- daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',description:'Trace recursion trees, step through tables, and recover the exact choices an algorithm makes.',tone:'#8fe5ee',icon:GitBranch,global:'AtlasDAA'},
- cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',description:'Follow packets across the stack, work through subnetting and error control, and review the original diagrams.',tone:'#b5b3ff',icon:Network,global:'AtlasCN'},
- ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',description:'Work each calculation from the cash-flow timeline to the final recommendation.',tone:'#f8bc79',icon:Calculator,global:'AtlasEE'},
- se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',description:'Read system diagrams, compare process models, and practice testing and project estimation.',tone:'#acd9ab',icon:Layers3,global:'AtlasSE'}
+ daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',description:'Trace recursion trees, step through tables, and recover the exact choices an algorithm makes.',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
+ cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',description:'Follow packets across the stack, work through subnetting and error control, and review the original diagrams.',tone:'#b5b3ff',light:'#573ca1',icon:Network,global:'AtlasCN'},
+ ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',description:'Work each calculation from the cash-flow timeline to the final recommendation.',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'},
+ se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',description:'Read system diagrams, compare process models, and practice testing and project estimation.',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'}
 };
 const subjectEntries=Object.entries(subjects);
 const lastKey='study-atlas-last-route';
@@ -57,7 +57,7 @@ function Home({progress,showSearch}){
  const countPapers=Object.values(totals).reduce((n,x)=>n+x.papers,0);
  return <main className="study-hub" id="hub-main" tabIndex={-1}>
   <section className="hub-hero">
-   <div className="hub-hero-copy"><p className="hub-kicker"><span></span> KIIT EXAM WORKBENCH</p>
+   <div className="hub-hero-copy"><p className="hub-kicker"><span></span> PAST-PAPER STUDY</p>
     <h1>Your study<br/> <em>Atlas.</em></h1>
     <p className="hub-description">Four subjects, one place to work through past papers. Pick a subject, revisit a bookmark, or jump straight into a 1-mark drill.</p>
     <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('saved')}><Bookmark size={16}/> Bookmarks</button><a className="hub-action" href={linkTo(last?.subject??'daa','review')} onClick={smartLink}><Layers3 size={16}/> Review Studio</a></div>
@@ -68,7 +68,7 @@ function Home({progress,showSearch}){
   <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div><span>Four designs. One question finder.</span></header>
    <div className="hub-cards">{subjectEntries.map(([id,course],j)=>{
     const Icon=course.icon,stats=totals[id],mastered=index.filter(q=>q.subject===id&&progress[id].done.has(q.id)).length;
-    return <article className="hub-card" key={id} style={{'--card-tone':course.tone,'--card-delay':j*48+'ms'}}>
+    return <article className="hub-card" key={id} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
      <div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b>0{j+1}</b></span></div>
      <h3><a href={linkTo(id)} onClick={smartLink}>{course.title}<ArrowUpRight size={18}/></a></h3>
      <p>{course.description}</p>
@@ -84,7 +84,7 @@ function Home({progress,showSearch}){
     <button type="button" onClick={()=>showSearch('saved')}><Bookmark size={20}/><span><b>All bookmarks</b><small>Open saved questions across all four subjects.</small></span><ArrowDownRight size={17}/></button>
    </div>
   </section>
-  <footer className="hub-footer"><span>Study Atlas</span><span>KIIT · Algorithms · Networks · Economics · Software</span></footer>
+  <footer className="hub-footer"><span>Study Atlas</span><span>Algorithms · Networks · Economics · Software</span></footer>
  </main>;
 }
 
@@ -199,7 +199,7 @@ function Hub(){
  },[]);
  useLayoutEffect(()=>{
   if(shown==null)return;
-  document.title=shown==='home'?'Study Atlas · KIIT Exam Workbench':subjects[shown].title+' · Study Atlas';
+  document.title=shown==='home'?'Study Atlas · Past Papers and Practice':subjects[shown].title+' · Study Atlas';
   if(shown===route.subject&&shown!=='home')remember(location.hash||linkTo(shown));
  },[shown,route]);
  useEffect(()=>{
