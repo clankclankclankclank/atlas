@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {Activity,ArrowLeft,ArrowRight,Database,Globe2,Layers3,Laptop,Router,Server} from 'lucide-react';
-import {SignalPath} from '../visual-effects.jsx';
+import {CursorGrid,SignalPath} from '../visual-effects.jsx';
 
 const traces=[
  {id:'route',label:'Routing',nodes:[[Laptop,'Source'],[Router,'Gateway'],[Router,'Next hop'],[Server,'Destination']],steps:[
@@ -32,7 +32,7 @@ export function SignalBoard(){
  return <section className="cn-signal-board" aria-label="Packet walkthrough">
   <header className="cn-board-head"><span><Activity size={15}/> PACKET WALKTHROUGH</span><span className="cn-board-index">0{step+1} / 0{trace.steps.length}</span></header>
   <div className="cn-protocol-switch" role="group" aria-label="Choose a protocol">{traces.map(({id,label},i)=><button type="button" key={id} aria-pressed={mode===i} onClick={()=>{setMode(i);setStep(0);}}>{label}</button>)}</div>
-  <div className="cn-signal-graph">
+  <div className="cn-signal-graph"><CursorGrid/>
    <svg viewBox="0 0 426 149" aria-hidden="true">
     <path className="cn-signal-guide" d="M0 57H426M0 98H426M48 0v130M158 0v130M268 0v130M378 0v130"/>
     {x.slice(0,-1).map((value,i)=><SignalPath key={trace.id+i} path={'M'+value+' '+y[i]+'H'+(value+47)+'L'+(x[i+1]-26)+' '+y[i+1]+'H'+x[i+1]} active={i===Math.min(step,last-1)}/>)}

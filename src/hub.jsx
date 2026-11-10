@@ -2,7 +2,7 @@ import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
-import {RevealLine,SignalPath,trackSpotlight} from './visual-effects.jsx';
+import {CountStat,CursorGrid,RevealGrid,RevealLine,SignalPath,SubjectPillNav,trackSpotlight} from './visual-effects.jsx';
 import {index,totals} from './generated-index.mjs';
 import {RecentTrail} from './reading-trail.jsx';
 import {Clock3} from 'lucide-react';
@@ -32,9 +32,9 @@ function Header({shown,pending,view,showSearch,showRecent}){
  const settingsSubject=subjects[shown]?shown:persistedSubject()?.subject??'daa';
  return <header className="atlas-top" data-switching={pending ? 'true' : undefined}><div className="atlas-top-inner">
   <a href="#/" onClick={smartLink} className="atlas-brand" aria-label="Study Atlas home"><span className="atlas-brand-icon"><Compass size={20}/></span><span>Study Atlas</span></a>
-  <nav aria-label="Subjects" className="atlas-subnav">
+  <SubjectPillNav active={shown}>
    {subjectEntries.map(([id,course])=><a key={id} href={linkTo(id)} onClick={smartLink} style={{'--subject-accent':course.tone}} aria-current={shown===id?'page':undefined} data-pending={pending===id?'true':undefined} onPointerEnter={()=>warmSubject(id)} onFocus={()=>warmSubject(id)}><course.icon size={13} aria-hidden="true"/>{course.abbr}</a>)}
-  </nav>
+  </SubjectPillNav>
   <div className="atlas-top-actions"><button type="button" className="atlas-global-settings atlas-history-open" aria-label="Recently opened" title="Recently opened" onClick={showRecent}><Clock3 size={17}/></button><a className="atlas-global-settings" href={linkTo(settingsSubject,'settings')} onClick={smartLink} aria-label="Atlas settings" aria-current={view==='settings'?'page':undefined}><Settings2 size={17}/></a><button type="button" className="atlas-search-open" onClick={()=>showSearch('all')} aria-label="Search all subjects"><Search size={18}/><span>Find a question</span><kbd>Ctrl K</kbd></button></div>
  </div></header>;
 }
@@ -44,7 +44,7 @@ function HeroMap({active,setActive}){
  const course=subjects[active];
  return <div className="hub-map" aria-label="Choose a subject to preview" style={{'--map-active':course.tone,'--map-active-light':course.light}}>
   <div className="hub-map-head"><span><i/> SUBJECT MAP</span><span>01–04 / ATLAS</span></div>
-  <div className="hub-map-body">
+  <div className="hub-map-body"><CursorGrid/>
    <svg viewBox="0 0 440 280" aria-hidden="true">
     <defs><pattern id="hub-grid" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="currentColor" opacity=".25"/></pattern></defs>
     <rect width="440" height="280" fill="url(#hub-grid)"/>
@@ -87,9 +87,9 @@ function Home({progress,showSearch}){
    </div>
    <HeroMap active={active} setActive={setActive}/>
   </section>
-  <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions',BookOpen],[countPapers,'exam papers',Layers3],[done,'mastered',Activity],[saved,'bookmarks',Bookmark]].map(([number,label,Icon])=><div key={label}><Icon size={16} aria-hidden="true"/><b>{number}</b><span>{label}</span></div>)}</section>
+  <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions',BookOpen],[countPapers,'exam papers',Layers3],[done,'mastered',Activity],[saved,'bookmarks',Bookmark]].map(([number,label,Icon])=><div key={label}><Icon size={16} aria-hidden="true"/><CountStat value={number}/><span>{label}</span></div>)}</section>
   <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div></header>
-   <div className="hub-cards">{subjectEntries.map(([id,course],j)=>{
+   <RevealGrid className="hub-cards">{subjectEntries.map(([id,course],j)=>{
     const Icon=course.icon,stats=totals[id],mastered=index.filter(q=>q.subject===id&&progress[id].done.has(q.id)).length;
     return <article className="hub-card" key={id} onPointerMove={trackSpotlight} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
      <SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b> / 0{j+1}</b></span></div>
@@ -98,7 +98,7 @@ function Home({progress,showSearch}){
      <div className="hub-card-progress"><span>{mastered} / {stats.questions} mastered</span><progress aria-label={course.abbr+' mastery'} max={stats.questions} value={mastered}/></div>
      <div className="hub-card-actions"><a href={linkTo(id,'questions')} onClick={smartLink}>Question bank <ChevronRight size={14}/></a><a href={linkTo(id,'questions',{marks:'1'})} onClick={smartLink}>1-mark drill <ChevronRight size={14}/></a></div>
     </article>;
-   })}</div>
+   })}</RevealGrid>
   </section>
   <section className="hub-shortcuts" aria-labelledby="shortcuts-heading"><header className="hub-section-head"><div><p className="hub-kicker">02 / QUICK ACCESS</p><h2 id="shortcuts-heading">Get straight to the work</h2></div></header>
    <div className="hub-shortcut-grid">

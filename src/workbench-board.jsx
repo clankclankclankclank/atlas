@@ -1,7 +1,7 @@
 
 import React,{useState} from 'react';
 import {Activity,ArrowLeft,ArrowRight,Boxes,GitBranch} from 'lucide-react';
-import {SignalPath} from './visual-effects.jsx';
+import {CursorGrid,SignalPath} from './visual-effects.jsx';
 
 const sort=[
  ['Start','The first value is a sorted prefix of length one.','[7, 3, 5, 2]',[7,3,5,2]],
@@ -34,7 +34,7 @@ function Board({label,Icon,position,options,active,onSelect,children,readout,con
  return <section className="workbench-board" aria-label={label}>
   <header className="workbench-board-head"><span><Icon size={15}/>{label}</span><span>{position}</span></header>
   <div className="workbench-tabs" role="group" aria-label={label+' options'}>{options.map((option,i)=><button key={option} type="button" aria-pressed={active===i} onClick={()=>onSelect(i)}>{option}</button>)}</div>
-  <div className="workbench-stage">{children}</div>
+  <div className="workbench-stage"><CursorGrid/>{children}</div>
   <div className="workbench-readout"><div aria-live="polite"><span>{readout[2]}</span><h2>{readout[0]}</h2><p>{readout[1]}</p></div>{controls}</div>
  </section>;
 }
