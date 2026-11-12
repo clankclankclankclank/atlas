@@ -1,6 +1,7 @@
 
 @import "tailwindcss" source(none);
 @source "./";
+@source "../paper-workbench.jsx";
 
 :root{color-scheme:dark;--bg:#0d1018;--rail:#10141f;--panel:#151b29;--soft:#1b2335;--line:#2b354b;--ink:#edf1fb;--muted:#a4b0c7;--accent:#b4bcff;--accent-ink:#171b38;--pop:#f6b990;--shadow:#05071055;--focus:#aeb8ff;scrollbar-gutter:stable}
 :root[data-theme=light]{color-scheme:light;--bg:#f4f5fa;--rail:#fcfcff;--panel:#fff;--soft:#edf0fa;--line:#d6dbec;--ink:#1e2638;--muted:#545f78;--accent:#4751a3;--accent-ink:#fff;--pop:#9d4d24;--shadow:#26365d18;--focus:#4751a3}

@@ -11,6 +11,9 @@ const tagged={
  ee:{
   numerical:new Set("E1-1(c) E1-1(e) E1-1(f) E1-1(g) E1-2(b) E1-3(b) E1-4(a) E1-4(b) E1-5(a) E1-5(b) E2-1(a) E2-1(b) E2-1(d) E2-1(j) E2-2(a) E2-2(b) E2-3(b) E2-4(a) E2-4(b) E2-5(a) E2-6(a) E2-6(b) E2-7(b) E3-1(c) E3-1(d) E3-1(e) E3-1(f) E3-1(g) E3-1(h) E3-2(a) E3-2(b) E3-3(a) E3-3(b) E3-4(a) E3-4(b) E3-5(a) E3-6(b) E4-1(b) E4-1(c) E4-2(b) E4-3(a) E4-4(a) E4-4(b) E4-5(a) E4-5(b) E4-6(a) E5-1(b) E5-1(f) E5-1(g) E5-1(h) E5-2(a) E5-2(b) E5-3(a) E5-3(b) E5-4(a) E5-4(b) E5-5(a) E5-5(b) E5-6(a) E5-6(b) E5-7(a) E6-1(a) E6-1(b) E6-1(d) E6-1(i) E6-2(a) E6-2(b) E6-3(a) E6-3(b) E6-4(a) E6-4(b) E6-5(a) E6-5(b)".split(' '))
  },
+ dos:{
+  numerical:new Set(['D25-2(a)','D25-3(b)','D25-4(a)','D24-2(a)','D24-3(b)','D24-4(a)'])
+ },
  se:{
   numerical:new Set("S1-5(a) S1-5(b) S1-7(b) S2-4(b) S2-6(a)(i) S2-6(b) S3-5(a) S3-6(a) S4-7(b) S4-8(b) S5-5(a) S5-6(b) S5-8(b)".split(' '))
  }

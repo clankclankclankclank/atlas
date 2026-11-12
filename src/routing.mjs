@@ -1,11 +1,12 @@
 import {normalizeQuestionType} from './question-types.js';
 
-export const subjects=['daa','cn','ee','se'];
+export const subjects=['daa','cn','ee','se','dos'];
 export const studyKeys={
  daa:'daa-atlas-progress-v1',
  cn:'cn-atlas-2025-v1',
  ee:'ee-atlas-progress-v1',
- se:'se-atlas-progress-v1'
+ se:'se-atlas-progress-v1',
+ dos:'dos-atlas-progress-v1'
 };
 export const routeEvent='atlas-route';
 export const progressEvent='atlas-progress';

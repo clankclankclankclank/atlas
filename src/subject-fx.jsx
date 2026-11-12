@@ -15,7 +15,8 @@ const palettes={
  daa:['#4b92ae','#75e6ed','#c7f9ff'],
  cn:['#5425ab','#a864e8','#efd3ff'],
  ee:['#95542b','#e2a446','#ffe0a0'],
- se:['#348966','#61c899','#baf6cb']
+ se:['#348966','#61c899','#baf6cb'],
+ dos:['#943d67','#e578ae','#ffd2e7']
 };
 function useEffects(){
  const {ui,theme}=useAtlasPreferences();

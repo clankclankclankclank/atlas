@@ -1,8 +1,9 @@
+import {PasswordGate} from './password-gate.jsx';
 import {DirectionalCursor} from './directional-cursor.jsx';
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
-import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,X} from 'lucide-react';
+import {Activity,ArrowDownRight,ArrowRight,ArrowUpRight,Bookmark,BookOpen,Calculator,ChevronRight,Layers3,Network,Search,Settings2,Compass,GitBranch,Server,X} from 'lucide-react';
 import {CountStat,MapParticles,RevealGrid,RevealLine,SignalPath,SubjectPillNav,trackSpotlight} from './visual-effects.jsx';
 import {index,totals} from './generated-index.mjs';
 import {RecentTrail} from './reading-trail.jsx';
@@ -12,10 +13,11 @@ import {useAtlasPreferences} from './preferences.js';
 import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} from './routing.mjs';
 
 const subjects={
- daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
+ se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'},
  cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',tone:'#b5b3ff',light:'#573ca1',icon:Network,global:'AtlasCN'},
- ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'},
- se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'}
+ dos:{abbr:'DOS',title:'Distributed Operating Systems',short:'Distributed OS',tag:'RPC, clocks, coordination',tone:'#f3a8cc',light:'#8e3262',icon:Server,global:'AtlasDOS'},
+ daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
+ ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'}
 };
 const subjectEntries=Object.entries(subjects);
 const lastKey='study-atlas-last-route';
@@ -30,7 +32,7 @@ function smartLink(e){
 }
 
 function Header({shown,pending,view,showSearch,showRecent}){
- const settingsSubject=subjects[shown]?shown:persistedSubject()?.subject??'daa';
+ const settingsSubject=subjects[shown]?shown:persistedSubject()?.subject??'se';
  return <header className="atlas-top" data-switching={pending ? 'true' : undefined}><div className="atlas-top-inner">
   <a href="#/" onClick={smartLink} className="atlas-brand" aria-label="Study Atlas home"><span className="atlas-brand-icon"><Compass size={20}/></span><span>Study Atlas</span></a>
   <SubjectPillNav active={shown}>
@@ -41,7 +43,7 @@ function Header({shown,pending,view,showSearch,showRecent}){
 }
 
 function HeroMap({active,setActive}){
- const points=[[82,68],[358,68],[82,214],[358,214]];
+ const points=[[82,68],[358,68],[220,220],[82,214],[358,214]];
  const course=subjects[active];
  return <div className="hub-map" aria-label="Choose a subject to preview" style={{'--map-active':course.tone,'--map-active-light':course.light}}>
   <div className="hub-map-head"><span><i/> SUBJECT MAP</span><span>01–04 / ATLAS</span></div>
@@ -54,7 +56,7 @@ function HeroMap({active,setActive}){
     <circle cx="220" cy="140" r="77" className="hub-orbit hub-orbit-secondary"/>
     <circle cx="220" cy="140" r="48" className="hub-orbit"/>
     <path className="hub-map-ticks" d="M220 32v12m0 192v12m-108-108h12m192 0h12M144 64l8 8m136 136 8 8m-152 0 8-8m136-136 8-8"/>
-    {subjectEntries.map(([id],j)=>{const [x,y]=points[j];return <SignalPath key={id} path={'M220 140H'+(x<220?149:291)+'L'+(x<220?112:328)+' '+y+'H'+x} active={active===id}/>;})}
+    {subjectEntries.map(([id],j)=>{const [x,y]=points[j];return <SignalPath key={id} path={x===220?'M220 140V'+y:'M220 140H'+(x<220?149:291)+'L'+(x<220?112:328)+' '+y+'H'+x} active={active===id}/>;})}
     <circle cx="220" cy="140" r="33" className="hub-map-core"/>
     <path d="M235 125l-9 21-21 9 9-21Z" className="hub-map-glyph"/>
     <circle cx="220" cy="140" r="3" className="hub-map-dot"/>
@@ -69,13 +71,14 @@ function SubjectGlyph({subject}){
   daa:<><path d="M90 24v25m0 0-52 40m52-40 52 40m-52-40v40"/><circle cx="90" cy="21" r="8"/><circle cx="38" cy="92" r="8"/><circle cx="90" cy="92" r="8"/><circle cx="142" cy="92" r="8"/></>,
   cn:<><path d="M24 77h40l27-45h55M64 77h44l33 22M91 32l17 45"/>{[[24,77],[64,77],[91,32],[146,32],[108,77],[141,99]].map(([x,y])=><circle key={x+':'+y} cx={x} cy={y} r="6"/>)}</>,
   ee:<><path d="M20 101h139M24 101V21m22 67 34-19 26-28 44-19"/>{[[46,88],[80,69],[106,41],[150,22]].map(([x,y])=><circle key={x} cx={x} cy={y} r="5"/>)}</>,
+  dos:<><path d="M45 35h90M45 35l45 61 45-61"/><rect x="28" y="22" width="34" height="26" rx="5"/><rect x="118" y="22" width="34" height="26" rx="5"/><rect x="73" y="83" width="34" height="26" rx="5"/></>,
   se:<><rect x="64" y="17" width="52" height="28" rx="5"/><rect x="21" y="79" width="52" height="28" rx="5"/><rect x="107" y="79" width="52" height="28" rx="5"/><path d="M90 45v18H47v16m43-16h43v16"/></>
  };
  return <svg className="hub-card-art" viewBox="0 0 180 125" aria-hidden="true">{art[subject]}</svg>;
 }
 function Home({progress,showSearch}){
  const last=persistedSubject();
- const [active,setActive]=useState(last?.subject??'daa');
+ const [active,setActive]=useState(last?.subject??'se');
  const done=index.filter(q=>progress[q.subject].done.has(q.id)).length;
  const saved=index.filter(q=>progress[q.subject].saved.has(q.id)).length;
  const countPapers=Object.values(totals).reduce((n,x)=>n+x.papers,0);
@@ -83,8 +86,8 @@ function Home({progress,showSearch}){
   <section className="hub-hero">
    <div className="hub-hero-copy"><p className="hub-kicker"><span></span> PAST-PAPER STUDY</p>
     <h1 aria-label="Study Atlas"><RevealLine>Study</RevealLine><RevealLine delay={85} accent>Atlas.</RevealLine></h1>
-    <p className="hub-description">Past papers, worked solutions, and practice tools across four subjects.</p>
-    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/daa" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('all')}><Search size={16}/> Find a question</button></div>
+    <p className="hub-description">Past papers, worked solutions, and practice tools across five subjects.</p>
+    <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/se" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('all')}><Search size={16}/> Find a question</button></div>
    </div>
    <HeroMap active={active} setActive={setActive}/>
   </section>
@@ -103,13 +106,13 @@ function Home({progress,showSearch}){
   </section>
   <section className="hub-shortcuts" aria-labelledby="shortcuts-heading"><header className="hub-section-head"><div><p className="hub-kicker">02 / QUICK ACCESS</p><h2 id="shortcuts-heading">Get straight to the work</h2></div></header>
    <div className="hub-shortcut-grid">
-    <a href={linkTo('ee','questions',{marks:'long'})} onClick={smartLink}><Calculator size={20}/><span><b>EE worked solutions</b><small>64 rewritten long answers with formulas, tables, and a step player.</small></span><ArrowDownRight size={17}/></a>
-    <a href={linkTo('daa','diagrams')} onClick={smartLink}><BookOpen size={20}/><span><b>DAA Trace Studio</b><small>Step through recursion, Huffman, and graph diagrams.</small></span><ArrowDownRight size={17}/></a>
+    <a href={linkTo('se','questions',{marks:'long'})} onClick={smartLink}><Layers3 size={20}/><span><b>SE long answers</b><small>Practice design, testing, estimation, and UML questions.</small></span><ArrowDownRight size={17}/></a>
     <a href={linkTo('cn','diagrams')} onClick={smartLink}><Network size={20}/><span><b>CN network diagrams</b><small>Explore routers, links, and past-paper topologies.</small></span><ArrowDownRight size={17}/></a>
-    <button type="button" onClick={()=>showSearch('saved')}><Bookmark size={20}/><span><b>All bookmarks</b><small>Open saved questions across all four subjects.</small></span><ArrowDownRight size={17}/></button>
+    <a href={linkTo('dos','questions')} onClick={smartLink}><Server size={20}/><span><b>DOS past papers</b><small>Worked questions from the 2024 and 2025 finals.</small></span><ArrowDownRight size={17}/></a>
+    <button type="button" onClick={()=>showSearch('saved')}><Bookmark size={20}/><span><b>All bookmarks</b><small>Open saved questions across all subjects.</small></span><ArrowDownRight size={17}/></button>
    </div>
   </section>
-  <footer className="hub-footer"><span>Study Atlas</span><span>Algorithms · Networks · Economics · Software</span></footer>
+  <footer className="hub-footer"><span>Study Atlas</span><span>SE · CN · DOS · DAA · EE</span></footer>
  </main>;
 }
 
@@ -186,7 +189,7 @@ function warmSubject(id){loadSubject(id).catch(()=>{});}
 function useSubjectPreviews(){
  useEffect(()=>{
   if(navigator.connection?.saveData)return;
-  const warm=()=>{if(!document.hidden)warmSubject(persistedSubject()?.subject??'daa');};
+  const warm=()=>{if(!document.hidden)warmSubject(persistedSubject()?.subject??'se');};
   if(typeof requestIdleCallback==='function'){
    const handle=requestIdleCallback(warm,{timeout:1800});
    return ()=>cancelIdleCallback(handle);
@@ -277,4 +280,4 @@ function Hub(){
  </>;
 }
 for(const id of Object.keys(subjects))migratePracticeQueues(id);
-createRoot(document.getElementById('atlas-root')).render(<Hub/>);
+createRoot(document.getElementById('atlas-root')).render(<PasswordGate><Hub/></PasswordGate>);

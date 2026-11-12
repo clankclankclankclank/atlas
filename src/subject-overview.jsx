@@ -3,7 +3,7 @@ import {StudyAction,SubjectBackdrop} from './subject-fx.jsx';
 import {AlgorithmBoard,CashFlowBoard,TraceabilityBoard} from './workbench-board.jsx';
 import {CountStat,RevealGrid,RevealLine,trackSpotlight} from './visual-effects.jsx';
 import {SignalBoard} from './cn/signal-board.jsx';
-import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction} from 'lucide-react';
+import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction,Server,Clock3} from 'lucide-react';
 
 const models={
  daa:{
@@ -19,6 +19,7 @@ const models={
   heading:['Computer','Networks'],date:'2022–2025',
   tool:['Network diagrams','diagrams'],
   features:[
+   ['1-mark drill','Revise protocol facts and quick calculations.',BookOpen,{marks:'1'}],
    ['Numerical lab','Practice subnet masks, timing, and error checks.',Calculator,{view:'lab'}],
    ['Most repeated','Start with recurring exam patterns.',Network,{view:'repeats'}],
    ['Formula sheet','Look up routing, transport, and timing formulas.',SquareFunction,{view:'formula'}]
@@ -37,13 +38,33 @@ const models={
   heading:['Software','Engineering'],date:'2022–2025',
   tool:['Diagram Studio','diagrams'],
   features:[
+   ['Long-answer drill','Practice 4+ mark design, testing, and estimation questions.',BookOpen,{marks:'long'}],
    ['Diagram Studio','Explore UML, design models, and their relationships.',Boxes,{view:'diagrams'}],
    ['Estimation lab','Work through COCOMO, function points, and PERT.',Calculator,{view:'lab'}],
    ['Revision plan','Organize your practice across the core chapters.',ShieldCheck,{view:'plan'}]
   ]
+ },
+ dos:{
+  heading:['Distributed','Operating Systems'],date:'2024–2025',tool:['Diagram Studio','diagrams'],
+  features:[
+   ['Omega network','Trace the perfect shuffle through three switch stages.',Network,{question:'D25-2(a)'}],
+   ['Berkeley clock offsets','Calculate the target clock and each signed correction.',Clock3,{question:'D25-4(a)'}],
+   ['Distributed deadlocks','Trace a probe and compare prevention rules.',Boxes,{question:'D25-6(b)'}]
+  ]
  }
 };
-const boards={daa:AlgorithmBoard,cn:SignalBoard,ee:CashFlowBoard,se:TraceabilityBoard};
+function DistributedBoard({openQuestion}) {
+ return <aside className="dos-hero-board" aria-label="Distributed systems practice">
+  {[
+   ['Remote procedure calls','Batching and message flow',Server,'D25-3(b)'],
+   ['Clock synchronization','Offsets and drift',Clock3,'D25-4(a)'],
+   ['Coordination','Wait-for graphs and probes',Network,'D25-6(b)']
+  ].map(([title,caption,Icon,id])=><button key={id} type="button" onClick={()=>openQuestion(id)}>
+    <Icon size={19}/><span><strong>{title}</strong><small>{caption}</small></span><ArrowUpRight size={16}/>
+  </button>)}
+ </aside>;
+}
+const boards={daa:AlgorithmBoard,cn:SignalBoard,ee:CashFlowBoard,se:TraceabilityBoard,dos:DistributedBoard};
 export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers}){
  const model=models[subject],mastered=new Set(done),Board=boards[subject];
  return <div className="subject-overview">
@@ -51,11 +72,11 @@ export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,ope
    <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={model.heading.join(' ')}><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></h1>
     <div className="subject-actions"><StudyAction onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></StudyAction><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
-   <Board/>
+   <Board openQuestion={openQuestion}/>
   </section>
   <div className="subject-stats">{[[questions.length,'worked questions',BookOpen],[papers.length,'exam papers',FileText],[topics.length,'topics',Layers3],[mastered.size,'mastered',ShieldCheck]].map(([n,label,Icon])=><div key={label}><Icon size={15} aria-hidden="true"/><CountStat value={n}/><span>{label}</span></div>)}</div>
   <section className="subject-section" aria-labelledby="subject-practice"><div className="subject-section-heading"><div><p className="subject-kicker">01 / QUICK ACCESS</p><h2 id="subject-practice">Practice shortcuts</h2></div></div>
-   <RevealGrid className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" onPointerMove={trackSpotlight} type="button" onClick={()=>target.question?openQuestion(target.question):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span><small>0{i+1}</small></span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</RevealGrid>
+   <RevealGrid className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" onPointerMove={trackSpotlight} type="button" onClick={()=>target.question?openQuestion(target.question):target.marks?go('questions',null,{marks:target.marks}):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span><small>0{i+1}</small></span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</RevealGrid>
   </section>
   <section className="subject-section" aria-labelledby="subject-library"><div className="subject-section-heading"><div><p className="subject-kicker">02 / STUDY BY TOPIC</p><h2 id="subject-library">Chapter library</h2></div><button className="button secondary" onClick={openSaved}><Bookmark size={16}/> Bookmarks{savedCount?' · '+savedCount:''}</button></div>
    <div className="subject-library">{topics.map(({id,title,description,Icon})=>{const list=questions.filter(q=>q.topic===id),count=list.length,complete=list.filter(q=>mastered.has(q.id)).length;return <button key={id} className="subject-card subject-chapter" onPointerMove={trackSpotlight} type="button" onClick={()=>openTopic(id)}><span className="subject-icon"><Icon size={18}/></span><span><strong>{title}</strong><small>{description}</small><span className="subject-chapter-count">{complete?complete+' / '+count+' mastered':count+' questions'}</span>{count>0&&<progress value={complete} max={count} aria-label={title+' mastery'}/>}</span><ArrowUpRight size={16}/></button>;})}</div>

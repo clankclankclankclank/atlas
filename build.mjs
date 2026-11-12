@@ -5,10 +5,11 @@ import {access,cp,mkdir,readFile,readdir,rm,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import * as daa from './src/daa/course.mjs';
+import * as dos from './src/dos/course.mjs';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const dist=path.join(root,'dist'),target=path.join(dist,'app');
-const subjectNames={daa:'AtlasDAA',cn:'AtlasCN',ee:'AtlasEE',se:'AtlasSE'};
+const subjectNames={daa:'AtlasDAA',cn:'AtlasCN',ee:'AtlasEE',se:'AtlasSE',dos:'AtlasDOS'};
 const assetRoot=await access(path.join(root,'assets')).then(()=>root,()=>path.dirname(root));
 await rm(dist,{recursive:true,force:true});
 await mkdir(target,{recursive:true});
@@ -16,7 +17,7 @@ await Promise.all(['assets','media'].map(name=>cp(path.join(assetRoot,name),path
 
 const list=[],totals={};
 for(const id of Object.keys(subjectNames)){
- const content=id==='daa'?daa:JSON.parse(await readFile(path.join(root,'src',id,'study-data.json'),'utf8'));
+ const content={daa,dos}[id]??JSON.parse(await readFile(path.join(root,'src',id,'study-data.json'),'utf8'));
  totals[id]={questions:content.QS.length,papers:Object.keys(content.SCANS).length};
  for(const q of content.QS){
   const year=content.PAPERS?.[q.paper]?.label??'20'+q.paper.slice(1);

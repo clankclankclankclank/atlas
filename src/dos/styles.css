@@ -1,0 +1,21 @@
+@import "../se/styles.css";
+@source "./";
+
+:root {
+  --bg:#17121e; --rail:#211827; --panel:#261c2d; --soft:#30243b; --line:#504057;
+  --ink:#fcf0f8; --muted:#d0b9cb; --accent:#f3a8cc; --accent-ink:#36142a;
+  --pop:#f4c4d8; --focus:#f3a8cc; --hero-wash:#512b48; --hero-secondary:#37203d;
+}
+:root[data-theme=light] {
+  --bg:#f8edf4; --rail:#f3e3ee; --panel:#fff8fc; --soft:#f4e2ee; --line:#ddbbd0;
+  --ink:#462338; --muted:#6d4560; --accent:#8e3262; --accent-ink:#fff;
+  --pop:#963d62; --focus:#8e3262; --hero-wash:#f5d3e6; --hero-secondary:#f9e1ec;
+}
+:root[data-layout=minimal] {
+  --bg:#1b151d; --rail:#1b151d; --panel:#1b151d; --soft:#302335; --line:#4d3c53;
+  --ink:#fff1fa; --muted:#d2bdcf; --accent:#f3a8cc; --accent-ink:#36142a; --pop:#f3a8cc; --focus:#f3a8cc;
+}
+:root[data-layout=minimal][data-theme=light] {
+  --bg:#fff8fc; --rail:#fff8fc; --panel:#fff8fc; --soft:#f4e2ee; --line:#ddbbd0;
+  --ink:#462338; --muted:#6d4560; --accent:#8e3262; --accent-ink:#fff; --pop:#8e3262; --focus:#8e3262;
+}

@@ -1,0 +1,97 @@
+{
+  "Omega switches": {
+    "symbols": [
+      [
+        "N",
+        "input or output count",
+        "ports"
+      ]
+    ],
+    "example": "N=8 gives 3 stages, 4 switches per stage and 12 total."
+  },
+  "RPC fixed and transfer cost": {
+    "symbols": [
+      [
+        "T",
+        "total sequential time",
+        "ms"
+      ],
+      [
+        "k",
+        "number of RPCs",
+        "calls"
+      ],
+      [
+        "F",
+        "fixed cost per call",
+        "ms per call"
+      ],
+      [
+        "c",
+        "transfer cost per data unit",
+        "ms per KB"
+      ],
+      [
+        "D",
+        "total transferred data",
+        "KB"
+      ]
+    ],
+    "example": "One 32 KB call at F=1 and c=1.5 costs 1+48=49 ms."
+  },
+  "Berkeley correction": {
+    "symbols": [
+      [
+        "tᵢ",
+        "reading from machine i at the common instant",
+        "ms"
+      ],
+      [
+        "n",
+        "number of accepted readings",
+        "clocks"
+      ]
+    ],
+    "example": "If the target is 292.5 ms and this clock reads 270 ms, add 22.5 ms."
+  },
+  "Clock skew from tick rates": {
+    "symbols": [
+      [
+        "r₁",
+        "first tick rate",
+        "ticks per ms"
+      ],
+      [
+        "r₂",
+        "second tick rate",
+        "ticks per ms"
+      ],
+      [
+        "r₀",
+        "nominal tick rate",
+        "ticks per ms"
+      ],
+      [
+        "Δt",
+        "elapsed time since synchronization",
+        "ms"
+      ]
+    ],
+    "example": "(1000−990) × 60,000 ÷ 1000 = 600 ms."
+  },
+  "Triple modular redundancy": {
+    "symbols": [
+      [
+        "R",
+        "reliability of one module",
+        "probability"
+      ],
+      [
+        "TMR",
+        "triple modular redundancy",
+        "majority of three"
+      ]
+    ],
+    "example": "For R=0.9, 3(0.9)²−2(0.9)³=0.972 with an ideal voter."
+  }
+}
