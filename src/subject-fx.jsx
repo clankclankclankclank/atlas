@@ -16,7 +16,7 @@ const palettes={
  cn:['#5425ab','#a864e8','#efd3ff'],
  ee:['#95542b','#e2a446','#ffe0a0'],
  se:['#348966','#61c899','#baf6cb'],
- dos:['#943d67','#e578ae','#ffd2e7']
+ dos:['#254c9c','#76a4ff','#d8e8ff']
 };
 function useEffects(){
  const {ui,theme}=useAtlasPreferences();
@@ -28,13 +28,14 @@ function useEffects(){
  },[]);
  return {minimal:ui==='minimal',light:theme==='light',animated:ui!=='minimal'&&!reduce};
 }
-export function SubjectBackdrop({subject,live=false,diagram=false}){
+export function SubjectBackdrop({subject,live=false,diagram=false,Scene}){
  const {minimal,light,animated}=useEffects();
  if(minimal)return null;
  const [base,mid,bright]=palettes[subject];
  const trail=diagram&&matchMedia('(hover:hover) and (pointer:fine)').matches;
  return <div className="atlas-subject-backdrop" data-scene={subject} aria-hidden="true">
   <div className="atlas-scene-art">
+   {live&&animated&&Scene&&<Scene light={light}/>}
    {live&&animated&&subject==='daa'&&<Scanner color1={light?'#356986':base} color2={light?'#007c92':mid} color3={light?'#005665':bright} lightMode={light} dpr={.8} speed={.28} sweepSpeed={.21} bandDensity={15} glow={.72} grain={false} clickEffect="ping" intro={false}/>}
    {live&&animated&&subject==='cn'&&<MoltenMetal colors={light?metalColors.light:metalColors.dark} coreColor={light?'#54268b':bright} lightMode={light} dpr={.8} speed={.19} scale={2.6} detail={3} thickness={1.45} glow={2} brightness={1.48} grain={0} intro={false}/>}
    {live&&animated&&subject==='ee'&&<GradientWaves horizonColor={light?'#bc7a47':base} waveColor={light?'#be8137':mid} crestColor={light?'#9b5821':bright} lightMode={light} quality="low" dpr={.75} speed={.21} amplitude={2.25} tilt={62} sheen={.3} grain={0} intro={false}/>}

@@ -19,7 +19,7 @@ import {useReward} from './use-reward.js';
 import {matches,DailyVariants,QuestionTypeFilter,MarkFilter,CopyQuestionLink,useSubjectRoute} from './shared.jsx';
 import {navigate,readRoute,progressEvent,replaceQuestionType,studyKeys} from './routing.mjs';
 
-export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,data,papers,clips,labs,calculate,formulaDetails,searchHint,formulaHint,diagramHint,labHint}) {
+export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,data,papers,clips,labs,calculate,formulaDetails,Scene,searchHint,formulaHint,diagramHint,labHint}) {
   const {QS, SCANS:sourceScans, TOPICS, ORDER, REPEATS, NOTES, FORMULA_ENTRIES, PAPERS, DIAGRAMS} = data;
   const SCANS=Object.fromEntries(Object.entries(sourceScans).map(([paper,pages])=>[paper,pages.map(file=>file.replace('assets/','assets/'+subject+'/'))]));
   const markValues=[...new Set(QS.map(q=>q.marks))].sort((a,b)=>a-b);
@@ -225,7 +225,7 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
     return <><a className="skip-link" href="#main-content">Skip to content</a><div className="atlas-shell">
       <Navigation display={display} view={view} go={go} count={progress.done.length}/>
       <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
-        {view==='overview'&&<SubjectOverview subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openNumericals={()=>go('questions',null,{type:'numerical'})} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
+        {view==='overview'&&<SubjectOverview Scene={Scene} subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openNumericals={()=>go('questions',null,{type:'numerical'})} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
         {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress,trail}} onFocusQuestion={id=>{setOpened([id]);setJump({id});}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
         {view==='notes'&&<Notes openTopic={openTopic} noteRequest={noteRequest} trail={trail}/>}
         {view==='formula'&&<Formulas openQuestion={openQuestion}/>}

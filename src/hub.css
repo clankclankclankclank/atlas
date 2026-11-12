@@ -720,29 +720,40 @@ html[data-subject]:not([data-subject=home]):not([data-layout=minimal]) .atlas-sh
 
 
 html[data-subject=dos] {
- --workbench-halo:#58334f; --workbench-accent:#f3a8cc;
- --workbench-panel:#302137; --workbench-base:#251b2c; --workbench-rule:#64445e;
- --workbench-ink:#fff0fa; --workbench-dim:#d0b9cb;
+ --workbench-halo:#233f78; --workbench-accent:#8ab5ff;
+ --workbench-panel:#192944; --workbench-base:#101d34; --workbench-rule:#3b5685;
+ --workbench-ink:#eff5ff; --workbench-dim:#b4c7e3;
 }
 html[data-subject=dos][data-theme=light] {
- --workbench-halo:#f3cce2; --workbench-accent:#8e3262;
- --workbench-panel:#fff3fa; --workbench-base:#f8e4f0; --workbench-rule:#dfb6ce;
- --workbench-ink:#462338; --workbench-dim:#6d4560;
+ --workbench-halo:#cbdfff; --workbench-accent:#2854ad;
+ --workbench-panel:#f4f8ff; --workbench-base:#e1ebfc; --workbench-rule:#b1c6e6;
+ --workbench-ink:#172a4c; --workbench-dim:#3d567b;
 }
 [data-scene=dos] {
  --scene-fallback:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--accent) 24%,transparent) 1px,transparent 1.5px) 0 0/16px 16px;
 }
-html[data-subject=dos] .subject-hero h1 { font-size:clamp(31px,4.4vw,67px); }
-.dos-hero-board { display:grid; align-self:center; gap:9px; width:min(100%,560px); }
-.dos-hero-board button {
- display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px;
- padding:13px 14px; border-radius:10px; border:1px solid var(--workbench-rule);
- text-align:left; color:var(--workbench-accent); background:var(--workbench-panel);
+html[data-subject=dos] .subject-hero h1 { font-size:clamp(31px,3.9vw,60px); }
+.atlas-scene-hero [data-scene=dos] .atlas-scene-art {
+ inset:0;
+ opacity:.92;
+ mask-image:linear-gradient(105deg,transparent 24%,#000 63%);
 }
-.dos-hero-board button:hover { border-color:var(--workbench-accent); }
-.dos-hero-board strong,.dos-hero-board small { display:block; }
-.dos-hero-board strong { color:var(--workbench-ink); font-size:14px; }
-.dos-hero-board small { color:var(--workbench-dim); font-size:12px; }
+html[data-subject=dos][data-theme=light] .atlas-scene-hero .atlas-scene-art { opacity:.7; }
+html[data-subject=dos]:not([data-layout=minimal]) .workbench-board {
+ background:color-mix(in srgb,var(--workbench-panel) 82%,transparent);
+}
+.dos-trace-controls { display:grid; justify-items:end; gap:7px; }
+.dos-trace-link {
+ display:inline-flex; align-items:center; gap:4px;
+ color:var(--workbench-accent); font-size:12px; font-weight:680; white-space:nowrap;
+}
+.dos-trace-link:hover { text-decoration:underline; }
+@media(max-width:720px){
+ .atlas-scene-hero [data-scene=dos] .atlas-scene-art {
+  opacity:.72;
+  mask-image:linear-gradient(155deg,transparent 3%,#000 59%);
+ }
+}
 
 .atlas-lock {
  box-sizing:border-box; min-height:100dvh; display:grid; place-items:center; padding:20px;

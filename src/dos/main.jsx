@@ -1,3 +1,4 @@
+import {DistributedScene} from './scene.jsx';
 import {Server} from 'lucide-react';
 import {createPaperWorkbench} from '../paper-workbench.jsx';
 import * as data from './course.mjs';
@@ -8,7 +9,7 @@ import {labs,calculate} from './calculators.js';
 export const mount=createPaperWorkbench({
  subject:'dos',title:'Distributed Operating Systems',brand:'Distributed OS Atlas',tag:'DISTRIBUTED SYSTEMS',
  BrandIcon:Server,period:'Autumn papers 2024–2025',data,papers:Object.keys(data.PAPERS),
- clips,labs,calculate,formulaDetails,
+ clips,labs,calculate,formulaDetails,Scene:DistributedScene,
  searchHint:'Search RPC, Berkeley, deadlock…',
  formulaHint:'Search clock skew, RPC, Omega…',
  diagramHint:'Search Omega, Bully, RPC…',

@@ -1,9 +1,9 @@
 import React from 'react';
 import {StudyAction,SubjectBackdrop} from './subject-fx.jsx';
-import {AlgorithmBoard,CashFlowBoard,TraceabilityBoard} from './workbench-board.jsx';
+import {AlgorithmBoard,CashFlowBoard,DistributedBoard,TraceabilityBoard} from './workbench-board.jsx';
 import {CountStat,RevealGrid,RevealLine,trackSpotlight} from './visual-effects.jsx';
 import {SignalBoard} from './cn/signal-board.jsx';
-import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction,Server,Clock3} from 'lucide-react';
+import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction,Clock3} from 'lucide-react';
 
 const models={
  daa:{
@@ -53,22 +53,11 @@ const models={
   ]
  }
 };
-function DistributedBoard({openQuestion}) {
- return <aside className="dos-hero-board" aria-label="Distributed systems practice">
-  {[
-   ['Remote procedure calls','Batching and message flow',Server,'D25-3(b)'],
-   ['Clock synchronization','Offsets and drift',Clock3,'D25-4(a)'],
-   ['Coordination','Wait-for graphs and probes',Network,'D25-6(b)']
-  ].map(([title,caption,Icon,id])=><button key={id} type="button" onClick={()=>openQuestion(id)}>
-    <Icon size={19}/><span><strong>{title}</strong><small>{caption}</small></span><ArrowUpRight size={16}/>
-  </button>)}
- </aside>;
-}
 const boards={daa:AlgorithmBoard,cn:SignalBoard,ee:CashFlowBoard,se:TraceabilityBoard,dos:DistributedBoard};
-export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers}){
+export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers,Scene}){
  const model=models[subject],mastered=new Set(done),Board=boards[subject];
  return <div className="subject-overview">
-  <section className="subject-hero atlas-scene-hero"><SubjectBackdrop subject={subject} live/>
+  <section className="subject-hero atlas-scene-hero"><SubjectBackdrop subject={subject} live Scene={Scene}/>
    <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={model.heading.join(' ')}><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></h1>
     <div className="subject-actions"><StudyAction onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></StudyAction><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>

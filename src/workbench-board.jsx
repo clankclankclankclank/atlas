@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import {Activity,ArrowLeft,ArrowRight,Boxes,GitBranch} from 'lucide-react';
+import {Activity,ArrowLeft,ArrowRight,ArrowUpRight,Boxes,GitBranch,Server} from 'lucide-react';
 import {CursorGrid,SignalPath} from './visual-effects.jsx';
 
 const sort=[
@@ -74,4 +74,46 @@ export function TraceabilityBoard(){
    {steps.map(([name,,id],i)=><button type="button" key={name} aria-pressed={i===step} onClick={()=>setStep(i)}><span>{id}</span><b>{name}</b></button>)}
   </div>
  </Board>;
+}
+
+const distributedTraces=[
+ {
+  label:'Remote calls',question:'D25-3(b)',topic:'RPC timing',
+  steps:[
+   ['Client','Marshal the arguments into a request.','REQUEST'],
+   ['Network','For one 32 KB call, the data takes 32 × 1.5 = 48 ms to transfer.','TRANSFER'],
+   ['Server','One call costs 49 ms. Splitting the same data into 32 calls costs 80 ms.','RESULT']
+  ]
+ },
+ {
+  label:'Clock sync',question:'D25-4(a)',topic:'Berkeley algorithm',
+  steps:[
+   ['Poll','Collect the readings at the same instant: 300, 270, 290 and 310 ms.','4 CLOCKS'],
+   ['Average','Compute the target: (300 + 270 + 290 + 310) ÷ 4 = 292.5 ms.','292.5 ms'],
+   ['Adjust','Send each clock its signed correction: −7.5, +22.5, +2.5 and −17.5 ms.','OFFSETS']
+  ]
+ }
+];
+
+export function DistributedBoard({openQuestion}) {
+ const [active,setActive]=useState(0),[step,setStep]=useState(0);
+ const {steps,question,topic}=distributedTraces[active];
+ return <Board label="Distributed systems walkthrough" Icon={Server}
+   position={(step+1)+' / '+steps.length} options={distributedTraces.map(trace=>trace.label)}
+   active={active} onSelect={index=>{setActive(index);setStep(0);}} readout={steps[step]}
+   controls={<div className="dos-trace-controls">
+    <StepControls step={step} total={steps.length} setStep={setStep}/>
+    <button className="dos-trace-link" type="button" onClick={()=>openQuestion(question)}>Open question <ArrowUpRight size={14}/></button>
+   </div>}>
+   <div className="workbench-trace">
+    <svg viewBox="0 0 440 118" preserveAspectRatio="none" aria-hidden="true">
+     <SignalPath path="M75 54H220" active={step===1}/>
+     <SignalPath path="M220 54H365" active={step===2}/>
+    </svg>
+    {steps.map(([name,,tag],index)=><button key={name} type="button" aria-pressed={step===index}
+      onClick={()=>setStep(index)} aria-label={topic+' · '+name}>
+     <span>{tag}</span><b>{name}</b>
+    </button>)}
+   </div>
+  </Board>;
 }

@@ -15,7 +15,7 @@ import {getStudyProgress,linkTo,navigate,observeRoute,progressEvent,readRoute} f
 const subjects={
  se:{abbr:'SE',title:'Software Engineering',short:'Software',tag:'Models, testing, estimation',tone:'#acd9ab',light:'#216644',icon:Layers3,global:'AtlasSE'},
  cn:{abbr:'CN',title:'Computer Networks',short:'Networks',tag:'Layers, routing, protocols',tone:'#b5b3ff',light:'#573ca1',icon:Network,global:'AtlasCN'},
- dos:{abbr:'DOS',title:'Distributed Operating Systems',short:'Distributed OS',tag:'RPC, clocks, coordination',tone:'#f3a8cc',light:'#8e3262',icon:Server,global:'AtlasDOS'},
+ dos:{abbr:'DOS',title:'Distributed Operating Systems',short:'Distributed OS',tag:'RPC, clocks, coordination',tone:'#8ab5ff',light:'#2854ad',icon:Server,global:'AtlasDOS'},
  daa:{abbr:'DAA',title:'Design & Analysis of Algorithms',short:'Algorithms',tag:'Recursion, DP, graphs',tone:'#8fe5ee',light:'#17667e',icon:GitBranch,global:'AtlasDAA'},
  ee:{abbr:'EE',title:'Engineering Economics',short:'Economics',tag:'Cash flows, markets, decisions',tone:'#f8bc79',light:'#8a501a',icon:Calculator,global:'AtlasEE'}
 };
