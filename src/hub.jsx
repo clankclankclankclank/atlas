@@ -76,7 +76,7 @@ function SubjectGlyph({subject}){
  };
  return <svg className="hub-card-art" viewBox="0 0 180 125" aria-hidden="true">{art[subject]}</svg>;
 }
-function Home({progress,showSearch}){
+function Home({progress,showSearch,minimal}){
  const last=persistedSubject();
  const [active,setActive]=useState(last?.subject??'se');
  const done=index.filter(q=>progress[q.subject].done.has(q.id)).length;
@@ -84,27 +84,27 @@ function Home({progress,showSearch}){
  const countPapers=Object.values(totals).reduce((n,x)=>n+x.papers,0);
  return <main className="study-hub" id="hub-main" tabIndex={-1}>
   <section className="hub-hero">
-   <div className="hub-hero-copy"><p className="hub-kicker"><span></span> PAST-PAPER STUDY</p>
-    <h1 aria-label="Study Atlas"><RevealLine>Study</RevealLine><RevealLine delay={85} accent>Atlas.</RevealLine></h1>
-    <p className="hub-description">Past papers, worked solutions, and practice tools across five subjects.</p>
+   <div className="hub-hero-copy">{!minimal&&<p className="hub-kicker"><span></span> PAST-PAPER STUDY</p>}
+    <h1 aria-label="Study Atlas">{minimal?'Study Atlas':<><RevealLine>Study</RevealLine><RevealLine delay={85} accent>Atlas.</RevealLine></>}</h1>
+    {!minimal&&<p className="hub-description">Past papers, worked solutions, and practice tools across five subjects.</p>}
     <div className="hub-hero-actions">{last?<a className="hub-action hub-primary" href={savedRoute()} onClick={smartLink}>Resume {subjects[last.subject].abbr} <ArrowRight size={17}/></a>:<a className="hub-action hub-primary" href="#/se" onClick={smartLink}>Start studying <ArrowRight size={17}/></a>}<button type="button" className="hub-action" onClick={()=>showSearch('all')}><Search size={16}/> Find a question</button></div>
    </div>
-   <HeroMap active={active} setActive={setActive}/>
+   {!minimal&&<HeroMap active={active} setActive={setActive}/>}
   </section>
   <section className="hub-stat-strip" aria-label="Study Atlas statistics">{[[index.length,'worked questions',BookOpen],[countPapers,'exam papers',Layers3],[done,'mastered',Activity],[saved,'bookmarks',Bookmark]].map(([number,label,Icon])=><div key={label}><Icon size={16} aria-hidden="true"/><CountStat value={number}/><span>{label}</span></div>)}</section>
-  <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div><p className="hub-kicker">01 / SUBJECTS</p><h2 id="subjects-heading">Choose a workbench</h2></div></header>
+  <section className="hub-collection" aria-labelledby="subjects-heading"><header className="hub-section-head"><div>{!minimal&&<p className="hub-kicker">01 / SUBJECTS</p>}<h2 id="subjects-heading">{minimal?'Subjects':'Choose a workbench'}</h2></div></header>
    <RevealGrid className="hub-cards">{subjectEntries.map(([id,course],j)=>{
     const Icon=course.icon,stats=totals[id],mastered=index.filter(q=>q.subject===id&&progress[id].done.has(q.id)).length;
-    return <article className="hub-card" key={id} onPointerMove={trackSpotlight} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
-     <SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b> / 0{j+1}</b></span></div>
+    return <article className="hub-card" key={id} onPointerMove={minimal?undefined:trackSpotlight} style={{'--card-tone':course.tone,'--card-light':course.light,'--card-delay':j*48+'ms'}}>
+     {!minimal&&<><SubjectGlyph subject={id}/><div className="hub-card-meta"><span className="hub-card-icon"><Icon size={22}/></span><span>{course.abbr} <b> / 0{j+1}</b></span></div></>}
      <h3><a href={linkTo(id)} onClick={smartLink}>{course.title}<ArrowUpRight size={18}/></a></h3>
-     <p>{course.tag}</p>
+     {!minimal&&<p>{course.tag}</p>}
      <div className="hub-card-progress"><span>{mastered} / {stats.questions} mastered</span><progress aria-label={course.abbr+' mastery'} max={stats.questions} value={mastered}/></div>
      <div className="hub-card-actions"><a href={linkTo(id,'questions')} onClick={smartLink}>Question bank <ChevronRight size={14}/></a><a href={linkTo(id,'questions',{marks:'1'})} onClick={smartLink}>1-mark drill <ChevronRight size={14}/></a></div>
     </article>;
    })}</RevealGrid>
   </section>
-  <section className="hub-shortcuts" aria-labelledby="shortcuts-heading"><header className="hub-section-head"><div><p className="hub-kicker">02 / QUICK ACCESS</p><h2 id="shortcuts-heading">Get straight to the work</h2></div></header>
+  <section className="hub-shortcuts" aria-labelledby="shortcuts-heading"><header className="hub-section-head"><div>{!minimal&&<p className="hub-kicker">02 / QUICK ACCESS</p>}<h2 id="shortcuts-heading">{minimal?'Quick access':'Get straight to the work'}</h2></div></header>
    <div className="hub-shortcut-grid">
     <a href={linkTo('se','questions',{marks:'long'})} onClick={smartLink}><Layers3 size={20}/><span><b>SE long answers</b><small>Practice design, testing, estimation, and UML questions.</small></span><ArrowDownRight size={17}/></a>
     <a href={linkTo('cn','diagrams')} onClick={smartLink}><Network size={20}/><span><b>CN network diagrams</b><small>Explore routers, links, and past-paper topologies.</small></span><ArrowDownRight size={17}/></a>
@@ -270,7 +270,7 @@ function Hub(){
   <DirectionalCursor enabled={preferences.ui!=='minimal'}/>
   <Header shown={shown} pending={pending} view={route.view} showSearch={setFinder} showRecent={()=>setRecent(true)}/>
   <div ref={stage} className="atlas-stage" aria-busy={Boolean(pending)}>
-   {shown==='home'&&<Home progress={progress} showSearch={setFinder}/>}
+   {shown==='home'&&<Home progress={progress} showSearch={setFinder} minimal={preferences.ui==='minimal'}/>}
    {shown===null&&!error&&<p className="atlas-loading" role="status">Opening Study Atlas…</p>}
    <div ref={host} className="atlas-subject-host" hidden={shown===null||shown==='home'}/>
   </div>

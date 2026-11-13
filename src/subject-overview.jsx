@@ -1,4 +1,5 @@
 import React from 'react';
+import {useAtlasPreferences} from './preferences.js';
 import {StudyAction,SubjectBackdrop} from './subject-fx.jsx';
 import {AlgorithmBoard,CashFlowBoard,DistributedBoard,TraceabilityBoard} from './workbench-board.jsx';
 import {CountStat,RevealGrid,RevealLine,trackSpotlight} from './visual-effects.jsx';
@@ -55,20 +56,21 @@ const models={
 };
 const boards={daa:AlgorithmBoard,cn:SignalBoard,ee:CashFlowBoard,se:TraceabilityBoard,dos:DistributedBoard};
 export function SubjectOverview({subject,go,openTopic,openQuestion,openPaper,openNumericals,done,savedCount,openSaved,questions,topics,papers,Scene}){
+ const minimal=useAtlasPreferences().ui==='minimal';
  const model=models[subject],mastered=new Set(done),Board=boards[subject];
  return <div className="subject-overview">
   <section className="subject-hero atlas-scene-hero"><SubjectBackdrop subject={subject} live Scene={Scene}/>
-   <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={model.heading.join(' ')}><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></h1>
+   <div className="subject-hero-copy"><p className="subject-kicker"><i/> PAST PAPERS · {model.date}</p><h1 aria-label={model.heading.join(' ')}>{minimal?model.heading.join(' '):<><RevealLine>{model.heading[0]}</RevealLine><RevealLine delay={85} accent>{model.heading[1]}.</RevealLine></>}</h1>
     <div className="subject-actions"><StudyAction onClick={()=>go('questions')}>Open question bank <ArrowRight size={16}/></StudyAction><button className="button secondary" onClick={openNumericals}><Calculator size={16}/> Numericals</button><button className="button secondary" onClick={()=>go(model.tool[1])}>{model.tool[0]} <ArrowUpRight size={16}/></button></div>
    </div>
-   <Board openQuestion={openQuestion}/>
+   {!minimal&&<Board openQuestion={openQuestion}/>}
   </section>
   <div className="subject-stats">{[[questions.length,'worked questions',BookOpen],[papers.length,'exam papers',FileText],[topics.length,'topics',Layers3],[mastered.size,'mastered',ShieldCheck]].map(([n,label,Icon])=><div key={label}><Icon size={15} aria-hidden="true"/><CountStat value={n}/><span>{label}</span></div>)}</div>
   <section className="subject-section" aria-labelledby="subject-practice"><div className="subject-section-heading"><div><p className="subject-kicker">01 / QUICK ACCESS</p><h2 id="subject-practice">Practice shortcuts</h2></div></div>
-   <RevealGrid className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" onPointerMove={trackSpotlight} type="button" onClick={()=>target.question?openQuestion(target.question):target.marks?go('questions',null,{marks:target.marks}):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span><small>0{i+1}</small></span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</RevealGrid>
+   <RevealGrid className="subject-practice">{model.features.map(([label,description,Icon,target],i)=><button key={label} className="subject-card" onPointerMove={minimal?undefined:trackSpotlight} type="button" onClick={()=>target.question?openQuestion(target.question):target.marks?go('questions',null,{marks:target.marks}):go(target.view)}><span className="subject-card-top"><span className="subject-icon"><Icon size={20}/></span>{!minimal&&<small>0{i+1}</small>}</span><strong>{label} <ArrowUpRight size={17}/></strong><span>{description}</span></button>)}</RevealGrid>
   </section>
   <section className="subject-section" aria-labelledby="subject-library"><div className="subject-section-heading"><div><p className="subject-kicker">02 / STUDY BY TOPIC</p><h2 id="subject-library">Chapter library</h2></div><button className="button secondary" onClick={openSaved}><Bookmark size={16}/> Bookmarks{savedCount?' · '+savedCount:''}</button></div>
-   <div className="subject-library">{topics.map(({id,title,description,Icon})=>{const list=questions.filter(q=>q.topic===id),count=list.length,complete=list.filter(q=>mastered.has(q.id)).length;return <button key={id} className="subject-card subject-chapter" onPointerMove={trackSpotlight} type="button" onClick={()=>openTopic(id)}><span className="subject-icon"><Icon size={18}/></span><span><strong>{title}</strong><small>{description}</small><span className="subject-chapter-count">{complete?complete+' / '+count+' mastered':count+' questions'}</span>{count>0&&<progress value={complete} max={count} aria-label={title+' mastery'}/>}</span><ArrowUpRight size={16}/></button>;})}</div>
+   <div className="subject-library">{topics.map(({id,title,description,Icon})=>{const list=questions.filter(q=>q.topic===id),count=list.length,complete=list.filter(q=>mastered.has(q.id)).length;return <button key={id} className="subject-card subject-chapter" onPointerMove={minimal?undefined:trackSpotlight} type="button" onClick={()=>openTopic(id)}><span className="subject-icon"><Icon size={18}/></span><span><strong>{title}</strong><small>{description}</small><span className="subject-chapter-count">{complete?complete+' / '+count+' mastered':count+' questions'}</span>{count>0&&<progress value={complete} max={count} aria-label={title+' mastery'}/>}</span><ArrowUpRight size={16}/></button>;})}</div>
   </section>
   <section className="subject-section" aria-labelledby="subject-archive"><div className="subject-section-heading"><div><p className="subject-kicker">03 / ORIGINAL PAPERS</p><h2 id="subject-archive">Exam archive</h2></div><BookOpen size={19}/></div>
    <div className="subject-library">{papers.map(({id,label,pages})=><button className="subject-card subject-chapter" key={id} type="button" onClick={()=>openPaper(id)}><span className="subject-icon"><FileText size={17}/></span><span><strong>{label}</strong><small>{questions.filter(q=>q.paper===id).length} worked questions · {pages} scan pages</small></span><ArrowUpRight size={16}/></button>)}</div>
