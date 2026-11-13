@@ -1,3 +1,4 @@
+import {reportFailedSignIn} from './discord-alert.js';
 import React, {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {AudioLines, KeyRound} from 'lucide-react';
 
@@ -70,6 +71,7 @@ export function PasswordGate({children}) {
       if (pending !== attempt.current) return;
       if (entered !== verifier) {
         setError('Incorrect password.');
+        reportFailedSignIn();
         return;
       }
       try { localStorage.setItem(key, verifier); } catch {}
