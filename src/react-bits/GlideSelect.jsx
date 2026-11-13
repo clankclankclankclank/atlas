@@ -16,7 +16,7 @@ const MENU_GAP = 6;
 const DEFAULT_OPTIONS = ['One', 'Two', 'Three'];
 
 const norm = o => (typeof o === 'string' ? { value: o, label: o } : o);
-const textOf = it => (typeof it.label === 'string' ? it.label : it.value);
+const textOf = it => (typeof it.label === 'string' ? it.label : String(it.value));
 const typeaheadIndex = (items, from, ch) => {
   const c = ch.toLowerCase();
   const n = items.length;

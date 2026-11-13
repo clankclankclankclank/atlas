@@ -1,4 +1,4 @@
-import {StudyAction,StudyHeading,StudyScope,StudySelect,SubjectBranchNav} from './subject-fx.jsx';
+import {StudyAction,StudyHeading,StudyScope,StudySelect} from './subject-fx.jsx';
 import {matchesQuestionType} from './question-types.js';
 
 import React, {useDeferredValue, useMemo, useEffect, useId, useLayoutEffect, useRef, useState} from 'react';
@@ -52,8 +52,7 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
     return <aside className="rail">
       <button className="brand" onClick={()=>navigate('overview')} aria-label={title+" Atlas home"}><span className="brand-icon"><BrandIcon size={21}/></span><span><strong>{brand}</strong><small>{tag}</small></span></button>
       <button className="mobile-menu button secondary" aria-expanded={open} aria-controls="main-nav" onClick={()=>setOpen(!open)}>{open?<X size={18}/>:<Menu size={18}/>} Menu</button>
-      <SubjectBranchNav entries={mainNav} subject={subject} view={view} go={navigate}/>
-      <nav id="main-nav" className={open?'nav-open':''} aria-label="Study sections">
+      <nav id="main-nav" className={open?'atlas-section-dock nav-open':'atlas-section-dock'} aria-label="Study sections">
         {mainNav.map(([id,name,Icon],i)=><React.Fragment key={id}>{(i===0||id==='diagrams'||id==='settings')&&<p className="nav-label">{i===0?'Study':id==='diagrams'?'Practice':'Preferences'}</p>}<button type="button" aria-current={view===id?'page':undefined} className="nav-item" aria-label={name} title={display.sidebar==='icons'?name:undefined} onClick={()=>navigate(id)}><Icon size={17}/><span>{name}</span></button></React.Fragment>)}
       </nav>
       <div className="rail-tools"><button type="button" className="rail-collapse" aria-label={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} title={display.sidebar==='icons'?'Expand sidebar':'Collapse sidebar'} onClick={()=>updatePreferences({sidebar:display.sidebar==='icons'?'expanded':'icons'})}>{display.sidebar==='icons'?<PanelLeftOpen size={16}/>:<PanelLeftClose size={16}/>}<span>Collapse sidebar</span></button></div>
@@ -91,7 +90,7 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
     const active = Number(filters.quiz);
     return <>
       <Heading eyebrow="WORKED EXAM PAPERS" title="Question bank" description="Search worked questions across five Autumn papers."><span className="meta-pill" aria-live="polite">{results.length} results</span></Heading>
-      <section className="workbench-filter-panel" aria-label="Question bank controls"><div className="filters atlas-bank-fields"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder={searchHint}/><select className="field" value={filters.paper} aria-label="Exam year" onChange={e=>update('paper',e.target.value)}><option value="all">All papers</option>{papers.map(p=><option key={p} value={p}>{year(p)}</option>)}</select><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
+      <section className="workbench-filter-panel" aria-label="Question bank controls"><div className="filters atlas-bank-fields"><SearchBox value={filters.query} onChange={v=>update('query',v)} label="Search questions" placeholder={searchHint}/><StudySelect label="Exam year" value={filters.paper} onChange={v=>update('paper',v)} options={[{value:'all',label:'All papers'},...papers.map(p=>({value:p,label:year(p)}))]}/><TopicSelect value={filters.topic} onChange={v=>update('topic',v)}/></div>
       <div className="atlas-bank-controls"><MarkFilter values={markValues} marks={filters.marks} setMarks={v=>update('marks',v)}/><button className="button secondary atlas-shuffle" type="button" disabled={!results.length||search!==filters.query} onClick={()=>{const pool=results.filter(q=>!opened.includes(q.id));const items=pool.length?pool:results;onFocusQuestion(items[Math.floor(Math.random()*items.length)].id);}}>Shuffle question</button></div>
       <QuestionTypeFilter subject={subject} type={filters.type} setType={value=>{replaceQuestionType(subject,value);update('type',value);setOpened([]);}}/>
       <StudyScope value={filters.scope} onChange={value=>update('scope',value)} options={[{value:'all',label:'All questions'},{value:'review',label:'Unmastered'},{value:'saved',label:'Bookmarks ('+progress.saved.length+')'}]}/>
@@ -154,13 +153,13 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
   function LabForm({lab}) {
     const [values,setValues]=useState(()=>defaults(lab));
     const [result,setResult]=useState(()=>calculate(lab,defaults(lab)));
-    return <section className="lab-form surface"><h2>{lab.title}</h2><p>{lab.description}</p><form onSubmit={e=>{e.preventDefault();setResult(calculate(lab,values));}}><div className="lab-fields">{lab.fields.map(({id,label,items,type,min,max,step})=><label key={id}>{label}{items?<select className="field" value={values[id]} onChange={e=>setValues({...values,[id]:e.target.value})}>{items.map(i=><option key={i.value} value={i.value}>{i.label}</option>)}</select>:<input className="field" type={type||'text'} min={min} max={max} step={step||(type==='number'?'any':undefined)} value={values[id]} onChange={e=>setValues({...values,[id]:e.target.value})} required/>}</label>)}</div>
+    return <section className="lab-form surface"><h2>{lab.title}</h2><p>{lab.description}</p><form onSubmit={e=>{e.preventDefault();setResult(calculate(lab,values));}}><div className="lab-fields">{lab.fields.map(({id,label,items,type,min,max,step})=>items?<div key={id} className="atlas-lab-choice"><span>{label}</span><StudySelect label={label} value={values[id]} onChange={value=>setValues({...values,[id]:value})} options={items}/></div>:<label key={id}>{label}<input className="field" type={type||'text'} min={min} max={max} step={step||(type==='number'?'any':undefined)} value={values[id]} onChange={e=>setValues({...values,[id]:e.target.value})} required/></label>)}</div>
       <div className="flex flex-wrap gap-2"><StudyAction type="submit">Calculate <ArrowRight size={16}/></StudyAction></div>
     </form><div className="lab-result" aria-live="polite">{result.error?<p>{result.error}</p>:<Rich html={result.html}/>}</div></section>;
   }
   function Lab() {
     const [index,setIndex]=useState(0);
-    return <><Heading eyebrow="INTERACTIVE PRACTICE" title="Numerical lab" description={labHint}/><label className="lab-picker">Calculator<select aria-label="Calculator" className="field" value={index} onChange={e=>setIndex(+e.target.value)}>{labs.map((lab,i)=><option key={lab.method} value={i}>{lab.title}</option>)}</select></label><LabForm key={index} lab={labs[index]}/></>;
+    return <><Heading eyebrow="INTERACTIVE PRACTICE" title="Numerical lab" description={labHint}/><div className="lab-picker">Calculator<StudySelect label="Calculator" value={index} onChange={setIndex} options={labs.map((lab,i)=>({value:i,label:lab.title}))}/></div><LabForm key={index} lab={labs[index]}/></>;
   }
   function Scan({scan,setScan}) {
     const dialog=useRef(null);

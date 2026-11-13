@@ -1,5 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react';
-import {Check,Film,RotateCcw,Shuffle,Sparkles,Upload} from 'lucide-react';
+import {Check,Film,LockKeyhole,RotateCcw,Shuffle,Sparkles,Upload} from 'lucide-react';
+import {lockAtlas} from './access-state.js';
 import {listRewardVideos,removeRewardVideo,saveRewardVideo} from './reward-videos.js';
 
 let lastClip;
@@ -137,6 +138,7 @@ export function AtlasSettings({Heading,display,setDisplay,rewards,setRewards,pre
     <section className="formula-card surface"><h2>Theme</h2><div className="choices">{[['dark','Dark'],['light','Light']].map(([id,label])=><button key={id} className="choice" aria-pressed={display.theme===id} onClick={()=>setDisplay({theme:id})}><b>{label}</b>{display.theme===id&&<Check size={17}/>}</button>)}</div></section>
     <section className="formula-card surface"><h2>Mastery rewards</h2><label className="check-label"><input type="checkbox" checked={rewards} onChange={e=>setRewards(e.target.checked)}/>Play a reward after marking a question mastered</label><button className="button secondary" onClick={()=>preview()}><Sparkles size={17}/> Preview reward</button></section>
     <LocalRewardVideos preview={preview}/>
+    <section className="formula-card surface"><h2>Site access</h2><button type="button" className="button secondary" onClick={lockAtlas}><LockKeyhole size={16}/> Lock website</button></section>
     <MasteryReset mastered={mastered} onReset={onReset}/>
   </div><SettingsLoop clips={clips}/></div></>;
 }

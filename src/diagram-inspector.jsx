@@ -1,3 +1,4 @@
+import {StudySelect} from './study-select.jsx';
 import React,{useLayoutEffect,useRef,useState} from 'react';
 import {TableCalculation,useTableCalculations} from './table-calculations.jsx';
 import {Maximize2,Minus,Plus,X} from 'lucide-react';
@@ -112,7 +113,7 @@ function Inspector({figure,close}){
     </div>
     <aside className="atlas-inspector-info" aria-label="Diagram details">
      <div aria-live="polite"><small>{active?.kind??'Explore'}</small><h3>{active?.title??figure.title}</h3><p>{active?.detail??(parts.length?'Tap a node or edge, or choose one below. Zoom in and scroll to pan.':figure.caption||'Zoom in to read the original figure, then scroll to pan.')}</p></div>
-     {parts.length>0&&<label>Diagram element<select value={selected} onChange={e=>setSelected(Number(e.target.value))}><option value={-1}>Choose a node or edge</option>{parts.map(({title,kind},i)=><option key={i} value={i}>{kind} · {title}</option>)}</select></label>}
+     {parts.length>0&&<StudySelect label="Diagram element" value={selected} onChange={setSelected} options={[{value:-1,label:'Choose a node or edge'},...parts.map(({title,kind},value)=>({value,label:kind+' · '+title}))]}/>}
     </aside>
    </div>
   </div>

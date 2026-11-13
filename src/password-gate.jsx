@@ -1,5 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect,useRef,useState} from 'react';
 import {AudioLines, KeyRound} from 'lucide-react';
+
+import GridScan from './react-bits/GridScan.jsx';
+import {MusicControls} from './music-controls.jsx';
+import {lockEvent} from './access-state.js';
 
 const key = 'study-atlas-unlocked';
 const namespace = 'study-atlas-access-v1:';
@@ -19,14 +23,37 @@ export function PasswordGate({children}) {
   const [error, setError] = useState('');
   const [checking, setChecking] = useState(false);
 
+  const attempt = useRef(0);
+  const [motion,setMotion] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
+  useEffect(() => {
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setMotion(!media.matches);
+    const lock = () => {
+      attempt.current++;
+      try { localStorage.removeItem(key); } catch {}
+      setChecking(false);
+      setPassword('');
+      setError('');
+      setUnlocked(false);
+    };
+    media.addEventListener('change',update);
+    window.addEventListener(lockEvent,lock);
+    return () => {
+      media.removeEventListener('change',update);
+      window.removeEventListener(lockEvent,lock);
+    };
+  }, []);
+
   async function unlock(event) {
     event.preventDefault();
     if (checking) return;
+    const pending = ++attempt.current;
     setChecking(true);
     try {
       const bytes = new TextEncoder().encode(namespace + password);
       const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
       const entered = Array.from(hash, byte => byte.toString(16).padStart(2, '0')).join('');
+      if (pending !== attempt.current) return;
       if (entered !== verifier) {
         setError('Incorrect password.');
         return;
@@ -34,15 +61,17 @@ export function PasswordGate({children}) {
       try { localStorage.setItem(key, verifier); } catch {}
       setUnlocked(true);
     } catch {
-      setError('Password checking requires HTTPS or localhost.');
+      if (pending === attempt.current) setError('Password checking requires HTTPS or localhost.');
     } finally {
-      setChecking(false);
+      if (pending === attempt.current) setChecking(false);
     }
   }
 
-  if (unlocked) return children;
+  return <><MusicControls/>{unlocked ? children : <main className="atlas-lock">
+    {motion && <GridScan aria-hidden="true" className="atlas-lock-grid" linesColor="#745784" scanColor="#ffc0e3"
+      cells={10} depth={3.1} parallax={0.22} dpr={0.8} clickEffect="none" scanDirection="pingpong"
+      scanDuration={3.2} scanDelay={1.0} reflection={0.22}/>}
 
-  return <main className="atlas-lock">
     <section className="atlas-lock-card" aria-labelledby="atlas-lock-title">
       <AudioLines className="atlas-lock-mark" size={28} aria-hidden="true"/>
       <p className="atlas-lock-series">Angels of Delusion</p>
@@ -56,5 +85,5 @@ export function PasswordGate({children}) {
         <button type="submit" disabled={checking}><KeyRound size={16} aria-hidden="true"/> Unlock Atlas</button>
       </form>
     </section>
-  </main>;
+  </main>}</>;
 }

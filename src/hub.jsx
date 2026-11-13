@@ -1,3 +1,4 @@
+import {StudySelect} from './study-select.jsx';
 import {PasswordGate} from './password-gate.jsx';
 import {DirectionalCursor} from './directional-cursor.jsx';
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
@@ -137,8 +138,8 @@ function Finder({mode,close,progress}){
   <div className="atlas-finder-body">
    <header><div><p className="hub-kicker">QUESTION FINDER</p><h2 id="finder-title">{scope==='saved'?'Your bookmarks':'Search all subjects'}</h2></div><button className="atlas-finder-close" type="button" aria-label="Close question finder" onClick={close}><X size={22}/></button></header>
    <label className="atlas-finder-input"><Search size={18}/><input ref={input} type="search" placeholder="Search questions, topics, or years…" aria-label="Search across subjects" value={query} onChange={e=>{setLimit(30);setQuery(e.target.value);}} onKeyDown={e=>{if(e.key==='Enter'&&ordered[0])open(ordered[0]);}}/></label>
-   <div className="atlas-finder-controls"><select aria-label="Subject" value={active} onChange={e=>{setLimit(30);setActive(e.target.value);}}><option value="all">All subjects</option>{subjectEntries.map(([id,s])=><option key={id} value={id}>{s.abbr}</option>)}</select>
-   <select aria-label="Marks in search" value={marks} onChange={e=>{setLimit(30);setMarks(e.target.value);}}><option value="all">All marks</option><option value="1">1 mark</option><option value="long">4+ marks</option></select>
+   <div className="atlas-finder-controls"><StudySelect align="left" label="Subject" value={active} onChange={value=>{setLimit(30);setActive(value);}} options={[{value:'all',label:'All subjects'},...subjectEntries.map(([value,course])=>({value,label:course.abbr}))]}/>
+   <StudySelect align="left" label="Marks in search" value={marks} onChange={value=>{setLimit(30);setMarks(value);}} options={[{value:'all',label:'All marks'},{value:'1',label:'1 mark'},{value:'long',label:'4+ marks'}]}/>
    <button type="button" aria-pressed={scope==='saved'} onClick={()=>{setLimit(30);setScope(scope==='saved'?'all':'saved');}}><Bookmark size={15}/> Saved only</button></div>
    <p className="atlas-finder-count" aria-live="polite">{ordered.length} {ordered.length===1?'match':'matches'}</p>
    <div className="atlas-results">{ordered.slice(0,limit).map(q=><a key={q.subject+q.id} href={hrefFor(q)} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();open(q);}}><span style={{'--result-tone':subjects[q.subject].tone}}>{q.subject.toUpperCase()}</span><div><b>{q.title}</b><small>{q.year} · Q{q.ref} · {q.marks} {q.marks===1?'mark':'marks'}{progress[q.subject].done.has(q.id)?' · Mastered':''}</small></div><ArrowUpRight size={17}/></a>)}
@@ -216,6 +217,11 @@ function Hub(){
  const host=useRef(null);
  const stage=useRef(null);
  const mounted=useRef({id:shown});
+ useEffect(()=>()=> {
+  const {unmount,style}=mounted.current;
+  if(style)style.media='not all';
+  if(unmount)queueMicrotask(unmount);
+ },[]);
  useSubjectPreviews();
  useEffect(()=>observeRoute(()=>setRoute(readRoute())),[]);
  useEffect(()=>{

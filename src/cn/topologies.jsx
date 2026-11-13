@@ -1,3 +1,4 @@
+import {StudySelect} from '../study-select.jsx';
 import React,{useState} from 'react';
 import {DiagramRich} from '../diagram-inspector.jsx';
 
@@ -27,7 +28,7 @@ export function NetworkTopology({id}){
 export function NetworkStudio({openQuestion}){
  const [id,setId]=useState(Object.keys(topologies)[0]);
  return <section className="atlas-network-studio surface">
-  <label>Past-paper topology<select className="field" value={id} onChange={e=>setId(e.target.value)}>{Object.entries(topologies).map(([key,value])=><option key={key} value={key}>{value.title}</option>)}</select></label>
+  <div className="atlas-lab-choice"><span>Past-paper topology</span><StudySelect label="Past-paper topology" value={id} onChange={setId} options={Object.entries(topologies).map(([value,topology])=>({value,label:topology.title}))}/></div>
   <NetworkTopology id={id}/>
   <button type="button" className="button secondary" onClick={()=>openQuestion(id)}>Open worked question</button>
  </section>;

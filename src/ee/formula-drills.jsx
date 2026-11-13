@@ -1,3 +1,4 @@
+import {StudySelect} from '../study-select.jsx';
 import React,{useState} from 'react';
 import {ArrowRight,Check,RotateCcw,X} from 'lucide-react';
 import {drills} from './formula-drills-data.mjs';
@@ -38,7 +39,7 @@ export function FormulaDrills({Heading,Rich,questions,topics,reference}){
  }
  return <>
   <Heading eyebrow="FORMULA PRACTICE" title="Formula selection drills" description="Read the past-paper question and choose the formula for the highlighted task."/>
-  <div className="atlas-drill-toolbar"><label>Topic <select className="field" value={topic} onChange={e=>start(e.target.value)}><option value="all">All formula topics</option>{topics.filter(t=>drills.some(([id])=>questions.get(id)?.topic===t.id)).map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label><button type="button" className="button secondary" onClick={()=>start(topic)}><RotateCcw size={16}/> Restart drill</button></div>
+  <div className="atlas-drill-toolbar"><StudySelect label="Formula topic" value={topic} onChange={start} options={[{value:'all',label:'All formula topics'},...topics.filter(t=>drills.some(([id])=>questions.get(id)?.topic===t.id)).map(t=>({value:t.id,label:t.title}))]}/><button type="button" className="button secondary" onClick={()=>start(topic)}><RotateCcw size={16}/> Restart drill</button></div>
   {!current?<section className="atlas-drill surface"><h2>Drill complete</h2><p>{score} / {deck.length} formulas correct on the first try.</p><button type="button" className="button primary" onClick={()=>start(topic)}>Practice again</button></section>:
    <section className="atlas-drill surface">
     <div className="atlas-plan-meta"><span className="eyebrow">{reference(current.question)} · {current.question.marks} {current.question.marks===1?'mark':'marks'}</span><span>{index+1} / {deck.length} · {score} correct</span></div>

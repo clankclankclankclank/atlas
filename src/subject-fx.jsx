@@ -1,12 +1,11 @@
-import React,{useEffect,useMemo,useState} from 'react';
+import React,{useEffect,useState} from 'react';
 import {useAtlasPreferences} from './preferences.js';
 import Scanner from './react-bits/Scanner.jsx';
 import MoltenMetal from './react-bits/MoltenMetal.jsx';
 import GradientWaves from './react-bits/GradientWaves.jsx';
 import PatternWaves from './react-bits/PatternWaves.jsx';
 import GlowCursor from './react-bits/GlowCursor.jsx';
-import BranchedMenu from './react-bits/BranchedMenu.jsx';
-import GlideSelect from './react-bits/GlideSelect.jsx';
+export {StudySelect} from './study-select.jsx';
 import SpecularButton from './react-bits/SpecularButton.jsx';
 
 const media='(prefers-reduced-motion: reduce)';
@@ -50,22 +49,6 @@ export function StudyHeading({subject,eyebrow,title,description,children}){
   <div className="atlas-scene-copy"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{description&&<p className="section-description">{description}</p>}</div>
   {children}
  </header>;
-}
-export function SubjectBranchNav({entries,subject,view,go}){
- const groups=useMemo(()=>{
-  const study=[],practice=[],preferences=[];
-  const boundary=entries.findIndex(([id])=>id===(subject==='ee'?'repeats':'diagrams'));
-  entries.forEach(([value,label,Icon],i)=>{
-   (value==='settings'?preferences:i<boundary?study:practice).push({value,label,icon:<Icon size={15}/>});
-  });
-  return [{label:'Study',children:study},{label:'Practice',children:practice},{label:'Preferences',children:preferences}];
- },[entries,subject]);
- return <BranchedMenu className="atlas-branch-nav" items={groups} activeValue={view} defaultOpen={[0,1,2]} onSelect={go} width="100%" color="var(--ink)" accentColor="var(--accent)" lineColor="var(--line)" indent={25} trunk={7} radius={6} rowHeight={34} fontSize={13}/>;
-}
-export function StudySelect({options,value,onChange,label}){
- const {minimal}=useEffects();
- if(minimal)return <select className="field" aria-label={label} value={value} onChange={e=>onChange(e.target.value)}>{options.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select>;
- return <GlideSelect className="atlas-glide-filter" options={options} value={value} onChange={onChange} ariaLabel={label} showTags={false} size="sm" menuWidth={225} surfaceColor="var(--panel)" textColor="var(--ink)" accentColor="var(--accent)" highlightColor="var(--soft)"/>;
 }
 export function StudyScope({options,value,onChange}){
  return <div className="study-scopes" role="group" aria-label="Question list">{options.map(({value:id,label})=><button key={id} type="button" className="scope-button" aria-pressed={value===id} onClick={()=>onChange(id)}>{label}</button>)}</div>;
