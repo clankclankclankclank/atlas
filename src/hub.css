@@ -859,16 +859,24 @@ html[data-layout=minimal] .subject-practice .subject-card>span:last-child { grid
 .atlas-lock { position:relative; isolation:isolate; overflow:hidden; }
 .atlas-lock>.atlas-lock-grid { position:absolute; inset:0; z-index:-1; pointer-events:none; }
 .atlas-lock-card { background:#211726ef; }
-.atlas-music { position:fixed; right:14px; bottom:14px; z-index:45; color:#fff1fa; font:500 14px/1.4 Inter,system-ui,sans-serif; }
-.atlas-music summary,.atlas-music-heading button {
- display:grid; place-items:center; width:42px; height:42px; margin-inline-start:auto;
- border-radius:11px; border:1px solid #795a79; color:#ffc5e0; background:#261c2e; cursor:pointer;
+html[data-atlas-locked] {
+ scrollbar-gutter:auto;
+ overflow:hidden;
+ background:#130f19;
+ color-scheme:dark;
 }
-.atlas-music summary::-webkit-details-marker { display:none; }
-.atlas-music-panel { position:absolute; bottom:50px; right:0; width:min(250px,calc(100vw - 28px)); box-sizing:border-box; border:1px solid #795a79; border-radius:12px; padding:11px; background:#211726; box-shadow:0 12px 35px #1008198c; }
-.atlas-music-heading { display:flex; align-items:center; gap:9px; }
-.atlas-music-heading button { width:34px; height:34px; margin:0; }
-.atlas-music :focus-visible { outline:2px solid #ffc5e0; outline-offset:3px; }
+html[data-atlas-locked] body { margin:0; overflow:hidden; background:#130f19; }
+html[data-atlas-locked] #atlas-root { min-height:0; }
+.atlas-lock {
+ position:fixed;
+ inset:0;
+ min-height:0;
+ overflow:auto;
+ overscroll-behavior:contain;
+}
+.atlas-lock-card { margin:auto; }
+.atlas-music-heading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 12px; margin:8px 0; }
+.atlas-music-heading strong { font-size:14px; }
 .atlas-lab-choice { display:grid; gap:5px; align-content:start; }
 .atlas-glide-filter { --bank-field-height:41px; }
 .atlas-glide-filter .glide-select__label { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }

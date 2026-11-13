@@ -1,5 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react';
 import {Check,Film,LockKeyhole,RotateCcw,Shuffle,Sparkles,Upload} from 'lucide-react';
+import {MusicControls} from './music-controls.jsx';
 import {lockAtlas} from './access-state.js';
 import {listRewardVideos,removeRewardVideo,saveRewardVideo} from './reward-videos.js';
 
@@ -137,6 +138,7 @@ export function AtlasSettings({Heading,display,setDisplay,rewards,setRewards,pre
     <section className="formula-card surface"><h2>Sidebar</h2><div className="choices">{[['expanded','Expanded','Show section icons and labels'],['icons','Icons only','Keep the subject logo and section icons']].map(([id,label,hint])=><button key={id} className="choice" aria-pressed={display.sidebar===id} onClick={()=>setDisplay({sidebar:id})}><b>{label}</b><small>{hint}</small>{display.sidebar===id&&<Check size={17}/>}</button>)}</div></section>
     <section className="formula-card surface"><h2>Theme</h2><div className="choices">{[['dark','Dark'],['light','Light']].map(([id,label])=><button key={id} className="choice" aria-pressed={display.theme===id} onClick={()=>setDisplay({theme:id})}><b>{label}</b>{display.theme===id&&<Check size={17}/>}</button>)}</div></section>
     <section className="formula-card surface"><h2>Mastery rewards</h2><label className="check-label"><input type="checkbox" checked={rewards} onChange={e=>setRewards(e.target.checked)}/>Play a reward after marking a question mastered</label><button className="button secondary" onClick={()=>preview()}><Sparkles size={17}/> Preview reward</button></section>
+    <MusicControls/>
     <LocalRewardVideos preview={preview}/>
     <section className="formula-card surface"><h2>Site access</h2><button type="button" className="button secondary" onClick={lockAtlas}><LockKeyhole size={16}/> Lock website</button></section>
     <MasteryReset mastered={mastered} onReset={onReset}/>

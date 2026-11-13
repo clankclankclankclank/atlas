@@ -1,5 +1,5 @@
-import React, {useRef,useState} from 'react';
-import {Music2,Pause,Play} from 'lucide-react';
+import React, {useEffect,useState} from 'react';
+import {Pause,Play} from 'lucide-react';
 import WakeSlider from './react-bits/WakeSlider.jsx';
 
 const volumeKey = 'study-atlas-music-volume';
@@ -12,40 +12,58 @@ function readVolume() {
   return 10;
 }
 
+export function MusicPlayer() {
+  return <audio id="atlas-music-player" src="media/sampling-dreams.mp3" loop preload="none"/>;
+}
+
 export function MusicControls() {
-  const player = useRef(null);
   const [volume,setVolume] = useState(readVolume);
   const [playing,setPlaying] = useState(false);
   const [error,setError] = useState(false);
 
+  useEffect(() => {
+    const audio = document.getElementById('atlas-music-player');
+    if (!audio) return;
+    const sync = () => setPlaying(!audio.paused);
+    const failed = () => setError(true);
+    sync();
+    audio.addEventListener('play',sync);
+    audio.addEventListener('pause',sync);
+    audio.addEventListener('error',failed);
+    return () => {
+      audio.removeEventListener('play',sync);
+      audio.removeEventListener('pause',sync);
+      audio.removeEventListener('error',failed);
+    };
+  }, []);
+
   function changeVolume(value) {
     setVolume(value);
-    player.current.volume = value / 100;
+    const audio = document.getElementById('atlas-music-player');
+    if (audio) audio.volume = value / 100;
     try { localStorage.setItem(volumeKey,String(value)); } catch {}
   }
 
   async function toggle() {
-    const audio = player.current;
+    const audio = document.getElementById('atlas-music-player');
+    if (!audio) return;
     if (!audio.paused) { audio.pause(); return; }
     setError(false);
     audio.volume = volume / 100;
     try { await audio.play(); } catch { setError(true); }
   }
 
-  return <aside className="atlas-music" aria-label="Background music">
-    <audio ref={player} src="media/sampling-dreams.mp3" loop preload="none"
-      onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onError={()=>setError(true)}/>
-    <details>
-      <summary aria-label="Music controls"><Music2 size={18}/></summary>
-      <div className="atlas-music-panel">
-        <div className="atlas-music-heading">
-          <button type="button" aria-label={playing?'Pause music':'Play music'} onClick={toggle}>{playing?<Pause size={17}/>:<Play size={17}/>}</button>
-          <strong>Sampling Dreams</strong>
-        </div>
-        <WakeSlider value={volume} onChange={changeVolume} ariaLabel="Music volume" showValue
-          formatValue={value=>value+'%'} bars={22} height={42} fillColor="#ffc5e0" trackColor="#49374e"/>
-        {error&&<p role="status">Music could not play.</p>}
-      </div>
-    </details>
-  </aside>;
+  return <section className="formula-card surface atlas-music-settings">
+    <h2>Background music</h2>
+    <div className="atlas-music-heading">
+      <strong>Sampling Dreams</strong>
+      <button className="button secondary" type="button" onClick={toggle}>
+        {playing?<Pause size={16}/>:<Play size={16}/>} {playing?'Pause music':'Play music'}
+      </button>
+    </div>
+    <WakeSlider value={volume} onChange={changeVolume} ariaLabel="Music volume" showValue
+      formatValue={value=>value+'%'} bars={22} height={42}
+      fillColor="var(--accent)" trackColor="var(--soft)"/>
+    {error&&<p role="status">Music could not play.</p>}
+  </section>;
 }

@@ -1,8 +1,8 @@
-import React, {useEffect,useRef,useState} from 'react';
+import React, {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {AudioLines, KeyRound} from 'lucide-react';
 
 import GridScan from './react-bits/GridScan.jsx';
-import {MusicControls} from './music-controls.jsx';
+import {MusicPlayer} from './music-controls.jsx';
 import {lockEvent} from './access-state.js';
 
 const key = 'study-atlas-unlocked';
@@ -24,6 +24,10 @@ export function PasswordGate({children}) {
   const [checking, setChecking] = useState(false);
 
   const attempt = useRef(0);
+  useLayoutEffect(() => {
+    document.documentElement.toggleAttribute('data-atlas-locked', !unlocked);
+    return () => document.documentElement.removeAttribute('data-atlas-locked');
+  }, [unlocked]);
   const [motion,setMotion] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
   useEffect(() => {
     const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -67,7 +71,7 @@ export function PasswordGate({children}) {
     }
   }
 
-  return <><MusicControls/>{unlocked ? children : <main className="atlas-lock">
+  return unlocked ? <><MusicPlayer/>{children}</> : <main className="atlas-lock">
     {motion && <GridScan aria-hidden="true" className="atlas-lock-grid" linesColor="#745784" scanColor="#ffc0e3"
       cells={10} depth={3.1} parallax={0.22} dpr={0.8} clickEffect="none" scanDirection="pingpong"
       scanDuration={3.2} scanDelay={1.0} reflection={0.22}/>}
@@ -85,5 +89,5 @@ export function PasswordGate({children}) {
         <button type="submit" disabled={checking}><KeyRound size={16} aria-hidden="true"/> Unlock Atlas</button>
       </form>
     </section>
-  </main>}</>;
+  </main>;
 }
