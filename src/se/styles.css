@@ -131,3 +131,20 @@ body{background:var(--bg)}
 @media(max-width:1050px){.hero{grid-template-columns:1fr}.studio-board{max-width:520px}.hero h1{font-size:clamp(42px,8vw,78px)}}
 @media(max-width:720px){.hero{min-height:0}.hero h1{font-size:clamp(38px,11vw,63px)}.board-header,.board-footer{padding:7px 10px}.diagram-studio,[data-layout=minimal] .diagram-studio{display:block}.diagram-picker{display:flex;flex-wrap:wrap;max-height:145px;margin-bottom:9px;gap:4px}.studio-kicker{width:100%}.diagram-picker button{padding:4px 6px;font-size:11px}.settings-composition,[data-layout=minimal] .settings-composition{grid-template-columns:1fr}.eldreda-card{width:min(100%,350px)}}
 .diagram-fit .se-drawing svg{width:min(100%,var(--diagram-width));}.zoom-control .fit-diagram{font-size:12px;padding:5px 9px;margin-left:5px}.zoom-control .fit-diagram[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+
+.se-listening-filters,.se-listening-controls { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.se-listening-filters { margin-bottom:12px; }
+.se-listening { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(225px,1fr); gap:12px; align-items:start; }
+.se-listening-player,.se-listening-queue { min-width:0; padding:14px; }
+.se-listening-player .eyebrow { display:flex; align-items:center; gap:6px; letter-spacing:.04em; }
+.se-listening-player h2 { margin:8px 0 13px; font-size:clamp(18px,2vw,24px); line-height:1.3; }
+.se-listening-player audio { display:block; width:100%; margin:12px 0; }
+.se-listening-status { color:var(--muted); margin:10px 0; font-size:13px; }
+.se-listening-transcript { margin-top:14px; border-top:1px solid var(--line); padding-top:9px; }
+.se-listening-transcript p { margin:8px 0; overflow-wrap:anywhere; }
+.se-listening-queue { max-height:min(66vh,620px); overflow:auto; }
+.se-listening-queue li+li { border-top:1px solid var(--line); }
+.se-listening-queue button { display:block; text-align:left; width:100%; padding:8px; border-radius:6px; }
+.se-listening-queue button span { display:block; color:var(--muted); font-size:11px; }
+.se-listening-queue button[aria-current=true],.se-listening-queue button:hover { background:var(--soft); }
+@media (max-width:900px) { .se-listening { grid-template-columns:minmax(0,1fr); } .se-listening-queue { max-height:420px; } }

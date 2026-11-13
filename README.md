@@ -26,3 +26,7 @@ The password prompt is a browser-side gate. GitHub Pages serves public assets an
 Deploy this repository on Vercel and set `ATLAS_DISCORD_WEBHOOK` as a Production environment variable on that project. Use a fresh Discord webhook URL. Configure a Vercel Firewall rate limit for POST requests to `/api/atlas-alert` before enabling it. The relay also applies a five-minute cooldown per running function instance.
 
 Set the `atlas-alert-endpoint` meta tag in `index.html` to the deployment’s HTTPS URL ending in `/api/atlas-alert`, then publish to GitHub Pages. Leave the tag empty to disable alerts. The endpoint only accepts the Study Atlas Pages origin in browsers. A public caller can forge a report, so treat messages as signals rather than verified security events. The client sends no password, IP field, or device details, and Discord receives a fixed message.
+
+## SE Listening recordings
+
+The **Software Engineering → Listening** tab reads questions and answers aloud with browser speech synthesis. A recorded MP3 takes precedence when available. Place each recording in `media/se-listening/` using the lowercased question ID with punctuation converted to hyphens and trailing hyphens removed, for example `s1-1-a.mp3` for `S1-1(a)`. Build or deploy again to register new recordings.

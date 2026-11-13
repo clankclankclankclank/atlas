@@ -4,7 +4,7 @@ import {StudyAction,SubjectBackdrop} from './subject-fx.jsx';
 import {AlgorithmBoard,CashFlowBoard,DistributedBoard,TraceabilityBoard} from './workbench-board.jsx';
 import {CountStat,RevealGrid,RevealLine,trackSpotlight} from './visual-effects.jsx';
 import {SignalBoard} from './cn/signal-board.jsx';
-import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Layers3,Network,ShieldCheck,SquareFunction,Clock3} from 'lucide-react';
+import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bookmark,Boxes,Calculator,FileText,GitBranch,Headphones,Layers3,Network,ShieldCheck,SquareFunction,Clock3} from 'lucide-react';
 
 const models={
  daa:{
@@ -39,6 +39,7 @@ const models={
   heading:['Software','Engineering'],date:'2022–2025',
   tool:['Diagram Studio','diagrams'],
   features:[
+   ['Listening','Hear past-paper questions and worked answers.',Headphones,{view:'listen'}],
    ['Long-answer drill','Practice 4+ mark design, testing, and estimation questions.',BookOpen,{marks:'long'}],
    ['Diagram Studio','Explore UML, design models, and their relationships.',Boxes,{view:'diagrams'}],
    ['Estimation lab','Work through COCOMO, function points, and PERT.',Calculator,{view:'lab'}],

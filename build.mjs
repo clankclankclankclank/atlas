@@ -25,7 +25,10 @@ for(const id of Object.keys(subjectNames)){
   list.push({subject:id,id:q.id,ref:q.ref,marks:q.marks,title:q.question,year,name:q.question.toLowerCase(),search:[q.question,topic,year,id,'Q'+q.ref].join(' ').toLowerCase()});
  }
 }
-await writeFile(path.join(root,'src/generated-index.mjs'),'export const index='+JSON.stringify(list)+';\nexport const totals='+JSON.stringify(totals)+';\n');
+const recordingDir=path.join(assetRoot,'media','se-listening');
+const seRecordings=await access(recordingDir).then(()=>readdir(recordingDir,{withFileTypes:true}),()=>[]);
+const audioStems=seRecordings.filter(entry=>entry.isFile()&&/^[a-z0-9-]+\.mp3$/.test(entry.name)).map(entry=>entry.name.slice(0,-4)).sort();
+await writeFile(path.join(root,'src/generated-index.mjs'),'export const index='+JSON.stringify(list)+';\nexport const totals='+JSON.stringify(totals)+';\nexport const seRecordings='+JSON.stringify(audioStems)+';\n');
 const shared={absWorkingDir:root,bundle:true,minify:true,format:'iife',target:'es2022',define:{'process.env.NODE_ENV':'"production"'}};
 await Promise.all([
  build({...shared,entryPoints:['src/hub.jsx'],outfile:path.join(target,'hub.js')}),

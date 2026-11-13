@@ -13,13 +13,13 @@ import {useReadingTrail} from './reading-trail.jsx';
 import {PracticeQueues} from './practice-queues.jsx';
 import {PanelLeftClose,PanelLeftOpen} from 'lucide-react';
 import {updatePreferences,useAtlasPreferences} from './preferences.js';
-import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
+import {Activity, ArrowRight, BookmarkCheck, BookmarkMinus, ArrowUpRight, BookOpen, Bookmark, Check, ChevronDown, ChevronLeft, ChevronRight, CircuitBoard, ClipboardList, Clock3, FileText, FlaskConical, Headphones, House, Layers3, Menu, Network, Orbit, RotateCcw, Search, Settings2, ShieldCheck, Split, SquareFunction, X} from 'lucide-react';
 import {Reward} from './reward.jsx';
 import {useReward} from './use-reward.js';
 import {matches,DailyVariants,QuestionTypeFilter,MarkFilter,CopyQuestionLink,useSubjectRoute} from './shared.jsx';
 import {navigate,readRoute,progressEvent,replaceQuestionType,studyKeys} from './routing.mjs';
 
-export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,data,papers,clips,labs,calculate,formulaDetails,Scene,searchHint,formulaHint,diagramHint,labHint}) {
+export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,data,papers,clips,labs,calculate,formulaDetails,Scene,Listening,searchHint,formulaHint,diagramHint,labHint}) {
   const {QS, SCANS:sourceScans, TOPICS, ORDER, REPEATS, NOTES, FORMULA_ENTRIES, PAPERS, DIAGRAMS} = data;
   const SCANS=Object.fromEntries(Object.entries(sourceScans).map(([paper,pages])=>[paper,pages.map(file=>file.replace('assets/','assets/'+subject+'/'))]));
   const markValues=[...new Set(QS.map(q=>q.marks))].sort((a,b)=>a-b);
@@ -28,7 +28,7 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
   const reference = q => year(q.paper) + ' Q' + q.ref;
   const strip = value => value.replace(/<[^>]*>/g, ' ');
   const mainNav = [
-    ['overview','Overview',House], ['questions','Question bank',BookOpen], ['notes','Short notes',FileText],
+    ['overview','Overview',House], ['questions','Question bank',BookOpen], ...(Listening?[['listen','Listening',Headphones]]:[]), ['notes','Short notes',FileText],
     ['formula','Formula sheet',SquareFunction], ['diagrams','Diagram studio',Network], ['repeats','Most repeated',RotateCcw],
     ['lab','Numerical lab',FlaskConical], ['plan','Revision plan',ClipboardList], ['settings','Settings',Settings2]
   ];
@@ -226,6 +226,7 @@ export function createPaperWorkbench({subject,title,brand,tag,BrandIcon,period,d
       <main ref={main} id="main-content" tabIndex={-1}><div className="content atlas-page" key={view}>
         {view==='overview'&&<SubjectOverview Scene={Scene} subject={subject} questions={QS} topics={overviewTopics} papers={overviewPapers} go={go} openTopic={openTopic} openQuestion={openQuestion} openNumericals={()=>go('questions',null,{type:'numerical'})} openPaper={paper=>{setFilters({...emptyFilters,paper});setOpened([]);go('questions');}} done={progress.done} savedCount={progress.saved.length} openSaved={()=>{setFilters({...emptyFilters,scope:'saved'});go('questions');}}/>}
         {view==='questions'&&<Questions {...{filters,setFilters,opened,setOpened,progress,trail}} onFocusQuestion={id=>{setOpened([id]);setJump({id});}} onMaster={mark} onSave={id=>setProgress(current=>({...current,saved:changed(current.saved,id)}))} onScan={setScan}/>}
+        {view==='listen'&&Listening&&<Listening Heading={Heading} openQuestion={openQuestion}/>}
         {view==='notes'&&<Notes openTopic={openTopic} noteRequest={noteRequest} trail={trail}/>}
         {view==='formula'&&<Formulas openQuestion={openQuestion}/>}
         {view==='repeats'&&<Repeats openQuestion={openQuestion}/>}

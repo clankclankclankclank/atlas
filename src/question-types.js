@@ -15,7 +15,7 @@ const tagged={
   numerical:new Set(['D25-2(a)','D25-3(b)','D25-4(a)','D24-2(a)','D24-3(b)','D24-4(a)'])
  },
  se:{
-  numerical:new Set("S1-5(a) S1-5(b) S1-7(b) S2-4(b) S2-6(a)(i) S2-6(b) S3-5(a) S3-6(a) S4-7(b) S4-8(b) S5-5(a) S5-6(b) S5-8(b)".split(' '))
+  numerical:new Set("S1-5(a) S1-5(b) S1-7(b) S2-4(b) S2-6(a)(i) S2-6(b) S3-5(a) S3-6(a) S4-7(b) S4-8(b) S5-4(b) S5-5(a) S5-6(b) S5-8(b)".split(' '))
  }
 };
 
