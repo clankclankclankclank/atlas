@@ -5,7 +5,8 @@ import GridScan from './react-bits/GridScan.jsx';
 import {MusicPlayer} from './music-controls.jsx';
 import {lockEvent} from './access-state.js';
 
-const key = 'study-atlas-unlocked';
+const key = 'study-atlas-unlocked-v2';
+const legacyKey = 'study-atlas-unlocked';
 const namespace = 'study-atlas-access-v1:';
 const verifier = '369bd710d72ee91c09057f457e8641e0799b28b7fb8e319a6d5478c0930edb9a';
 
@@ -32,17 +33,26 @@ export function PasswordGate({children}) {
   useEffect(() => {
     const media = matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setMotion(!media.matches);
-    const lock = () => {
+    const reset = () => {
       attempt.current++;
-      try { localStorage.removeItem(key); } catch {}
       setChecking(false);
       setPassword('');
       setError('');
       setUnlocked(false);
     };
+    const lock = () => {
+      try { localStorage.removeItem(key); } catch {}
+      reset();
+    };
+    const syncLock = event => {
+      if (event.storageArea === localStorage && (event.key === null || (event.key === key && event.newValue === null))) reset();
+    };
+    try { localStorage.removeItem(legacyKey); } catch {}
+    window.addEventListener('storage',syncLock);
     media.addEventListener('change',update);
     window.addEventListener(lockEvent,lock);
     return () => {
+      window.removeEventListener('storage',syncLock);
       media.removeEventListener('change',update);
       window.removeEventListener(lockEvent,lock);
     };
