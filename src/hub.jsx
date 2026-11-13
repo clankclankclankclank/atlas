@@ -1,3 +1,4 @@
+import {InspectionDeterrent} from './inspection-deterrent.jsx';
 import {StudySelect} from './study-select.jsx';
 import {PasswordGate} from './password-gate.jsx';
 import {DirectionalCursor} from './directional-cursor.jsx';
@@ -286,4 +287,4 @@ function Hub(){
  </>;
 }
 for(const id of Object.keys(subjects))migratePracticeQueues(id);
-createRoot(document.getElementById('atlas-root')).render(<PasswordGate><Hub/></PasswordGate>);
+createRoot(document.getElementById('atlas-root')).render(<><InspectionDeterrent/><PasswordGate><Hub/></PasswordGate></>);
