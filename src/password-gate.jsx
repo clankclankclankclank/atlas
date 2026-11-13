@@ -8,7 +8,7 @@ import {lockEvent} from './access-state.js';
 const key = 'study-atlas-unlocked-v2';
 const legacyKey = 'study-atlas-unlocked';
 const namespace = 'study-atlas-access-v1:';
-const verifier = '369bd710d72ee91c09057f457e8641e0799b28b7fb8e319a6d5478c0930edb9a';
+const verifier = '617098aa8650c9b934fe9d2de3de4080a73216e9eba22810efee2bed2af98f03';
 
 function remembered() {
   try {
